@@ -12,7 +12,8 @@ public class Main {
 
         Database database = new Database();
         database.connect();
-        System.out.println(database.getAllTasksOfProject(1L));
+        Model model = new ModelManager(database);
+        Server server = new Server(model);
 
 
 
