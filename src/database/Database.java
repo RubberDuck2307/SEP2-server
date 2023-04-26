@@ -71,7 +71,7 @@ public class Database implements DatabaseConnection {
             LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             return localDate;
         } catch (Exception e) {
-            return null;
+            throw new RuntimeException(e);
         }
     }
 
@@ -84,9 +84,9 @@ public class Database implements DatabaseConnection {
             String description = set.getString("description");
             String status = set.getString("status");
             String priority = set.getString("priority");
-            LocalDate deadline = convertDate(set.getDate("deadline"));
+            LocalDate deadline = set.getDate("deadline").toLocalDate();
             Integer estimated_time = set.getInt("estimated_time");
-            LocalDate starting_date = convertDate(set.getDate("starting_date"));
+            LocalDate starting_date = set.getDate("starting_date").toLocalDate();
             taskList.addTask(new Task(id, name, description, deadline, estimated_time, priority, status, project_id, starting_date));
         }
         return taskList;
@@ -97,8 +97,15 @@ public class Database implements DatabaseConnection {
 
         ArrayList<Employee> employees = new ArrayList<>();
         while (set.next()) {
+            LocalDate dob;
             String name = set.getString("name");
-            LocalDate dob = convertDate(set.getDate("dob"));
+            try {
+
+                dob = set.getDate("dob").toLocalDate();
+            }
+            catch (NullPointerException e){
+                dob = null;
+            }
             Integer managerNumber = set.getInt("working_number");
             String gender = set.getString("gender");
             String phoneNumber = set.getString("phone_number");
