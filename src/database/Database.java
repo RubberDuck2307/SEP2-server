@@ -42,7 +42,14 @@ public class Database implements DatabaseConnection {
 
             String name = set.getString("name");
             String description = set.getString("description");
-            LocalDate deadline = convertDate(set.getDate("deadline"));
+
+            LocalDate deadline;
+            try {
+            deadline = set.getDate("deadline").toLocalDate();}
+            catch (NullPointerException e){
+                deadline = null;
+
+            }
             projectList.addProject(new Project(id, name, description, deadline, managers));
         }
 
