@@ -1,8 +1,6 @@
 package mediator;
 
-import model.Model;
-import model.ProjectList;
-import model.TaskList;
+import model.*;
 
 import java.net.MalformedURLException;
 import java.rmi.Naming;
@@ -44,7 +42,33 @@ public class Server implements RemoteModel {
 
     @Override
     public ProjectList getAllProjectsByWorkingNumber(Integer workingNumber) throws RemoteException {
+        System.out.println("Server: " + workingNumber);
         return model.getAllProjectsByUserId(workingNumber);
+    }
+
+    @Override
+    public void saveTask(Task task) throws RemoteException {
+        model.saveTask(task);
+    }
+
+    @Override
+    public void saveProject(Project project) throws RemoteException {
+        model.saveProject(project);
+    }
+
+    @Override
+    public Employee login(UserProfile userProfile) throws RemoteException {
+        return model.login(userProfile);
+    }
+
+    @Override
+    public void saveEmployee(Employee employee) throws RemoteException {
+        model.saveEmployee(employee);
+    }
+
+    @Override
+    public void updateProject(Project project) throws RemoteException {
+        model.updateProject(project);
     }
 
     @Override

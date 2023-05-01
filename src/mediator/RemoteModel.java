@@ -1,10 +1,10 @@
 package mediator;
 
-import model.ProjectList;
-import model.TaskList;
+import model.*;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.sql.SQLException;
 
 public interface RemoteModel extends Remote {
 
@@ -12,5 +12,15 @@ public interface RemoteModel extends Remote {
 
     ProjectList getAllProjectsByWorkingNumber(Integer workingNumber) throws RemoteException;
 
+    void saveTask(Task task) throws RemoteException;
+
+    void saveProject(Project project)throws RemoteException;
+
+
+    Employee login(UserProfile userProfile) throws RemoteException;
+
+    void saveEmployee(Employee employee) throws RemoteException;
+
+    void updateProject(Project project) throws RemoteException;
     String hello() throws RemoteException;
 }

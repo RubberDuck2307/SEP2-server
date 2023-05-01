@@ -35,6 +35,10 @@ public class ProjectList implements Serializable {
     public Project get(int index){
         return projects.get(index);
     }
+
+    public boolean contains(Project project){
+        return projects.contains(project);
+    }
     @Override
     public String toString() {
         return "ProjectList{" +
