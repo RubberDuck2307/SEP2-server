@@ -71,6 +71,10 @@ public class Server implements RemoteModel {
         model.updateProject(project);
     }
 
+    public void assignWorkerToTask(Integer workingNumber, Integer taskID) throws RemoteException{
+
+        model.assignWorkerToTask(workingNumber, taskID);
+    }
     @Override
     public String hello() {
         return "hello";
