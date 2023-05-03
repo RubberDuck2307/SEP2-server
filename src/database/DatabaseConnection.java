@@ -21,5 +21,5 @@ public interface DatabaseConnection {
 
     void updateProject(Project project) throws SQLException;
 
-    void assignWorkerToTask(Integer workingNumber, Integer taskID) throws SQLException;
+    void assignWorkerToTask(Integer workingNumber, Long taskID) throws SQLException;
 }

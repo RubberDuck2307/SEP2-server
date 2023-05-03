@@ -52,7 +52,7 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void assignWorkerToTask(Integer workingNumber, Integer taskID) {
+    public void assignWorkerToTask(Integer workingNumber, Long taskID) {
         try {
             databaseConnection.assignWorkerToTask(workingNumber, taskID);
         }

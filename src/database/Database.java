@@ -137,7 +137,7 @@ public class Database implements DatabaseConnection {
         return taskList;
     }
 
-    public void assignWorkerToTask(Integer workingNumber, Integer taskID) throws SQLException {
+    public void assignWorkerToTask(Integer workingNumber, Long taskID) throws SQLException {
          String query = "INSERT INTO worker_task VALUES("+ workingNumber.toString() + ", " + taskID.toString() +");";
          PreparedStatement st = conn.prepareStatement(query);
          st.executeUpdate();

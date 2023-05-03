@@ -71,7 +71,7 @@ public class Server implements RemoteModel {
         model.updateProject(project);
     }
 
-    public void assignWorkerToTask(Integer workingNumber, Integer taskID) throws RemoteException{
+    public void assignWorkerToTask(Integer workingNumber, Long taskID) throws RemoteException{
 
         model.assignWorkerToTask(workingNumber, taskID);
     }

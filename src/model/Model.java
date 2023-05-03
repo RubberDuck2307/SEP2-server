@@ -12,7 +12,7 @@ public interface Model {
     void saveTask(Task task);
 
     void saveProject(Project project);
-    void assignWorkerToTask(Integer workingNumber, Integer taskID);
+    void assignWorkerToTask(Integer workingNumber, Long taskID);
 
     Employee login(UserProfile userProfile);
 

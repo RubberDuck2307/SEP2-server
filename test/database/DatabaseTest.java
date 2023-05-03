@@ -23,7 +23,7 @@ class DatabaseTest {
     @Test
     void assignWorker() throws SQLException {
         database.addDummyData();
-        assertDoesNotThrow(()->database.assignWorkerToTask(3,6));
+        assertDoesNotThrow(()->database.assignWorkerToTask(3,6L));
     }
 
 
