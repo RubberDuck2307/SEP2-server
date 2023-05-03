@@ -1,15 +1,9 @@
 package database;
 
 import model.Project;
-import model.ProjectList;
 import model.Task;
-import model.TaskList;
-import org.junit.Assert;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-import org.testng.annotations.BeforeClass;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -26,6 +20,11 @@ class DatabaseTest {
         assertDoesNotThrow(() -> database.resetSequences());
     }
 
+    @Test
+    void assignWorker() throws SQLException {
+        database.addDummyData();
+        assertDoesNotThrow(()->database.assignWorkerToTask(3,6));
+    }
 
 
     @Test

@@ -52,6 +52,16 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public void assignWorkerToTask(Integer workingNumber, Integer taskID) {
+        try {
+            databaseConnection.assignWorkerToTask(workingNumber, taskID);
+        }
+        catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public Employee login(UserProfile userProfile) {
        try {
            return databaseConnection.login(userProfile);

@@ -137,6 +137,12 @@ public class Database implements DatabaseConnection {
         return taskList;
     }
 
+    public void assignWorkerToTask(Integer workingNumber, Integer taskID) throws SQLException {
+         String query = "INSERT INTO worker_task VALUES("+ workingNumber.toString() + ", " + taskID.toString() +");";
+         PreparedStatement st = conn.prepareStatement(query);
+         st.executeUpdate();
+    }
+
     public void clearTasksTable() throws SQLException {
         String query = "DELETE FROM tasks;";
         PreparedStatement st = conn.prepareStatement(query);
@@ -288,9 +294,9 @@ public class Database implements DatabaseConnection {
 
     private void addDummyDataEmployees() throws SQLException {
         String query = "INSERT INTO employees(name, working_number, role, gender, dob, phone_number, email)" +
-                "VALUES('BOB,1,WORKER, 'M', '1999-12-9', '123456789','Bob@gmail.com' )," +
-                "(ALICE, 2, WORKER, 'F', '1999-12-9', '123456789', 'Alice@gmail.com')," +
-                "(JOHN, 3, WORKER, 'M', '1999-12-9', '123456789', 'John@gmail.com');";
+                "VALUES('BOB',1,'WORKER', 'M', '1999-12-9', '123456789','Bob@gmail.com' )," +
+                "('ALICE', 2, 'WORKER', 'F', '1999-12-9', '123456789', 'Alice@gmail.com')," +
+                "('JOHN', 3, 'WORKER', 'M', '1999-12-9', '123456789', 'John@gmail.com');";
         Statement statement = conn.createStatement();
         statement.executeUpdate(query);
     }
