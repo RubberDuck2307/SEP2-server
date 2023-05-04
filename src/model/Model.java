@@ -21,5 +21,7 @@ public interface Model {
 
     void updateProject(Project project);
     void updateTask(Task task);
+
+    EmployeeList getEmployeesOfTask(Long TaskId);
     ArrayList<Employee> getEmployeesAssignedToManager(int managerNumber);
 }

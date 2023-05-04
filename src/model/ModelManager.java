@@ -35,6 +35,14 @@ public class ModelManager implements Model {
         }
     }
 
+    public EmployeeList getEmployeesOfTask(Long TaskId){
+        try {
+            return databaseConnection.getEmployeesOfTask(TaskId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
     @Override
     public void saveTask(Task task) {
         try {

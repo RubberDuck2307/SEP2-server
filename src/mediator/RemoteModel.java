@@ -27,4 +27,5 @@ public interface RemoteModel extends Remote {
     String hello() throws RemoteException;
 
     void updateTask(Task task) throws RemoteException;
+    EmployeeList getEmployeesOfTask(Long TaskId) throws RemoteException;
 }

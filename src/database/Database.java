@@ -164,6 +164,15 @@ public class Database implements DatabaseConnection {
         return taskList;
     }
 
+    public EmployeeList getEmployeesOfTask(Long TaskId) throws SQLException{
+        String query = "SELECT * FROM employees WHERE working_number in (SELECT working_number FROM worker_task WHERE task_id = " + TaskId + ");";
+        PreparedStatement st = conn.prepareStatement(query);
+        ResultSet set = st.executeQuery();
+        ArrayList<Employee> employees = getAllEmployeesFromSet(set);
+        EmployeeList employeeList = new EmployeeList(employees);
+        return employeeList;
+    }
+
     public void resetSequences() throws SQLException {
         String query = "ALTER SEQUENCE projects_id_seq RESTART WITH 1; ALTER SEQUENCE tasks_id_seq RESTART WITH 1;";
         PreparedStatement statement = conn.prepareStatement(query);

@@ -91,4 +91,11 @@ public class Server implements RemoteModel {
     public void updateTask(Task task) throws RemoteException {
         model.updateTask(task);
     }
+
+    @Override
+    public EmployeeList getEmployeesOfTask(Long TaskId) throws RemoteException {
+        return model.getEmployeesOfTask(TaskId);
+    }
+
+
 }

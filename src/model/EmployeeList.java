@@ -11,6 +11,10 @@ public class EmployeeList implements Serializable
     employeesList= new ArrayList<>();
   }
 
+  public EmployeeList(ArrayList<Employee> employeesList) {
+    this.employeesList = employeesList;
+  }
+
   public Employee getEmployeeById(int id){
     for (Employee employee: employeesList){
       if (Objects.equals(employee.getWorkingNumber(), id)){
