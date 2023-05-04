@@ -43,6 +43,17 @@ public class ModelManager implements Model {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public void removeWorkerFromTask(Integer workingNumber, Long taskID) {
+        try {
+            databaseConnection.removeWorkerFromTask(workingNumber, taskID);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
     @Override
     public void saveTask(Task task) {
         try {
@@ -105,7 +116,7 @@ public class ModelManager implements Model {
         }
     }
 
-    public ArrayList<Employee> getEmployeesAssignedToManager(int managerNumber) {
+    public EmployeeList getEmployeesAssignedToManager(int managerNumber) {
         try {
             return databaseConnection.getEmployeesAssignedToManager(managerNumber);
         }

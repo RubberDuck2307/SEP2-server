@@ -139,10 +139,19 @@ public class Database implements DatabaseConnection {
 
 
     public void assignWorkerToTask(Integer workingNumber, Long taskID) throws SQLException {
+        System.out.println("assigning worker to task");
          String query = "INSERT INTO worker_task VALUES("+ workingNumber.toString() + ", " + taskID.toString() +");";
          PreparedStatement st = conn.prepareStatement(query);
          st.executeUpdate();
     }
+
+    public void removeWorkerFromTask(Integer workingNumber, Long taskID) throws SQLException {
+        System.out.println("removing worker from task");
+        String query = "DELETE FROM worker_task WHERE working_number = " + workingNumber.toString() + " AND task_id = " + taskID.toString() + ";";
+        PreparedStatement st = conn.prepareStatement(query);
+        st.executeUpdate();
+    }
+
 
     public void clearTasksTable() throws SQLException {
         String query = "DELETE FROM tasks;";
@@ -194,12 +203,13 @@ public class Database implements DatabaseConnection {
         st.executeUpdate();
     }
 
-    public ArrayList<Employee> getEmployeesAssignedToManager(int managerNumber) throws SQLException{
+    public EmployeeList getEmployeesAssignedToManager(int managerNumber) throws SQLException{
         String query = "SELECT * FROM employees WHERE working_number in (SELECT working_number FROM manager_worker WHERE manager_number = " + managerNumber + ");";
         PreparedStatement st = conn.prepareStatement(query);
         ResultSet set = st.executeQuery();
         ArrayList<Employee> employees = getAllEmployeesFromSet(set);
-        return employees;
+        EmployeeList employeeList = new EmployeeList(employees);
+        return employeeList;
     }
 
 

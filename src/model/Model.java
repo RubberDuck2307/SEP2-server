@@ -23,5 +23,6 @@ public interface Model {
     void updateTask(Task task);
 
     EmployeeList getEmployeesOfTask(Long TaskId);
-    ArrayList<Employee> getEmployeesAssignedToManager(int managerNumber);
+    public void removeWorkerFromTask(Integer workingNumber, Long taskID);
+    EmployeeList getEmployeesAssignedToManager(int managerNumber);
 }

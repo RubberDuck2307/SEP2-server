@@ -57,13 +57,18 @@ public class Server implements RemoteModel {
     }
 
     @Override
-    public ArrayList<Employee> getEmployeesAssignedToManager(int managerNumber) throws RemoteException {
+    public EmployeeList getEmployeesAssignedToManager(int managerNumber) throws RemoteException {
        return model.getEmployeesAssignedToManager(managerNumber);
     }
 
     @Override
     public Employee login(UserProfile userProfile) throws RemoteException {
         return model.login(userProfile);
+    }
+
+    @Override
+    public void removeWorkerFromTask(Integer workingNumber, Long taskID) throws RemoteException {
+        model.removeWorkerFromTask(workingNumber, taskID);
     }
 
     @Override
