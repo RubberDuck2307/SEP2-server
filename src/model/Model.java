@@ -23,6 +23,7 @@ public interface Model {
     void updateTask(Task task);
 
     EmployeeList getEmployeesOfTask(Long TaskId);
-    public void removeWorkerFromTask(Integer workingNumber, Long taskID);
+     EmployeeList getAllEmployeesAssignedToProject(Long projectId);
+    void removeWorkerFromTask(Integer workingNumber, Long taskID);
     EmployeeList getEmployeesAssignedToManager(int managerNumber);
 }

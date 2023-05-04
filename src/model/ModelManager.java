@@ -134,5 +134,13 @@ public class ModelManager implements Model {
             throw new RuntimeException(e);
         }
     }
+    public EmployeeList getAllEmployeesAssignedToProject(Long projectId){
+        try {
+            return databaseConnection.getAllEmployeesAssignedToProject(projectId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
 
 }
