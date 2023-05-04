@@ -89,4 +89,13 @@ public class ModelManager implements Model {
         }
     }
 
+    public ArrayList<Employee> getEmployeesAssignedToManager(int managerNumber) {
+        try {
+            return databaseConnection.getEmployeesAssignedToManager(managerNumber);
+        }
+        catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

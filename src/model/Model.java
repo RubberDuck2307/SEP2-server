@@ -2,6 +2,7 @@ package model;
 
 import java.rmi.RemoteException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public interface Model {
 
@@ -21,4 +22,5 @@ public interface Model {
     void updateProject(Project project);
 
 
+    ArrayList<Employee> getEmployeesAssignedToManager(int managerNumber);
 }

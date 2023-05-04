@@ -3,6 +3,7 @@ package database;
 import model.*;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public interface DatabaseConnection {
 
@@ -22,4 +23,6 @@ public interface DatabaseConnection {
     void updateProject(Project project) throws SQLException;
 
     void assignWorkerToTask(Integer workingNumber, Long taskID) throws SQLException;
+
+    ArrayList<Employee> getEmployeesAssignedToManager(int managerNumber) throws SQLException;
 }

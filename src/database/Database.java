@@ -150,7 +150,7 @@ public class Database implements DatabaseConnection {
     }
 
     public void clearAllTables() throws SQLException {
-        String query = "DELETE FROM employee_project cascade; DELETE FROM worker_task cascade; DELETE FROM tasks cascade; DELETE FROM projects cascade;DELETE FROM user_profiles cascade; DELETE FROM employees cascade;";
+        String query = "DELETE FROM manager_worker cascade; DELETE FROM employee_project cascade; DELETE FROM worker_task cascade; DELETE FROM tasks cascade; DELETE FROM projects cascade;DELETE FROM user_profiles cascade; DELETE FROM employees cascade;";
         PreparedStatement st = conn.prepareStatement(query);
         st.executeUpdate();
     }
@@ -177,6 +177,21 @@ public class Database implements DatabaseConnection {
 
         return projectList;
     }
+
+    public void assignWorkerToManager(int managerNumber, int workerNumber) throws SQLException {
+        String query = "INSERT INTO worker_task VALUES("+ managerNumber + ", " + workerNumber +");";
+        PreparedStatement st = conn.prepareStatement(query);
+        st.executeUpdate();
+    }
+
+    public ArrayList<Employee> getEmployeesAssignedToManager(int managerNumber) throws SQLException{
+        String query = "SELECT * FROM employees WHERE working_number in (SELECT working_number FROM manager_worker WHERE manager_number = " + managerNumber + ");";
+        PreparedStatement st = conn.prepareStatement(query);
+        ResultSet set = st.executeQuery();
+        ArrayList<Employee> employees = getAllEmployeesFromSet(set);
+        return employees;
+    }
+
 
     private TaskList getTasksFromSet(ResultSet set) throws SQLException {
         TaskList taskList = new TaskList();
@@ -296,7 +311,8 @@ public class Database implements DatabaseConnection {
         String query = "INSERT INTO employees(name, working_number, role, gender, dob, phone_number, email)" +
                 "VALUES('BOB',1,'WORKER', 'M', '1999-12-9', '123456789','Bob@gmail.com' )," +
                 "('ALICE', 2, 'WORKER', 'F', '1999-12-9', '123456789', 'Alice@gmail.com')," +
-                "('JOHN', 3, 'WORKER', 'M', '1999-12-9', '123456789', 'John@gmail.com');";
+                "('JOHN', 3, 'WORKER', 'M', '1999-12-9', '123456789', 'John@gmail.com')," +
+                "('KARL', 4, 'PROJECT M', 'M', '1999-12-9', '123456789', 'John@gmail.com');";
         Statement statement = conn.createStatement();
         statement.executeUpdate(query);
     }
@@ -334,6 +350,17 @@ public class Database implements DatabaseConnection {
         statement.executeUpdate(query);
     }
 
+    private void addDummyDataManagerWorker() throws SQLException{
+        String query = "INSERT INTO manager_worker(manager_number, worker_number)\n" +
+                "VALUES (4, 2),\n" +
+                "       (4, 1),\n" +
+                "       (4, 3);";
+        Statement statement = conn.createStatement();
+        statement.executeUpdate(query);
+    }
+
+
+
     public void addDummyData() throws SQLException {
         addDummyDataProject();
         addDummyDataTasks();
@@ -341,5 +368,6 @@ public class Database implements DatabaseConnection {
         addDummyDataUserProfiles();
         addDummyDataEmployeeProject();
         addDummyDataWorkerTask();
+        addDummyDataManagerWorker();
     }
 }
