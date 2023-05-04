@@ -93,8 +93,8 @@ public class Server implements RemoteModel {
     }
 
     @Override
-    public EmployeeList getEmployeesOfTask(Long TaskId) throws RemoteException {
-        return model.getEmployeesOfTask(TaskId);
+    public EmployeeList getEmployeesOfTask(Long taskId) throws RemoteException {
+        return model.getEmployeesOfTask(taskId);
     }
 
 
