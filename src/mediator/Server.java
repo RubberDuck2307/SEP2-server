@@ -86,4 +86,9 @@ public class Server implements RemoteModel {
     public String hello() {
         return "hello";
     }
+
+    @Override
+    public void updateTask(Task task) throws RemoteException {
+        model.updateTask(task);
+    }
 }

@@ -20,6 +20,7 @@ public class ModelManager implements Model {
 
             return databaseConnection.getAllTasksOfProject(id);
         } catch (SQLException e) {
+            e.printStackTrace();
             throw new RuntimeException(e);
         }
     }
@@ -29,6 +30,7 @@ public class ModelManager implements Model {
         try {
             return databaseConnection.getAllProjectsOfEmployee(workingNumber);
         } catch (SQLException e) {
+            e.printStackTrace();
             throw new RuntimeException(e);
         }
     }
@@ -38,6 +40,7 @@ public class ModelManager implements Model {
         try {
             databaseConnection.saveTask(task);
         } catch (SQLException e) {
+            e.printStackTrace();
             throw new RuntimeException(e);
         }
     }
@@ -47,6 +50,7 @@ public class ModelManager implements Model {
         try {
             databaseConnection.saveProject(project);
         } catch (SQLException e) {
+            e.printStackTrace();
             throw new RuntimeException(e);
         }
     }
@@ -57,6 +61,7 @@ public class ModelManager implements Model {
             databaseConnection.assignWorkerToTask(workingNumber, taskID);
         }
         catch (SQLException e){
+            e.printStackTrace();
             throw new RuntimeException(e);
         }
     }
@@ -67,6 +72,7 @@ public class ModelManager implements Model {
            return databaseConnection.login(userProfile);
        }
        catch (SQLException e){
+           e.printStackTrace();
               throw new RuntimeException(e);
        }
     }
@@ -76,6 +82,7 @@ public class ModelManager implements Model {
         try {
             databaseConnection.saveEmployee(employee);
         } catch (SQLException e) {
+            e.printStackTrace();
             throw new RuntimeException(e);
         }
     }
@@ -85,6 +92,7 @@ public class ModelManager implements Model {
         try {
             databaseConnection.updateProject(project);
         } catch (SQLException e) {
+            e.printStackTrace();
             throw new RuntimeException(e);
         }
     }
@@ -94,6 +102,16 @@ public class ModelManager implements Model {
             return databaseConnection.getEmployeesAssignedToManager(managerNumber);
         }
         catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void updateTask(Task task){
+        try {
+            databaseConnection.updateTask(task);
+        } catch (SQLException e) {
+            e.printStackTrace();
             throw new RuntimeException(e);
         }
     }

@@ -25,4 +25,6 @@ public interface RemoteModel extends Remote {
     void updateProject(Project project) throws RemoteException;
     void assignWorkerToTask(Integer workingNumber, Long taskID) throws RemoteException;
     String hello() throws RemoteException;
+
+    void updateTask(Task task) throws RemoteException;
 }

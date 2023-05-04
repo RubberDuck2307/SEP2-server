@@ -126,7 +126,7 @@ public class Database implements DatabaseConnection {
         TaskList taskList = getTasksFromSet(set);
 
         for (int i = 0; i < taskList.size(); i++) {
-            String workerQuery = "SELECT * FROM employees WHERE working_number in (SELECT working_number FROM employee_project WHERE project_id = " + taskList.getTask(i).getId() + ");";
+            String workerQuery = "SELECT * FROM employees WHERE working_number in (SELECT working_number FROM worker_task WHERE task_id = " + taskList.getTask(i).getId() + ");";
             PreparedStatement workerSt = conn.prepareStatement(workerQuery);
             ResultSet workerSet = workerSt.executeQuery();
             ArrayList<Employee> employees = getAllEmployeesFromSet(workerSet);
@@ -136,6 +136,7 @@ public class Database implements DatabaseConnection {
 
         return taskList;
     }
+
 
     public void assignWorkerToTask(Integer workingNumber, Long taskID) throws SQLException {
          String query = "INSERT INTO worker_task VALUES("+ workingNumber.toString() + ", " + taskID.toString() +");";
