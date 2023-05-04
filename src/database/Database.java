@@ -36,7 +36,7 @@ public class Database implements DatabaseConnection {
 
     public void saveEmployee(Employee employee) throws SQLException {
         EmployeeDO employeeDO = new EmployeeDO(employee);
-        String query = "INSERT INTO employees (name, working_number, email, phone_number, dob, gender, email, role) VALUES (" + employeeDO.getName() + ", " + employeeDO.getWorkingNumber() + ", " + employeeDO.getEmail() + ", " + employeeDO.getPhoneNumber() + ", " + employeeDO.getDob() + ", " + employeeDO.getGender() + ", " + employeeDO.getEmail() + ", " + employeeDO.getRole() + ");";
+        String query = "INSERT INTO employees (name, working_number, email, phone_number, dob, gender, role) VALUES (" + employeeDO.getName() + ", " + employeeDO.getWorkingNumber() + ", " + employeeDO.getEmail() + ", " + employeeDO.getPhoneNumber() + ", " + employeeDO.getDob() + ", " + employeeDO.getGender() +  ", " + employeeDO.getRole() + ");";
         Statement statement = conn.createStatement();
         statement.executeUpdate(query);
         addUserProfile(employee.getUserProfile());
@@ -139,14 +139,12 @@ public class Database implements DatabaseConnection {
 
 
     public void assignWorkerToTask(Integer workingNumber, Long taskID) throws SQLException {
-        System.out.println("assigning worker to task");
          String query = "INSERT INTO worker_task VALUES("+ workingNumber.toString() + ", " + taskID.toString() +");";
          PreparedStatement st = conn.prepareStatement(query);
          st.executeUpdate();
     }
 
     public void removeWorkerFromTask(Integer workingNumber, Long taskID) throws SQLException {
-        System.out.println("removing worker from task");
         String query = "DELETE FROM worker_task WHERE working_number = " + workingNumber.toString() + " AND task_id = " + taskID.toString() + ";";
         PreparedStatement st = conn.prepareStatement(query);
         st.executeUpdate();

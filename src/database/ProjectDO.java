@@ -4,10 +4,10 @@ import model.Project;
 
 public class ProjectDO {
 
-    String id;
-    String name;
-    String description;
-    String deadline;
+    private String id;
+    private String name;
+    private String description;
+    private String deadline;
 
     public ProjectDO(Project project) {
         if (project.getId() == null) {
