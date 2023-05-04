@@ -87,7 +87,7 @@ public class Database implements DatabaseConnection {
 
 
     public void saveTask(Task task) throws SQLException {
-
+        System.out.println(task);
         TaskDO taskDO = new TaskDO(task);
 
         String query = "INSERT INTO TASKS (project_id, name, description, status, priority, deadline, estimated_time, starting_date)" +
@@ -119,7 +119,6 @@ public class Database implements DatabaseConnection {
     }
 
     public TaskList getAllTasksOfProject(Long projectId) throws SQLException {
-        System.out.println(projectId);
         String query = "SELECT * FROM tasks WHERE project_id = " + projectId + ";";
         PreparedStatement st = conn.prepareStatement(query);
         ResultSet set = st.executeQuery();
@@ -130,7 +129,6 @@ public class Database implements DatabaseConnection {
             PreparedStatement workerSt = conn.prepareStatement(workerQuery);
             ResultSet workerSet = workerSt.executeQuery();
             ArrayList<Employee> employees = getAllEmployeesFromSet(workerSet);
-            System.out.println(employees);
             taskList.getTask(i).setWorkers(employees);
         }
 
