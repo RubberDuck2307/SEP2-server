@@ -72,8 +72,8 @@ public class Server implements RemoteModel {
     }
 
     @Override
-    public void saveEmployee(Employee employee) throws RemoteException {
-        model.saveEmployee(employee);
+    public Integer saveEmployee(Employee employee, String password) throws RemoteException {
+        return model.saveEmployee(employee, password);
     }
 
     @Override
