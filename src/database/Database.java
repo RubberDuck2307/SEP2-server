@@ -36,7 +36,7 @@ public class Database implements DatabaseConnection {
 
     public void saveEmployee(Employee employee) throws SQLException {
         EmployeeDO employeeDO = new EmployeeDO(employee);
-        String query = "INSERT INTO employees (name, working_number, email, phone_number, dob, gender, email, role) VALUES (" + employeeDO.getName() + ", " + employeeDO.getWorkingNumber() + ", " + employeeDO.getEmail() + ", " + employeeDO.getPhoneNumber() + ", " + employeeDO.getDob() + ", " + employeeDO.getGender() + ", " + employeeDO.getEmail() + ", " + employeeDO.getRole() + ");";
+        String query = "INSERT INTO employees (name, working_number, email, phone_number, dob, gender, role) VALUES (" + employeeDO.getName() + ", " + employeeDO.getWorkingNumber() + ", " + employeeDO.getEmail() + ", " + employeeDO.getPhoneNumber() + ", " + employeeDO.getDob() + ", " + employeeDO.getGender() +  ", " + employeeDO.getRole() + ");";
         Statement statement = conn.createStatement();
         statement.executeUpdate(query);
         addUserProfile(employee.getUserProfile());
@@ -108,13 +108,6 @@ public class Database implements DatabaseConnection {
         PreparedStatement st = conn.prepareStatement(query);
         ResultSet set = st.executeQuery();
         ProjectList projectList = getAllProjectsFromSet(set);
-//        for (int i = 0; i < projectList.size(); i++) {
-//            query = "SELECT * FROM employees WHERE working_number in (SELECT working_number FROM employee_project WHERE id = " + projectList.get(0).getId() + ");";
-//            PreparedStatement workerSt = conn.prepareStatement(query);
-//            ResultSet workerSet = workerSt.executeQuery();
-//            ArrayList<Employee> employees = getAllEmployeesFromSet(workerSet);
-//            projectList.get(i).setProjectManager(employees);
-//        }
         return projectList;
     }
 
@@ -125,7 +118,7 @@ public class Database implements DatabaseConnection {
         TaskList taskList = getTasksFromSet(set);
 
         for (int i = 0; i < taskList.size(); i++) {
-            String workerQuery = "SELECT * FROM employees WHERE working_number in (SELECT working_number FROM employee_project WHERE project_id = " + taskList.getTask(i).getId() + ");";
+            String workerQuery = "SELECT * FROM employees WHERE working_number in (SELECT working_number FROM worker_task WHERE task_id = " + taskList.getTask(i).getId() + ");";
             PreparedStatement workerSt = conn.prepareStatement(workerQuery);
             ResultSet workerSet = workerSt.executeQuery();
             ArrayList<Employee> employees = getAllEmployeesFromSet(workerSet);
@@ -135,11 +128,19 @@ public class Database implements DatabaseConnection {
         return taskList;
     }
 
+
     public void assignWorkerToTask(Integer workingNumber, Long taskID) throws SQLException {
          String query = "INSERT INTO worker_task VALUES("+ workingNumber.toString() + ", " + taskID.toString() +");";
          PreparedStatement st = conn.prepareStatement(query);
          st.executeUpdate();
     }
+
+    public void removeWorkerFromTask(Integer workingNumber, Long taskID) throws SQLException {
+        String query = "DELETE FROM worker_task WHERE working_number = " + workingNumber.toString() + " AND task_id = " + taskID.toString() + ";";
+        PreparedStatement st = conn.prepareStatement(query);
+        st.executeUpdate();
+    }
+
 
     public void clearTasksTable() throws SQLException {
         String query = "DELETE FROM tasks;";
@@ -159,6 +160,15 @@ public class Database implements DatabaseConnection {
         ResultSet set = statement.executeQuery();
         TaskList taskList = getTasksFromSet(set);
         return taskList;
+    }
+
+    public EmployeeList getEmployeesOfTask(Long TaskId) throws SQLException{
+        String query = "SELECT * FROM employees WHERE working_number in (SELECT working_number FROM worker_task WHERE task_id = " + TaskId + ");";
+        PreparedStatement st = conn.prepareStatement(query);
+        ResultSet set = st.executeQuery();
+        ArrayList<Employee> employees = getAllEmployeesFromSet(set);
+        EmployeeList employeeList = new EmployeeList(employees);
+        return employeeList;
     }
 
     public void resetSequences() throws SQLException {
@@ -182,12 +192,13 @@ public class Database implements DatabaseConnection {
         st.executeUpdate();
     }
 
-    public ArrayList<Employee> getEmployeesAssignedToManager(int managerNumber) throws SQLException{
+    public EmployeeList getEmployeesAssignedToManager(int managerNumber) throws SQLException{
         String query = "SELECT * FROM employees WHERE working_number in (SELECT working_number FROM manager_worker WHERE manager_number = " + managerNumber + ");";
         PreparedStatement st = conn.prepareStatement(query);
         ResultSet set = st.executeQuery();
         ArrayList<Employee> employees = getAllEmployeesFromSet(set);
-        return employees;
+        EmployeeList employeeList = new EmployeeList(employees);
+        return employeeList;
     }
 
 
@@ -262,12 +273,6 @@ public class Database implements DatabaseConnection {
         ProjectList projectList = new ProjectList();
         while (set.next()) {
             Long id = set.getLong("id");
-
-            String managerQuery = "SELECT * FROM employees WHERE working_number in (SELECT working_number FROM employee_project WHERE project_id = " + id + " ) and role = 'PROJECT_M';";
-            PreparedStatement managerSt = conn.prepareStatement(managerQuery);
-            ResultSet managerSet = managerSt.executeQuery();
-            ArrayList<Employee> managers = getAllEmployeesFromSet(managerSet);
-
             String name = set.getString("name");
             String description = set.getString("description");
 
@@ -278,7 +283,7 @@ public class Database implements DatabaseConnection {
                 deadline = null;
 
             }
-            projectList.addProject(new Project(id, name, description, deadline, managers));
+            projectList.addProject(new Project(id, name, description, deadline));
         }
         return projectList;
     }
@@ -336,6 +341,14 @@ public class Database implements DatabaseConnection {
         statement.executeUpdate(query);
     }
 
+    public EmployeeList getAllEmployeesAssignedToProject(Long projectId) throws SQLException {
+        String query = "SELECT * FROM employees WHERE working_number in (SELECT working_number FROM employee_project WHERE project_id = " + projectId + " );";
+        PreparedStatement st = conn.prepareStatement(query);
+        ResultSet set = st.executeQuery();
+        ArrayList<Employee> employees = getAllEmployeesFromSet(set);
+        return new EmployeeList(employees);
+
+    }
     private void addDummyDataWorkerTask() throws SQLException {
         String query = "INSERT INTO worker_task( working_number, task_id)\n" +
                 "VALUES (1, 1)," +

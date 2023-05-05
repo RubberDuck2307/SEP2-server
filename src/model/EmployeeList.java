@@ -10,6 +10,11 @@ public class EmployeeList implements Serializable
   public EmployeeList(){
     employeesList= new ArrayList<>();
   }
+
+  public EmployeeList(ArrayList<Employee> employeesList) {
+    this.employeesList = employeesList;
+  }
+
   public Employee getEmployeeById(int id){
     for (Employee employee: employeesList){
       if (Objects.equals(employee.getWorkingNumber(), id)){
@@ -26,13 +31,39 @@ public class EmployeeList implements Serializable
     return employeesList.get(index);
   }
 
+  public Employee get(int index){
+    return this.employeesList.get(index);
+  }
+
   public int size(){
     return employeesList.size();
+  }
+
+  public void setEmployeesList(ArrayList<Employee> employeesList) {
+    this.employeesList = employeesList;
+  }
+
+  public boolean containsByWorkingNumber(Integer workingNumber){
+    for (Employee employee: employeesList){
+      if (Objects.equals(employee.getWorkingNumber(), workingNumber)){
+        return true;
+      }
+    }
+    return false;
+  }
+
+  public void removeByWorkingNumber(Integer workingNumber){
+    for (Employee employeeSaved: employeesList){
+      if (Objects.equals(employeeSaved.getWorkingNumber(), workingNumber)){
+        employeesList.remove(employeeSaved);
+        return;
+      }
+    }
   }
 
   @Override
   public String toString() {
     return "{" +  employeesList +
-        '}';
+            '}';
   }
 }

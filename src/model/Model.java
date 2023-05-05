@@ -20,7 +20,10 @@ public interface Model {
     void saveEmployee(Employee employee);
 
     void updateProject(Project project);
+    void updateTask(Task task);
 
-
-    ArrayList<Employee> getEmployeesAssignedToManager(int managerNumber);
+    EmployeeList getEmployeesOfTask(Long TaskId);
+     EmployeeList getAllEmployeesAssignedToProject(Long projectId);
+    void removeWorkerFromTask(Integer workingNumber, Long taskID);
+    EmployeeList getEmployeesAssignedToManager(int managerNumber);
 }

@@ -20,6 +20,7 @@ public class ModelManager implements Model {
 
             return databaseConnection.getAllTasksOfProject(id);
         } catch (SQLException e) {
+            e.printStackTrace();
             throw new RuntimeException(e);
         }
     }
@@ -29,6 +30,26 @@ public class ModelManager implements Model {
         try {
             return databaseConnection.getAllProjectsOfEmployee(workingNumber);
         } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    public EmployeeList getEmployeesOfTask(Long TaskId){
+        try {
+            return databaseConnection.getEmployeesOfTask(TaskId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void removeWorkerFromTask(Integer workingNumber, Long taskID) {
+        try {
+            databaseConnection.removeWorkerFromTask(workingNumber, taskID);
+        } catch (SQLException e) {
+            e.printStackTrace();
             throw new RuntimeException(e);
         }
     }
@@ -38,6 +59,7 @@ public class ModelManager implements Model {
         try {
             databaseConnection.saveTask(task);
         } catch (SQLException e) {
+            e.printStackTrace();
             throw new RuntimeException(e);
         }
     }
@@ -47,6 +69,7 @@ public class ModelManager implements Model {
         try {
             databaseConnection.saveProject(project);
         } catch (SQLException e) {
+            e.printStackTrace();
             throw new RuntimeException(e);
         }
     }
@@ -57,6 +80,7 @@ public class ModelManager implements Model {
             databaseConnection.assignWorkerToTask(workingNumber, taskID);
         }
         catch (SQLException e){
+            e.printStackTrace();
             throw new RuntimeException(e);
         }
     }
@@ -67,6 +91,7 @@ public class ModelManager implements Model {
            return databaseConnection.login(userProfile);
        }
        catch (SQLException e){
+           e.printStackTrace();
               throw new RuntimeException(e);
        }
     }
@@ -76,6 +101,7 @@ public class ModelManager implements Model {
         try {
             databaseConnection.saveEmployee(employee);
         } catch (SQLException e) {
+            e.printStackTrace();
             throw new RuntimeException(e);
         }
     }
@@ -85,15 +111,34 @@ public class ModelManager implements Model {
         try {
             databaseConnection.updateProject(project);
         } catch (SQLException e) {
+            e.printStackTrace();
             throw new RuntimeException(e);
         }
     }
 
-    public ArrayList<Employee> getEmployeesAssignedToManager(int managerNumber) {
+    public EmployeeList getEmployeesAssignedToManager(int managerNumber) {
         try {
             return databaseConnection.getEmployeesAssignedToManager(managerNumber);
         }
         catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void updateTask(Task task){
+        try {
+            databaseConnection.updateTask(task);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+    public EmployeeList getAllEmployeesAssignedToProject(Long projectId){
+        try {
+            return databaseConnection.getAllEmployeesAssignedToProject(projectId);
+        } catch (SQLException e) {
+            e.printStackTrace();
             throw new RuntimeException(e);
         }
     }
