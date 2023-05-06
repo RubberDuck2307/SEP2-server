@@ -34,12 +34,25 @@ public class Database implements DatabaseConnection {
         }
     }
 
-    public void saveEmployee(Employee employee) throws SQLException {
+    public Integer saveEmployee(Employee employee, String password) throws SQLException {
         EmployeeDO employeeDO = new EmployeeDO(employee);
-        String query = "INSERT INTO employees (name, working_number, email, phone_number, dob, gender, role) VALUES (" + employeeDO.getName() + ", " + employeeDO.getWorkingNumber() + ", " + employeeDO.getEmail() + ", " + employeeDO.getPhoneNumber() + ", " + employeeDO.getDob() + ", " + employeeDO.getGender() +  ", " + employeeDO.getRole() + ");";
-        Statement statement = conn.createStatement();
-        statement.executeUpdate(query);
-        addUserProfile(employee.getUserProfile());
+        String query = "INSERT INTO employees (name, email, phone_number, dob, gender, role) VALUES (" + employeeDO.getName() + ", " + employeeDO.getEmail() + ", " + employeeDO.getPhoneNumber() + ", " + employeeDO.getDob() + ", " + employeeDO.getGender() + ", " + employeeDO.getRole() + ");";
+        PreparedStatement statement = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+        int affectedRows = statement.executeUpdate();
+
+        if (affectedRows == 0) {
+            throw new SQLException("Creating user failed, no rows affected.");
+        }
+        UserProfile userProfile;
+        ResultSet generatedKeys = statement.getGeneratedKeys();
+        if (generatedKeys.next()) {
+            userProfile = new UserProfile(generatedKeys.getInt(2), password);
+        } else {
+            throw new SQLException("Creating user failed, no ID obtained.");
+        }
+
+        addUserProfile(userProfile);
+        return userProfile.getWorkingNumber();
     }
 
     public void addUserProfile(UserProfile userProfile) throws SQLException {
@@ -130,10 +143,25 @@ public class Database implements DatabaseConnection {
 
 
     public void assignWorkerToTask(Integer workingNumber, Long taskID) throws SQLException {
-         String query = "INSERT INTO worker_task VALUES("+ workingNumber.toString() + ", " + taskID.toString() +");";
-         PreparedStatement st = conn.prepareStatement(query);
-         st.executeUpdate();
+        String query = "INSERT INTO worker_task VALUES(" + workingNumber.toString() + ", " + taskID.toString() + ");";
+        PreparedStatement st = conn.prepareStatement(query);
+        st.executeUpdate();
     }
+
+    public void assignEmployeesToProject(ArrayList<Integer> employeeWorkingNumbers, Long ProjectID) throws SQLException {
+        String query = "INSERT INTO employee_project VALUES";
+        for (int i = 0; i < employeeWorkingNumbers.size(); i++) {
+            query += "(" + employeeWorkingNumbers.get(i) + ", " + ProjectID + ")";
+            if (i != employeeWorkingNumbers.size() - 1) {
+                query += ", ";
+            }
+        }
+        query += ";";
+        PreparedStatement st = conn.prepareStatement(query);
+        st.executeUpdate();
+    }
+
+
 
     public void removeWorkerFromTask(Integer workingNumber, Long taskID) throws SQLException {
         String query = "DELETE FROM worker_task WHERE working_number = " + workingNumber.toString() + " AND task_id = " + taskID.toString() + ";";
@@ -154,6 +182,7 @@ public class Database implements DatabaseConnection {
         st.executeUpdate();
     }
 
+
     public TaskList getAllTasks() throws SQLException {
         String query = "SELECT * FROM tasks;";
         PreparedStatement statement = conn.prepareStatement(query);
@@ -162,7 +191,7 @@ public class Database implements DatabaseConnection {
         return taskList;
     }
 
-    public EmployeeList getEmployeesOfTask(Long TaskId) throws SQLException{
+    public EmployeeList getEmployeesOfTask(Long TaskId) throws SQLException {
         String query = "SELECT * FROM employees WHERE working_number in (SELECT working_number FROM worker_task WHERE task_id = " + TaskId + ");";
         PreparedStatement st = conn.prepareStatement(query);
         ResultSet set = st.executeQuery();
@@ -172,7 +201,7 @@ public class Database implements DatabaseConnection {
     }
 
     public void resetSequences() throws SQLException {
-        String query = "ALTER SEQUENCE projects_id_seq RESTART WITH 1; ALTER SEQUENCE tasks_id_seq RESTART WITH 1;";
+        String query = "ALTER SEQUENCE projects_id_seq RESTART WITH 1; ALTER SEQUENCE tasks_id_seq RESTART WITH 1; ALTER SEQUENCE employees_working_number_seq RESTART WITH 1000;";
         PreparedStatement statement = conn.prepareStatement(query);
         statement.executeUpdate();
     }
@@ -187,12 +216,12 @@ public class Database implements DatabaseConnection {
     }
 
     public void assignWorkerToManager(int managerNumber, int workerNumber) throws SQLException {
-        String query = "INSERT INTO worker_task VALUES("+ managerNumber + ", " + workerNumber +");";
+        String query = "INSERT INTO worker_task VALUES(" + managerNumber + ", " + workerNumber + ");";
         PreparedStatement st = conn.prepareStatement(query);
         st.executeUpdate();
     }
 
-    public EmployeeList getEmployeesAssignedToManager(int managerNumber) throws SQLException{
+    public EmployeeList getEmployeesAssignedToManager(int managerNumber) throws SQLException {
         String query = "SELECT * FROM employees WHERE working_number in (SELECT working_number FROM manager_worker WHERE manager_number = " + managerNumber + ");";
         PreparedStatement st = conn.prepareStatement(query);
         ResultSet set = st.executeQuery();
@@ -349,6 +378,7 @@ public class Database implements DatabaseConnection {
         return new EmployeeList(employees);
 
     }
+
     private void addDummyDataWorkerTask() throws SQLException {
         String query = "INSERT INTO worker_task( working_number, task_id)\n" +
                 "VALUES (1, 1)," +
@@ -361,7 +391,7 @@ public class Database implements DatabaseConnection {
         statement.executeUpdate(query);
     }
 
-    private void addDummyDataManagerWorker() throws SQLException{
+    private void addDummyDataManagerWorker() throws SQLException {
         String query = "INSERT INTO manager_worker(manager_number, worker_number)\n" +
                 "VALUES (4, 2),\n" +
                 "       (4, 1),\n" +
@@ -369,7 +399,6 @@ public class Database implements DatabaseConnection {
         Statement statement = conn.createStatement();
         statement.executeUpdate(query);
     }
-
 
 
     public void addDummyData() throws SQLException {

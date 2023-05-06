@@ -37,6 +37,15 @@ public class Employee implements Serializable {
         setUserProfile(userProfile);
     }
 
+    public Employee(String name, LocalDate dob, String phoneNumber, String gender, EmployeeRole role, String email) {
+        this.name = name;
+        this.dob = dob;
+        this.phoneNumber = phoneNumber;
+        this.gender = gender;
+        this.role = role;
+        this.email = email;
+    }
+
     public Integer getWorkingNumber() {
         return workingNumber;
     }

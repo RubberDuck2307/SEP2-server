@@ -17,7 +17,7 @@ public interface Model {
 
     Employee login(UserProfile userProfile);
 
-    void saveEmployee(Employee employee);
+    Integer saveEmployee(Employee employee, String password);
 
     void updateProject(Project project);
     void updateTask(Task task);

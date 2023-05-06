@@ -97,9 +97,9 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void saveEmployee(Employee employee) {
+    public Integer saveEmployee(Employee employee, String password) {
         try {
-            databaseConnection.saveEmployee(employee);
+            return databaseConnection.saveEmployee(employee, password);
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException(e);

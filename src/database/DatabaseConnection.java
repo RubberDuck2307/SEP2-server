@@ -18,7 +18,7 @@ public interface DatabaseConnection {
 
     Employee login(UserProfile userProfile) throws SQLException;
 
-    void saveEmployee(Employee employee) throws SQLException;
+    Integer saveEmployee(Employee employee, String password) throws SQLException;
 
     void updateProject(Project project) throws SQLException;
 

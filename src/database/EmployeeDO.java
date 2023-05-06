@@ -20,7 +20,7 @@ public class EmployeeDO {
             name = "'" + employee.getName() + "'";
         }
         if (employee.getWorkingNumber() == null) {
-            throw new RuntimeException("Working number cannot be null");
+            workingNumber = "NULL";
         } else {
             workingNumber = employee.getWorkingNumber().toString();
         }
