@@ -20,6 +20,8 @@ public interface DatabaseConnection {
 
     Integer saveEmployee(Employee employee, String password) throws SQLException;
 
+    EmployeeList getAllProjectManagers() throws SQLException;
+
     void updateProject(Project project) throws SQLException;
 
     void assignWorkerToTask(Integer workingNumber, Long taskID) throws SQLException;
@@ -29,4 +31,5 @@ public interface DatabaseConnection {
     EmployeeList getEmployeesAssignedToManager(int managerNumber) throws SQLException;
     void updateTask(Task task) throws SQLException;
     EmployeeList getEmployeesOfTask(Long TaskId) throws SQLException;
+    void assignEmployeesToTask(ArrayList<Integer> employeeWorkingNumbers, Long TaskID) throws SQLException;
 }

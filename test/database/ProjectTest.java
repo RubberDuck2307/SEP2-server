@@ -20,7 +20,6 @@ public class ProjectTest {
     @BeforeAll
     static void setUp() {
         database = new Database();
-        database.connect();
         assertDoesNotThrow(() -> database.clearAllTables());
         assertDoesNotThrow(() -> database.resetSequences());
     }

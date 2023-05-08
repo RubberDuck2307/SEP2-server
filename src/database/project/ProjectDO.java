@@ -1,4 +1,4 @@
-package database;
+package database.project;
 
 import model.Project;
 

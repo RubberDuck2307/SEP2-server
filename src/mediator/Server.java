@@ -8,6 +8,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Server implements RemoteModel {
@@ -71,14 +72,25 @@ public class Server implements RemoteModel {
         model.removeWorkerFromTask(workingNumber, taskID);
     }
 
+
+
     @Override
     public Integer saveEmployee(Employee employee, String password) throws RemoteException {
         return model.saveEmployee(employee, password);
     }
 
     @Override
+    public EmployeeList getAllProjectManagers() throws RemoteException {
+        return model.getAllProjectManagers();
+    }
+
+    @Override
     public void updateProject(Project project) throws RemoteException {
         model.updateProject(project);
+    }
+
+    public void assignEmployeesToTask(ArrayList<Integer> employeeWorkingNumbers, Long TaskID) throws RemoteException{
+        model.assignEmployeesToTask(employeeWorkingNumbers, TaskID);
     }
 
 

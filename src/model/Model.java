@@ -21,7 +21,8 @@ public interface Model {
 
     void updateProject(Project project);
     void updateTask(Task task);
-
+    void assignEmployeesToTask(ArrayList<Integer> employeeWorkingNumbers, Long TaskID);
+    EmployeeList getAllProjectManagers();
     EmployeeList getEmployeesOfTask(Long TaskId);
      EmployeeList getAllEmployeesAssignedToProject(Long projectId);
     void removeWorkerFromTask(Integer workingNumber, Long taskID);

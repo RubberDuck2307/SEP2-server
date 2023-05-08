@@ -1,7 +1,5 @@
 package model;
 
-import database.UserProfileDO;
-
 import java.io.Serializable;
 import java.time.LocalDate;
 

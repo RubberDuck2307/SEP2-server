@@ -1,4 +1,4 @@
-package database;
+package database.employee;
 
 import model.Employee;
 import model.EmployeeRole;

@@ -11,7 +11,6 @@ public class Main {
     public static void main(String[] args) throws MalformedURLException, RemoteException, SQLException {
 
         Database database = new Database();
-        database.connect();
         Model model = new ModelManager(database);
         Server server = new Server(model);
 

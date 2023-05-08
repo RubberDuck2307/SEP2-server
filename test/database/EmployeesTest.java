@@ -19,7 +19,6 @@ public class EmployeesTest {
     @BeforeAll
     static void setUp() {
         database = new Database();
-        database.connect();
         assertDoesNotThrow(() -> database.clearAllTables());
         assertDoesNotThrow(() -> database.resetSequences());
         Project project = new Project(1L, "Very Interesting", "description", LocalDate.now());
