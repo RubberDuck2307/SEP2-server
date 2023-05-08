@@ -1,4 +1,4 @@
-package database;
+package database.task;
 
 import model.Task;
 

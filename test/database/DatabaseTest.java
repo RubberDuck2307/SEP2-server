@@ -15,7 +15,6 @@ class DatabaseTest {
     @BeforeAll
     static void setUp(){
         database = new Database();
-        database.connect();
         assertDoesNotThrow(() -> database.clearAllTables());
         assertDoesNotThrow(() -> database.resetSequences());
     }

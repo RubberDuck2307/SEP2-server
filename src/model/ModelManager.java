@@ -55,9 +55,9 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void saveTask(Task task) {
+    public Long saveTask(Task task) {
         try {
-            databaseConnection.saveTask(task);
+            return databaseConnection.saveTask(task);
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
@@ -94,6 +94,15 @@ public class ModelManager implements Model {
            e.printStackTrace();
               throw new RuntimeException(e);
        }
+    }
+
+    public EmployeeList getAllProjectManagers() {
+        try {
+            return databaseConnection.getAllProjectManagers();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -134,6 +143,17 @@ public class ModelManager implements Model {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public void assignEmployeesToTask(ArrayList<Integer> employeeWorkingNumbers, Long TaskID) {
+        try {
+            databaseConnection.assignEmployeesToTask(employeeWorkingNumbers, TaskID);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
     public EmployeeList getAllEmployeesAssignedToProject(Long projectId){
         try {
             return databaseConnection.getAllEmployeesAssignedToProject(projectId);

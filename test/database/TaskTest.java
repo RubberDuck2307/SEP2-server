@@ -17,7 +17,6 @@ public class TaskTest {
     @BeforeAll
     static void setUp() {
         database = new Database();
-        database.connect();
         assertDoesNotThrow(() -> database.clearAllTables());
         assertDoesNotThrow(() -> database.resetSequences());
         assertDoesNotThrow(() -> database.saveProject(new Project("Interesting", "description", LocalDate.now())));

@@ -13,14 +13,17 @@ public interface RemoteModel extends Remote {
 
     ProjectList getAllProjectsByWorkingNumber(Integer workingNumber) throws RemoteException;
 
-    void saveTask(Task task) throws RemoteException;
+    Long saveTask(Task task) throws RemoteException;
 
     void saveProject(Project project)throws RemoteException;
 
     EmployeeList getEmployeesAssignedToManager(int managerNumber) throws RemoteException;
     Employee login(UserProfile userProfile) throws RemoteException;
     void removeWorkerFromTask(Integer workingNumber, Long taskID) throws RemoteException;
+    void assignEmployeesToTask(ArrayList<Integer> employeeWorkingNumbers, Long TaskID) throws RemoteException;
     Integer saveEmployee(Employee employee, String password) throws RemoteException;
+
+    EmployeeList getAllProjectManagers() throws RemoteException;
     EmployeeList getAllEmployeesAssignedToProject(Long projectId) throws RemoteException;
     void updateProject(Project project) throws RemoteException;
     void assignWorkerToTask(Integer workingNumber, Long taskID) throws RemoteException;

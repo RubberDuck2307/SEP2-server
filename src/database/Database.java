@@ -1,17 +1,36 @@
 package database;
 
+import database.employee.EmployeeDO;
+import database.employee.EmployeeService;
+import database.employee.UserProfileDO;
+import database.project.ProjectDO;
+import database.project.ProjectService;
+import database.task.TaskDO;
+import database.task.TaskService;
 import model.*;
 
 import java.sql.*;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
 
 public class Database implements DatabaseConnection {
 
     private Connection conn;
+    private EmployeeService employeeService;
+    private ProjectService projectService;
+    private TaskService taskService;
+    private DatabaseManager databaseManager;
 
-    public void connect() {
+    public Database() {
+        connect();
+        this.employeeService = new EmployeeService(conn);
+        this.projectService = new ProjectService(conn);
+        this.taskService = new TaskService(conn);
+        this.databaseManager = new DatabaseManager(conn);
+
+    }
+
+    private void connect() {
         conn = null;
         try {
             conn = DriverManager.getConnection(Credentials.url, Credentials.user, Credentials.password);
@@ -34,380 +53,100 @@ public class Database implements DatabaseConnection {
         }
     }
 
+    public EmployeeList getAllProjectManagers(){
+        return employeeService.getAllProjectManagers();
+    }
+
     public Integer saveEmployee(Employee employee, String password) throws SQLException {
-        EmployeeDO employeeDO = new EmployeeDO(employee);
-        String query = "INSERT INTO employees (name, email, phone_number, dob, gender, role) VALUES (" + employeeDO.getName() + ", " + employeeDO.getEmail() + ", " + employeeDO.getPhoneNumber() + ", " + employeeDO.getDob() + ", " + employeeDO.getGender() + ", " + employeeDO.getRole() + ");";
-        PreparedStatement statement = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-        int affectedRows = statement.executeUpdate();
-
-        if (affectedRows == 0) {
-            throw new SQLException("Creating user failed, no rows affected.");
-        }
-        UserProfile userProfile;
-        ResultSet generatedKeys = statement.getGeneratedKeys();
-        if (generatedKeys.next()) {
-            userProfile = new UserProfile(generatedKeys.getInt(2), password);
-        } else {
-            throw new SQLException("Creating user failed, no ID obtained.");
-        }
-
-        addUserProfile(userProfile);
-        return userProfile.getWorkingNumber();
+        return employeeService.saveEmployee(employee, password);
     }
 
     public void addUserProfile(UserProfile userProfile) throws SQLException {
-        UserProfileDO userProfileDO = new UserProfileDO(userProfile);
-        String query = "INSERT INTO user_profiles (working_number, password) VALUES (" + userProfileDO.getWorkingNumber() + ", " + userProfileDO.getPassword() + ");";
-        Statement statement = conn.createStatement();
-        statement.executeUpdate(query);
+        employeeService.addUserProfile(userProfile);
     }
 
     public Employee login(UserProfile userProfile) throws SQLException {
-        UserProfileDO userProfileDO = new UserProfileDO(userProfile);
-        String query = "SELECT * FROM user_profiles WHERE working_number = " + userProfileDO.getWorkingNumber() + " AND password = " + userProfileDO.getPassword() + ";";
-        PreparedStatement statement = conn.prepareStatement(query);
-        ResultSet rs = statement.executeQuery();
-        if (!rs.next()) {
-            throw new RuntimeException("Invalid working number or password");
-        } else {
-            query = "SELECT * FROM employees WHERE working_number = " + userProfileDO.getWorkingNumber() + ";";
-            statement = conn.prepareStatement(query);
-            rs = statement.executeQuery();
-            return getAllEmployeesFromSet(rs).get(0);
-        }
+        return employeeService.login(userProfile);
     }
 
     public void saveProject(Project project) throws SQLException {
-        ProjectDO projectDO = new ProjectDO(project);
-
-        String query = "INSERT INTO projects (name, description, deadline) VALUES (" + projectDO.getName() + ", " + projectDO.getDescription() + ", " + projectDO.getDeadline() + ");";
-        Statement statement = conn.createStatement();
-        statement.executeUpdate(query);
+        projectService.saveProject(project);
     }
 
     public void updateTask(Task task) throws SQLException {
-        TaskDO taskDO = new TaskDO(task);
-
-        if (taskDO.getId() == "NULL") {
-            throw new RuntimeException("Id cannot be null");
-        }
-
-        String query = "UPDATE tasks SET name = " + taskDO.getName() + ", description = " + taskDO.getDescription() + ", status = " + taskDO.getStatus()
-                + ", priority = " + taskDO.getPriority() + ", deadline = " + taskDO.getDeadline() + ", estimated_time = " + taskDO.getEstimatedTime() + ", starting_date = " + taskDO.getStartingDate() + ", project_id = " + taskDO.getProjectId() + " WHERE id = " + taskDO.getId() + ";";
-        Statement statement = conn.createStatement();
-        statement.executeUpdate(query);
+        taskService.updateTask(task);
     }
 
 
-    public void saveTask(Task task) throws SQLException {
-        System.out.println(task);
-        TaskDO taskDO = new TaskDO(task);
-
-        String query = "INSERT INTO TASKS (project_id, name, description, status, priority, deadline, estimated_time, starting_date)" +
-                "VALUES (" + taskDO.getProjectId() + ", " + taskDO.getName() + ", " + taskDO.getDescription() + ", " + taskDO.getStatus() + ", " + taskDO.getPriority() + ", " + taskDO.getDeadline() + ", " + taskDO.getEstimatedTime() + ", " + taskDO.getStartingDate() + ");";
-        Statement statement = conn.createStatement();
-        statement.executeUpdate(query);
+    public Long saveTask(Task task) throws SQLException {
+        return taskService.saveTask(task);
     }
 
     public void updateProject(Project project) throws SQLException {
-        ProjectDO projectDO = new ProjectDO(project);
-        String query = "UPDATE projects SET name = " + projectDO.getName() + ", description = " + projectDO.getDescription() + ", deadline = " + projectDO.getDeadline() + " WHERE id = " + projectDO.getId() + ";";
-        Statement statement = conn.createStatement();
-        statement.executeUpdate(query);
+        projectService.updateProject(project);
     }
 
     public ProjectList getAllProjectsOfEmployee(int workingNumber) throws SQLException {
-        String query = "SELECT * FROM projects WHERE id in (SELECT id FROM employee_project WHERE working_number = " + workingNumber + " );";
-        PreparedStatement st = conn.prepareStatement(query);
-        ResultSet set = st.executeQuery();
-        ProjectList projectList = getAllProjectsFromSet(set);
-        return projectList;
+        return projectService.getAllProjectsOfEmployee(workingNumber);
     }
 
     public TaskList getAllTasksOfProject(Long projectId) throws SQLException {
-        String query = "SELECT * FROM tasks WHERE project_id = " + projectId + ";";
-        PreparedStatement st = conn.prepareStatement(query);
-        ResultSet set = st.executeQuery();
-        TaskList taskList = getTasksFromSet(set);
-
-        for (int i = 0; i < taskList.size(); i++) {
-            String workerQuery = "SELECT * FROM employees WHERE working_number in (SELECT working_number FROM worker_task WHERE task_id = " + taskList.getTask(i).getId() + ");";
-            PreparedStatement workerSt = conn.prepareStatement(workerQuery);
-            ResultSet workerSet = workerSt.executeQuery();
-            ArrayList<Employee> employees = getAllEmployeesFromSet(workerSet);
-            taskList.getTask(i).setWorkers(employees);
-        }
-
-        return taskList;
+       return taskService.getAllTasksOfProject(projectId);
     }
 
 
     public void assignWorkerToTask(Integer workingNumber, Long taskID) throws SQLException {
-        String query = "INSERT INTO worker_task VALUES(" + workingNumber.toString() + ", " + taskID.toString() + ");";
-        PreparedStatement st = conn.prepareStatement(query);
-        st.executeUpdate();
+        taskService.assignWorkerToTask(workingNumber, taskID);
     }
 
     public void assignEmployeesToProject(ArrayList<Integer> employeeWorkingNumbers, Long ProjectID) throws SQLException {
-        String query = "INSERT INTO employee_project VALUES";
-        for (int i = 0; i < employeeWorkingNumbers.size(); i++) {
-            query += "(" + employeeWorkingNumbers.get(i) + ", " + ProjectID + ")";
-            if (i != employeeWorkingNumbers.size() - 1) {
-                query += ", ";
-            }
-        }
-        query += ";";
-        PreparedStatement st = conn.prepareStatement(query);
-        st.executeUpdate();
+        projectService.assignEmployeesToProject(employeeWorkingNumbers, ProjectID);
     }
 
 
 
     public void removeWorkerFromTask(Integer workingNumber, Long taskID) throws SQLException {
-        String query = "DELETE FROM worker_task WHERE working_number = " + workingNumber.toString() + " AND task_id = " + taskID.toString() + ";";
-        PreparedStatement st = conn.prepareStatement(query);
-        st.executeUpdate();
+        taskService.removeWorkerFromTask(workingNumber, taskID);
     }
 
-
-    public void clearTasksTable() throws SQLException {
-        String query = "DELETE FROM tasks;";
-        PreparedStatement st = conn.prepareStatement(query);
-        st.executeUpdate();
-    }
-
-    public void clearAllTables() throws SQLException {
-        String query = "DELETE FROM manager_worker cascade; DELETE FROM employee_project cascade; DELETE FROM worker_task cascade; DELETE FROM tasks cascade; DELETE FROM projects cascade;DELETE FROM user_profiles cascade; DELETE FROM employees cascade;";
-        PreparedStatement st = conn.prepareStatement(query);
-        st.executeUpdate();
-    }
 
 
     public TaskList getAllTasks() throws SQLException {
-        String query = "SELECT * FROM tasks;";
-        PreparedStatement statement = conn.prepareStatement(query);
-        ResultSet set = statement.executeQuery();
-        TaskList taskList = getTasksFromSet(set);
-        return taskList;
+        return taskService.getAllTasks();
     }
 
     public EmployeeList getEmployeesOfTask(Long TaskId) throws SQLException {
-        String query = "SELECT * FROM employees WHERE working_number in (SELECT working_number FROM worker_task WHERE task_id = " + TaskId + ");";
-        PreparedStatement st = conn.prepareStatement(query);
-        ResultSet set = st.executeQuery();
-        ArrayList<Employee> employees = getAllEmployeesFromSet(set);
-        EmployeeList employeeList = new EmployeeList(employees);
-        return employeeList;
+        return employeeService.getEmployeesOfTask(TaskId);
     }
 
-    public void resetSequences() throws SQLException {
-        String query = "ALTER SEQUENCE projects_id_seq RESTART WITH 1; ALTER SEQUENCE tasks_id_seq RESTART WITH 1; ALTER SEQUENCE employees_working_number_seq RESTART WITH 1000;";
-        PreparedStatement statement = conn.prepareStatement(query);
-        statement.executeUpdate();
-    }
 
     public ProjectList getAllProjects() throws SQLException {
-        String query = "SELECT * FROM projects;";
-        PreparedStatement statement = conn.prepareStatement(query);
-        ResultSet set = statement.executeQuery();
-        ProjectList projectList = getAllProjectsFromSet(set);
-
-        return projectList;
+        return projectService.getAllProjects();
     }
 
     public void assignWorkerToManager(int managerNumber, int workerNumber) throws SQLException {
-        String query = "INSERT INTO worker_task VALUES(" + managerNumber + ", " + workerNumber + ");";
-        PreparedStatement st = conn.prepareStatement(query);
-        st.executeUpdate();
+        employeeService.assignWorkerToManager(managerNumber, workerNumber);
     }
 
     public EmployeeList getEmployeesAssignedToManager(int managerNumber) throws SQLException {
-        String query = "SELECT * FROM employees WHERE working_number in (SELECT working_number FROM manager_worker WHERE manager_number = " + managerNumber + ");";
-        PreparedStatement st = conn.prepareStatement(query);
-        ResultSet set = st.executeQuery();
-        ArrayList<Employee> employees = getAllEmployeesFromSet(set);
-        EmployeeList employeeList = new EmployeeList(employees);
-        return employeeList;
-    }
-
-
-    private TaskList getTasksFromSet(ResultSet set) throws SQLException {
-        TaskList taskList = new TaskList();
-        while (set.next()) {
-            Long id = set.getLong("id");
-            Long project_id = set.getLong("project_id");
-            String name = set.getString("name");
-            String description = set.getString("description");
-            String status = set.getString("status");
-            String priority = set.getString("priority");
-            LocalDate deadline;
-            try {
-                deadline = set.getDate("deadline").toLocalDate();
-            } catch (NullPointerException e) {
-                deadline = null;
-            }
-            Integer estimated_time = set.getInt("estimated_time");
-            LocalDate starting_date;
-            try {
-                starting_date = set.getDate("starting_date").toLocalDate();
-            } catch (NullPointerException e) {
-                starting_date = null;
-            }
-            taskList.addTask(new Task(id, name, description, deadline, estimated_time, priority, status, project_id, starting_date));
-        }
-        return taskList;
-    }
-
-    private ArrayList<Employee> getAllEmployeesFromSet(ResultSet set) throws SQLException {
-        ArrayList<Employee> employees = new ArrayList<>();
-        while (set.next()) {
-            LocalDate dob;
-            String name = set.getString("name");
-            try {
-
-                dob = set.getDate("dob").toLocalDate();
-            } catch (NullPointerException e) {
-                dob = null;
-            }
-            Integer managerNumber = set.getInt("working_number");
-            String gender = set.getString("gender");
-            String phoneNumber = set.getString("phone_number");
-            String role = set.getString("role");
-            EmployeeRole employeeRole;
-            switch (role) {
-                case "PROJECT M":
-                    employeeRole = EmployeeRole.PROJECT_MANAGER;
-                    break;
-                case "WORKER":
-                    employeeRole = EmployeeRole.WORKER;
-                    break;
-                case "HR":
-                    employeeRole = EmployeeRole.HR;
-                    break;
-                case "MAIN MANAGER":
-                    employeeRole = EmployeeRole.MAIN_MANAGER;
-                    break;
-                default:
-                    throw new RuntimeException("Invalid role");
-            }
-            String email = set.getString("email");
-
-            employees.add(new Employee(managerNumber, name, dob, phoneNumber, gender, employeeRole, email));
-        }
-
-        return employees;
-    }
-
-    private ProjectList getAllProjectsFromSet(ResultSet set) throws SQLException {
-        ProjectList projectList = new ProjectList();
-        while (set.next()) {
-            Long id = set.getLong("id");
-            String name = set.getString("name");
-            String description = set.getString("description");
-
-            LocalDate deadline;
-            try {
-                deadline = set.getDate("deadline").toLocalDate();
-            } catch (NullPointerException e) {
-                deadline = null;
-
-            }
-            projectList.addProject(new Project(id, name, description, deadline));
-        }
-        return projectList;
-    }
-
-    private void addDummyDataProject() throws SQLException {
-        String query = "Insert into projects(name, description, deadline)" +
-                "VALUES ('firstProject', 'I like potatoes', '2003-12-9')," +
-                "('secondProject', 'I like bananas', '2006-12-4')," +
-                "('thirdProject', 'I like apples', '2007-12-4');";
-        Statement statement = conn.createStatement();
-        statement.executeUpdate(query);
-    }
-
-    private void addDummyDataTasks() throws SQLException {
-        String query = "Insert into tasks(name, description, deadline, estimated_time, priority, status, project_id)" +
-                "VALUES ('firstTask', 'I like fathers', '2003-12-9', 10, 'HIGH', 'IN PROGRESS', 1)," +
-                "('secondTask', 'I like mothers', '2006-12-4', 10, 'HIGH', 'IN PROGRESS', 1)," +
-                "('thirdTask', 'I like sons', '2007-12-4', 10, 'HIGH', 'IN PROGRESS', 1)," +
-                "('fourthTask', 'I like daughters', '2007-12-4', 10, 'HIGH', 'IN PROGRESS', 2)," +
-                "('fifthTask', 'I like brothers', '2007-12-4', 10, 'HIGH', 'IN PROGRESS', 2)," +
-                "('sixthTask', 'I like sisters', '2007-12-4', 10, 'HIGH', 'IN PROGRESS', 3)," +
-                "('seventhTask', 'I like grandfathers', '2007-12-4', 10, 'HIGH', 'IN PROGRESS', 3);";
-        Statement statement = conn.createStatement();
-        statement.executeUpdate(query);
-    }
-
-    private void addDummyDataEmployees() throws SQLException {
-        String query = "INSERT INTO employees(name, working_number, role, gender, dob, phone_number, email)" +
-                "VALUES('BOB',1,'WORKER', 'M', '1999-12-9', '123456789','Bob@gmail.com' )," +
-                "('ALICE', 2, 'WORKER', 'F', '1999-12-9', '123456789', 'Alice@gmail.com')," +
-                "('JOHN', 3, 'WORKER', 'M', '1999-12-9', '123456789', 'John@gmail.com')," +
-                "('KARL', 4, 'PROJECT M', 'M', '1999-12-9', '123456789', 'John@gmail.com');";
-        Statement statement = conn.createStatement();
-        statement.executeUpdate(query);
-    }
-
-    private void addDummyDataUserProfiles() throws SQLException {
-        String query = "INSERT INTO user_profiles( password, working_number)\n" +
-                "VALUES ('123', 1)," +
-                "('123',2)," +
-                "('123',3);";
-        Statement statement = conn.createStatement();
-        statement.executeUpdate(query);
-    }
-
-    private void addDummyDataEmployeeProject() throws SQLException {
-        String query = "INSERT INTO employee_project( working_number, project_id)\n" +
-                "VALUES (1, 1)," +
-                "(2,1)," +
-                "(3,1)," +
-                "(2,2)," +
-                "(3,2)," +
-                "(3,3);";
-        Statement statement = conn.createStatement();
-        statement.executeUpdate(query);
+        return employeeService.getEmployeesAssignedToManager(managerNumber);
     }
 
     public EmployeeList getAllEmployeesAssignedToProject(Long projectId) throws SQLException {
-        String query = "SELECT * FROM employees WHERE working_number in (SELECT working_number FROM employee_project WHERE project_id = " + projectId + " );";
-        PreparedStatement st = conn.prepareStatement(query);
-        ResultSet set = st.executeQuery();
-        ArrayList<Employee> employees = getAllEmployeesFromSet(set);
-        return new EmployeeList(employees);
-
+        return employeeService.getAllEmployeesAssignedToProject(projectId);
     }
-
-    private void addDummyDataWorkerTask() throws SQLException {
-        String query = "INSERT INTO worker_task( working_number, task_id)\n" +
-                "VALUES (1, 1)," +
-                "(2,1)," +
-                "(3,1)," +
-                "(2,2)," +
-                "(3,2)," +
-                "(3,3);";
-        Statement statement = conn.createStatement();
-        statement.executeUpdate(query);
-    }
-
-    private void addDummyDataManagerWorker() throws SQLException {
-        String query = "INSERT INTO manager_worker(manager_number, worker_number)\n" +
-                "VALUES (4, 2),\n" +
-                "       (4, 1),\n" +
-                "       (4, 3);";
-        Statement statement = conn.createStatement();
-        statement.executeUpdate(query);
-    }
-
 
     public void addDummyData() throws SQLException {
-        addDummyDataProject();
-        addDummyDataTasks();
-        addDummyDataEmployees();
-        addDummyDataUserProfiles();
-        addDummyDataEmployeeProject();
-        addDummyDataWorkerTask();
-        addDummyDataManagerWorker();
+        databaseManager.addDummyData();
+    }
+    public void clearAllTables() throws SQLException {
+        databaseManager.clearAllTables();
+    }
+
+    public void resetSequences() throws SQLException {
+        databaseManager.resetSequences();
+    }
+    public void assignEmployeesToTask(ArrayList<Integer> employeeWorkingNumbers, Long TaskID) throws SQLException{
+        taskService.assignEmployeesToTask(employeeWorkingNumbers, TaskID);
     }
 }
