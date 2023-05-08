@@ -4,6 +4,7 @@ import database.SetParser;
 import model.EmployeeList;
 import model.Task;
 import model.TaskList;
+import model.UserProfile;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -18,14 +19,25 @@ public class TaskService {
         setParser = new SetParser();
     }
 
-    public void saveTask(Task task) throws SQLException {
+    public Long saveTask(Task task) throws SQLException {
 
         TaskDO taskDO = new TaskDO(task);
 
         String query = "INSERT INTO TASKS (project_id, name, description, status, priority, deadline, estimated_time, starting_date)" +
                 "VALUES (" + taskDO.getProjectId() + ", " + taskDO.getName() + ", " + taskDO.getDescription() + ", " + taskDO.getStatus() + ", " + taskDO.getPriority() + ", " + taskDO.getDeadline() + ", " + taskDO.getEstimatedTime() + ", " + taskDO.getStartingDate() + ");";
-        Statement statement = conn.createStatement();
-        statement.executeUpdate(query);
+        PreparedStatement statement = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+        int affectedRows = statement.executeUpdate();
+
+        if (affectedRows == 0) {
+            throw new SQLException("Creating user failed, no rows affected.");
+        }
+        ResultSet generatedKeys = statement.getGeneratedKeys();
+        Long id;
+        if (generatedKeys.next()) {
+            id = generatedKeys.getLong("id");
+        } else {
+            throw new SQLException("Creating user failed, no ID obtained.");}
+        return id;
     }
 
     public void updateTask(Task task) throws SQLException {

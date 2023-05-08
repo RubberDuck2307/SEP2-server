@@ -12,7 +12,7 @@ public interface DatabaseConnection {
 
     TaskList getAllTasksOfProject(Long projectId) throws SQLException;
 
-    void saveTask(Task task) throws SQLException;
+    Long saveTask(Task task) throws SQLException;
 
     void saveProject(Project project) throws SQLException;
 

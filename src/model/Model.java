@@ -10,7 +10,7 @@ public interface Model {
 
     ProjectList getAllProjectsByUserId(Integer workingNumber);
 
-    void saveTask(Task task);
+    Long saveTask(Task task);
 
     void saveProject(Project project);
     void assignWorkerToTask(Integer workingNumber, Long taskID);

@@ -55,9 +55,9 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void saveTask(Task task) {
+    public Long saveTask(Task task) {
         try {
-            databaseConnection.saveTask(task);
+            return databaseConnection.saveTask(task);
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException(e);

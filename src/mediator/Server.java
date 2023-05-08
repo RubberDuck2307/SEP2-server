@@ -48,8 +48,8 @@ public class Server implements RemoteModel {
     }
 
     @Override
-    public void saveTask(Task task) throws RemoteException {
-        model.saveTask(task);
+    public Long saveTask(Task task) throws RemoteException {
+       return model.saveTask(task);
     }
 
     @Override

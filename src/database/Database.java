@@ -78,8 +78,8 @@ public class Database implements DatabaseConnection {
     }
 
 
-    public void saveTask(Task task) throws SQLException {
-        taskService.saveTask(task);
+    public Long saveTask(Task task) throws SQLException {
+        return taskService.saveTask(task);
     }
 
     public void updateProject(Project project) throws SQLException {
