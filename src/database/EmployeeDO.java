@@ -48,9 +48,9 @@ public class EmployeeDO {
             } else if (employee.getRole().equals(EmployeeRole.WORKER)) {
                 role = "'WORKER'";
             } else if (employee.getRole().equals(EmployeeRole.MAIN_MANAGER)) {
-                role = "'MAIN MANAGER'";
+                role = "'MAIN M'";
             } else if (employee.getRole().equals(EmployeeRole.PROJECT_MANAGER)) {
-                role = "'PROJECT MANAGER'";
+                role = "'PROJECT M'";
             } else {
                 throw new RuntimeException("Role is not valid");
             }
