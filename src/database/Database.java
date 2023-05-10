@@ -161,4 +161,14 @@ public class Database implements DatabaseConnection {
     public void assignEmployeesToTask(ArrayList<Integer> employeeWorkingNumbers, Long TaskID) throws SQLException{
         taskService.assignEmployeesToTask(employeeWorkingNumbers, TaskID);
     }
+
+    @Override public Employee getEmployeeByWorkingNumber(int workingNumber) throws SQLException
+    {
+        return employeeService.getEmployeeByWorkingNumber(workingNumber);
+    }
+
+    @Override public EmployeeList getAllEmployees() throws SQLException
+    {
+        return employeeService.getAllEmployees();
+    }
 }

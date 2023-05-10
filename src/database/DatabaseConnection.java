@@ -38,4 +38,6 @@ public interface DatabaseConnection {
     void updateTask(Task task) throws SQLException;
     EmployeeList getEmployeesOfTask(Long TaskId) throws SQLException;
     void assignEmployeesToTask(ArrayList<Integer> employeeWorkingNumbers, Long TaskID) throws SQLException;
+    Employee getEmployeeByWorkingNumber(int workingNumber) throws SQLException;
+    EmployeeList getAllEmployees() throws SQLException;
 }

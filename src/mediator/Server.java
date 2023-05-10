@@ -62,6 +62,7 @@ public class Server implements RemoteModel {
        return model.getEmployeesAssignedToManager(managerNumber);
     }
 
+
     @Override
     public Employee login(UserProfile userProfile) throws RemoteException {
         return model.login(userProfile);
@@ -131,6 +132,14 @@ public class Server implements RemoteModel {
         return model.getEmployeesOfTask(taskId);
     }
 
+    @Override public Employee getEmployeeByWorkingNumber(int workingNumber)
+    {
+        return model.getEmployeeByWorkingNumber(workingNumber);
+    }
 
+    @Override public EmployeeList getAllEmployees() throws RemoteException
+    {
+        return model.getAllEmployees();
+    }
 
 }
