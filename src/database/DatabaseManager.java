@@ -49,7 +49,8 @@ public class DatabaseManager {
         String query = "INSERT INTO user_profiles( password, working_number)\n" +
                 "VALUES ('123', 1)," +
                 "('123',2)," +
-                "('123',3);";
+                "('123',3)," +
+                "('123',4);";
         Statement statement = conn.createStatement();
         statement.executeUpdate(query);
     }
