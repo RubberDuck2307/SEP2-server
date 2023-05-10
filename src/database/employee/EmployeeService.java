@@ -77,10 +77,11 @@ public class EmployeeService {
     }
 
     public EmployeeList getEmployeesAssignedToManager(int managerNumber) throws SQLException {
-        String query = "SELECT * FROM employees WHERE working_number in (SELECT working_number FROM manager_worker WHERE manager_number = " + managerNumber + ");";
+        String query = "SELECT * FROM employees WHERE working_number in (SELECT worker_number FROM manager_worker WHERE manager_number = " + managerNumber + ");";
         PreparedStatement st = conn.prepareStatement(query);
         ResultSet set = st.executeQuery();
         EmployeeList employeeList = setParser.getAllEmployeesFromSet(set);
+        System.out.println(employeeList);
         return employeeList;
     }
 
