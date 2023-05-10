@@ -40,7 +40,9 @@ public class DatabaseManager {
                 "VALUES('BOB',1,'WORKER', 'M', '1999-12-9', '123456789','Bob@gmail.com' )," +
                 "('ALICE', 2, 'WORKER', 'F', '1999-12-9', '123456789', 'Alice@gmail.com')," +
                 "('JOHN', 3, 'WORKER', 'M', '1999-12-9', '123456789', 'John@gmail.com')," +
-                "('KARL', 4, 'PROJECT M', 'M', '1999-12-9', '123456789', 'John@gmail.com');";
+                "('KARL', 4, 'PROJECT M', 'M', '1999-12-9', '123456789', 'John@gmail.com')," +
+                "('JAN', 5, 'MAIN M', 'M', '1999-12-9', '123456789', 'John@gmail.com')," +
+                "('ANNICKA', 6, 'HR', 'F', '1999-12-9', '123456789', 'object@gmail.com');";
         Statement statement = conn.createStatement();
         statement.executeUpdate(query);
     }
@@ -50,7 +52,9 @@ public class DatabaseManager {
                 "VALUES ('123', 1)," +
                 "('123',2)," +
                 "('123',3)," +
-                "('123',4);";
+                "('123',4),"+
+                "('123',5),"+
+                "('123',6);";
         Statement statement = conn.createStatement();
         statement.executeUpdate(query);
     }
