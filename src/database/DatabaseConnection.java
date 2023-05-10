@@ -37,5 +37,6 @@ public interface DatabaseConnection {
     EmployeeList getEmployeesAssignedToManager(int managerNumber) throws SQLException;
     void updateTask(Task task) throws SQLException;
     EmployeeList getEmployeesOfTask(Long TaskId) throws SQLException;
+    EmployeeList getAllEmployees() throws SQLException;
     void assignEmployeesToTask(ArrayList<Integer> employeeWorkingNumbers, Long TaskID) throws SQLException;
 }

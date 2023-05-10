@@ -131,6 +131,9 @@ public class Server implements RemoteModel {
         return model.getEmployeesOfTask(taskId);
     }
 
-
+    @Override public EmployeeList getAllEmployees() throws RemoteException
+    {
+        return model.getAllEmployees();
+    }
 
 }

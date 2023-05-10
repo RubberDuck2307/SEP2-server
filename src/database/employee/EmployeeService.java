@@ -106,6 +106,13 @@ public class EmployeeService {
         return employees;
 
     }
-
+ public EmployeeList getAllEmployees()  throws SQLException
+    {
+        String query = "SELECT * FROM employees;";
+        PreparedStatement st = conn.prepareStatement(query);
+        ResultSet set = st.executeQuery();
+        EmployeeList employees = setParser.getAllEmployeesFromSet(set);
+        return employees;
+    }
 
 }

@@ -131,6 +131,10 @@ public class Database implements DatabaseConnection {
         return employeeService.getEmployeesOfTask(TaskId);
     }
 
+    @Override public EmployeeList getAllEmployees() throws SQLException
+    {
+        return employeeService.getAllEmployees();
+    }
 
     public ProjectList getAllProjects() throws SQLException {
         return projectService.getAllProjects();
