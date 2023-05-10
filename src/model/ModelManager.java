@@ -63,6 +63,14 @@ public class ModelManager implements Model {
             throw new RuntimeException(e);
         }
     }
+    public void unassignEmployeesFromTask(ArrayList<Integer> employeeWorkingNumbers, Long TaskID){
+        try {
+            databaseConnection.unassignEmployeesFromTask(employeeWorkingNumbers, TaskID);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
 
     @Override
     public void saveProject(Project project) {

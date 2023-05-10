@@ -90,6 +90,10 @@ public class Database implements DatabaseConnection {
         return projectService.getAllProjectsOfEmployee(workingNumber);
     }
 
+    public void unassignEmployeesFromTask(ArrayList<Integer> employeeWorkingNumbers, Long TaskID) throws SQLException {
+        taskService.unassignEmployeesFromTask(employeeWorkingNumbers, TaskID);
+    }
+
     public TaskList getAllTasksOfProject(Long projectId) throws SQLException {
        return taskService.getAllTasksOfProject(projectId);
     }

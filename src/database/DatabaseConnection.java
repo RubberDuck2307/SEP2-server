@@ -14,6 +14,8 @@ public interface DatabaseConnection {
 
     Long saveTask(Task task) throws SQLException;
 
+    void unassignEmployeesFromTask(ArrayList<Integer> employeeWorkingNumbers, Long TaskID) throws SQLException;
+
     void saveProject(Project project) throws SQLException;
 
     Employee login(UserProfile userProfile) throws SQLException;
