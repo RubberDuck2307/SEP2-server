@@ -20,14 +20,16 @@ public interface RemoteModel extends Remote {
     void unassignEmployeesFromTask(ArrayList<Integer> employeeWorkingNumbers, Long TaskID) throws RemoteException;
     EmployeeList getEmployeesAssignedToManager(int managerNumber) throws RemoteException;
     Employee login(UserProfile userProfile) throws RemoteException;
+    void assignWorkerToTask(Integer workingNumber, Long taskID) throws RemoteException;
     void removeWorkerFromTask(Integer workingNumber, Long taskID) throws RemoteException;
     void assignEmployeesToTask(ArrayList<Integer> employeeWorkingNumbers, Long TaskID) throws RemoteException;
     Integer saveEmployee(Employee employee, String password) throws RemoteException;
 
+    void assignEmployeeToProject(Integer workingNumber, Long projectID);
+    void removeEmployeeFromProject(Integer workingNumber, Long projectID);
     EmployeeList getAllProjectManagers() throws RemoteException;
     EmployeeList getAllEmployeesAssignedToProject(Long projectId) throws RemoteException;
     void updateProject(Project project) throws RemoteException;
-    void assignWorkerToTask(Integer workingNumber, Long taskID) throws RemoteException;
     String hello() throws RemoteException;
 
     void updateTask(Task task) throws RemoteException;

@@ -31,6 +31,18 @@ public class ProjectService {
         statement.executeUpdate(query);
     }
 
+    public void assignEmployeeToProject(Integer workingNumber, Long projectID) throws SQLException {
+        String query = "INSERT INTO employee_project VALUES(" + workingNumber.toString() + ", " + projectID.toString() + ");";
+        PreparedStatement st = conn.prepareStatement(query);
+        st.executeUpdate();
+    }
+
+    public void removeEmployeeFromProject(Integer workingNumber, Long projectID) throws SQLException {
+        String query = "DELETE FROM employee_project WHERE working_number = " + workingNumber.toString() + " AND project_id = " + projectID.toString() + ";";
+        PreparedStatement st = conn.prepareStatement(query);
+        st.executeUpdate();
+    }
+
     public ProjectList getAllProjectsOfEmployee(int workingNumber) throws SQLException {
         String query = "SELECT * FROM projects WHERE id in (SELECT id FROM employee_project WHERE working_number = " + workingNumber + " );";
         PreparedStatement st = conn.prepareStatement(query);

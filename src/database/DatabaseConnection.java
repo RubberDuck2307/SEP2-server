@@ -27,9 +27,13 @@ public interface DatabaseConnection {
     void updateProject(Project project) throws SQLException;
 
     void assignWorkerToTask(Integer workingNumber, Long taskID) throws SQLException;
+    void removeWorkerFromTask(Integer workingNumber, Long taskID) throws SQLException;
+
+
+    void assignEmployeeToProject(Integer workingNumber, Long projectID) throws SQLException;
+    void removeEmployeeFromProject(Integer workingNumber, Long projectID) throws SQLException;
 
     EmployeeList getAllEmployeesAssignedToProject(Long projectId) throws SQLException;
-    void removeWorkerFromTask(Integer workingNumber, Long taskID) throws SQLException;
     EmployeeList getEmployeesAssignedToManager(int managerNumber) throws SQLException;
     void updateTask(Task task) throws SQLException;
     EmployeeList getEmployeesOfTask(Long TaskId) throws SQLException;
