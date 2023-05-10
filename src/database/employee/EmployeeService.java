@@ -64,8 +64,10 @@ public class EmployeeService {
         PreparedStatement statement = conn.prepareStatement(query);
         ResultSet rs = statement.executeQuery();
         if (!rs.next()) {
+            System.out.println("Invalid working number or password");
             throw new RuntimeException("Invalid working number or password");
         } else {
+            System.out.println("Login successful");
             query = "SELECT * FROM employees WHERE working_number = " + userProfileDO.getWorkingNumber() + ";";
             statement = conn.prepareStatement(query);
             rs = statement.executeQuery();

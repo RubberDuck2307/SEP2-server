@@ -37,7 +37,7 @@ public class SetParser {
                 case "HR":
                     employeeRole = EmployeeRole.HR;
                     break;
-                case "MAIN MANAGER":
+                case "MAIN M":
                     employeeRole = EmployeeRole.MAIN_MANAGER;
                     break;
                 default:
@@ -46,6 +46,7 @@ public class SetParser {
             String email = set.getString("email");
 
             employees.add(new Employee(managerNumber, name, dob, phoneNumber, gender, employeeRole, email));
+            System.out.println(employees);
         }
         EmployeeList employeeList = new EmployeeList(employees);
         return employeeList;
