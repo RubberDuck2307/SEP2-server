@@ -69,6 +69,7 @@ public class EmployeeService {
             query = "SELECT * FROM employees WHERE working_number = " + userProfileDO.getWorkingNumber() + ";";
             statement = conn.prepareStatement(query);
             rs = statement.executeQuery();
+            System.out.println(rs);
             return setParser.getAllEmployeesFromSet(rs).get(0);
         }
     }

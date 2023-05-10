@@ -99,6 +99,21 @@ public class TaskService {
             }
         }
         query += ";";
+        System.out.println(query);
+        PreparedStatement st = conn.prepareStatement(query);
+        st.executeUpdate();
+    }
+
+    public void unassignEmployeesFromTask(ArrayList<Integer> employeeWorkingNumbers, Long TaskID) throws SQLException{
+        String query = "DELETE FROM worker_task WHERE task_id = " + TaskID + " AND working_number IN (";
+        for (int i = 0; i < employeeWorkingNumbers.size(); i++) {
+            query += employeeWorkingNumbers.get(i);
+            if (i != employeeWorkingNumbers.size() - 1) {
+                query += ", ";
+            }
+        }
+        query += ");";
+        System.out.println(query);
         PreparedStatement st = conn.prepareStatement(query);
         st.executeUpdate();
     }

@@ -45,6 +45,17 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public void assignWorkerToTask(Integer workingNumber, Long taskID) {
+        try {
+            databaseConnection.assignWorkerToTask(workingNumber, taskID);
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public void removeWorkerFromTask(Integer workingNumber, Long taskID) {
         try {
             databaseConnection.removeWorkerFromTask(workingNumber, taskID);
@@ -63,6 +74,14 @@ public class ModelManager implements Model {
             throw new RuntimeException(e);
         }
     }
+    public void unassignEmployeesFromTask(ArrayList<Integer> employeeWorkingNumbers, Long TaskID){
+        try {
+            databaseConnection.unassignEmployeesFromTask(employeeWorkingNumbers, TaskID);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
 
     @Override
     public void saveProject(Project project) {
@@ -75,11 +94,21 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void assignWorkerToTask(Integer workingNumber, Long taskID) {
+    public void assignEmployeeToProject(Integer workingNumber, Long projectID) {
         try {
-            databaseConnection.assignWorkerToTask(workingNumber, taskID);
+            databaseConnection.assignEmployeeToProject(workingNumber, projectID);
         }
         catch (SQLException e){
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void removeEmployeeFromProject(Integer workingNumber, Long projectID) {
+        try {
+            databaseConnection.removeEmployeeFromProject(workingNumber, projectID);
+        } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
         }

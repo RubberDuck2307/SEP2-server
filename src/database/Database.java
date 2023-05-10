@@ -90,6 +90,10 @@ public class Database implements DatabaseConnection {
         return projectService.getAllProjectsOfEmployee(workingNumber);
     }
 
+    public void unassignEmployeesFromTask(ArrayList<Integer> employeeWorkingNumbers, Long TaskID) throws SQLException {
+        taskService.unassignEmployeesFromTask(employeeWorkingNumbers, TaskID);
+    }
+
     public TaskList getAllTasksOfProject(Long projectId) throws SQLException {
        return taskService.getAllTasksOfProject(projectId);
     }
@@ -99,17 +103,25 @@ public class Database implements DatabaseConnection {
         taskService.assignWorkerToTask(workingNumber, taskID);
     }
 
-    public void assignEmployeesToProject(ArrayList<Integer> employeeWorkingNumbers, Long ProjectID) throws SQLException {
-        projectService.assignEmployeesToProject(employeeWorkingNumbers, ProjectID);
-    }
-
-
-
     public void removeWorkerFromTask(Integer workingNumber, Long taskID) throws SQLException {
         taskService.removeWorkerFromTask(workingNumber, taskID);
     }
 
 
+
+    public void assignEmployeeToProject(Integer workingNumber, Long projectID) throws SQLException {
+        projectService.assignEmployeeToProject(workingNumber, projectID);
+    }
+
+    public void removeEmployeeFromProject(Integer workingNumber, Long projectID) throws SQLException {
+        projectService.removeEmployeeFromProject(workingNumber, projectID);
+    }
+
+
+
+    public void assignEmployeesToProject(ArrayList<Integer> employeeWorkingNumbers, Long ProjectID) throws SQLException {
+        projectService.assignEmployeesToProject(employeeWorkingNumbers, ProjectID);
+    }
 
     public TaskList getAllTasks() throws SQLException {
         return taskService.getAllTasks();

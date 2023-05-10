@@ -67,6 +67,9 @@ public class Server implements RemoteModel {
         return model.login(userProfile);
     }
 
+    public void unassignEmployeesFromTask(ArrayList<Integer> employeeWorkingNumbers, Long TaskID) throws RemoteException{
+        model.unassignEmployeesFromTask(employeeWorkingNumbers, TaskID);
+    }
     @Override
     public void removeWorkerFromTask(Integer workingNumber, Long taskID) throws RemoteException {
         model.removeWorkerFromTask(workingNumber, taskID);
@@ -77,6 +80,18 @@ public class Server implements RemoteModel {
     @Override
     public Integer saveEmployee(Employee employee, String password) throws RemoteException {
         return model.saveEmployee(employee, password);
+    }
+
+    @Override public void assignEmployeeToProject(Integer workingNumber,
+        Long projectID)
+    {
+        model.assignEmployeeToProject(workingNumber, projectID);
+    }
+
+    @Override public void removeEmployeeFromProject(Integer workingNumber,
+        Long projectID)
+    {
+        model.removeEmployeeFromProject(workingNumber, projectID);
     }
 
     @Override
@@ -96,9 +111,9 @@ public class Server implements RemoteModel {
 
 
     public void assignWorkerToTask(Integer workingNumber, Long taskID) throws RemoteException{
-
         model.assignWorkerToTask(workingNumber, taskID);
     }
+
     @Override
     public String hello() {
         return "hello";
@@ -115,6 +130,7 @@ public class Server implements RemoteModel {
     public EmployeeList getEmployeesOfTask(Long taskId) throws RemoteException {
         return model.getEmployeesOfTask(taskId);
     }
+
 
 
 }
