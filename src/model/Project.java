@@ -4,14 +4,36 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+/**
+ * A class representing a project
+ */
+
 public class Project implements Serializable {
+    /**
+     * unique id of the project
+     */
     private Long id;
+    /**
+     * name of the project
+     */
     private String name;
+    /**
+     * description of the project
+     */
     private String description;
+    /**
+     * deadline of the project
+     */
     private LocalDate deadline;
 
 
-
+    /**
+     * 4-argument constructor for the class Project.
+     * @param id
+     * @param name
+     * @param description
+     * @param deadline
+     */
 
     public Project(Long id, String name, String description, LocalDate deadline) {
         this.id = id;
@@ -20,11 +42,19 @@ public class Project implements Serializable {
         this.deadline = deadline;
     }
 
+    /**
+     * 3-argument constructor for the class Project. Id is not set.
+     * @param name
+     * @param description
+     * @param deadline
+     */
+
     public Project(String name, String description, LocalDate deadline) {
         this.name = name;
         this.description = description;
         this.deadline = deadline;
     }
+
 
     public Long getId() {
         return id;

@@ -5,14 +5,27 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/**
+ * The class responsible for modifying the tables in the database and adding dummy data. The class was created for testing purposes only.
+ * @author Anna Andrlova, Alex Bolfa, Cosmin Demian, Jan Metela, Arturs Ricards Rijnieks
+ * @version 1.0 - May 2023
+ */
 public class DatabaseManager {
 
     private Connection conn;
 
+    /**
+     * The constructor setting the connection
+     * @param conn the connection to the database
+     */
     public DatabaseManager(Connection conn) {
         this.conn = conn;
     }
 
+    /**
+     * adds dummy data to projects table
+     * @throws SQLException
+     */
     private void addDummyDataProject() throws SQLException {
         String query = "Insert into projects(name, description, deadline)" +
                 "VALUES ('firstProject', 'I like potatoes', '2003-12-9')," +
@@ -22,6 +35,10 @@ public class DatabaseManager {
         statement.executeUpdate(query);
     }
 
+    /**
+     * adds dummy data to tasks table
+     * @throws SQLException
+     */
     private void addDummyDataTasks() throws SQLException {
         String query = "Insert into tasks(name, description, deadline, estimated_time, priority, status, project_id)" +
                 "VALUES ('firstTask', 'I like fathers', '2003-12-9', 10, 'HIGH', 'IN PROGRESS', 1)," +
@@ -35,6 +52,11 @@ public class DatabaseManager {
         statement.executeUpdate(query);
     }
 
+    /**
+     * adds dummy data to employees table
+     * @throws SQLException
+     */
+
     private void addDummyDataEmployees() throws SQLException {
         String query = "INSERT INTO employees(name, working_number, role, gender, dob, phone_number, email)" +
                 "VALUES('BOB',1,'WORKER', 'M', '1999-12-9', '123456789','Bob@gmail.com' )," +
@@ -46,6 +68,11 @@ public class DatabaseManager {
         Statement statement = conn.createStatement();
         statement.executeUpdate(query);
     }
+
+    /**
+     * adds dummy data to user_profiles table
+     * @throws SQLException
+     */
 
     private void addDummyDataUserProfiles() throws SQLException {
         String query = "INSERT INTO user_profiles( password, working_number)\n" +
@@ -59,6 +86,11 @@ public class DatabaseManager {
         statement.executeUpdate(query);
     }
 
+    /**
+     * adds dummy data to employee_project table
+     * @throws SQLException
+     */
+
     private void addDummyDataEmployeeProject() throws SQLException {
         String query = "INSERT INTO employee_project( working_number, project_id)\n" +
                 "VALUES (1, 1)," +
@@ -70,6 +102,11 @@ public class DatabaseManager {
         Statement statement = conn.createStatement();
         statement.executeUpdate(query);
     }
+
+    /**
+     * adds dummy data to worker_task table
+     * @throws SQLException
+     */
 
     private void addDummyDataWorkerTask() throws SQLException {
         String query = "INSERT INTO worker_task( working_number, task_id)\n" +
@@ -83,6 +120,11 @@ public class DatabaseManager {
         statement.executeUpdate(query);
     }
 
+    /**
+     * adds dummy data to manager_worker table
+     * @throws SQLException
+     */
+
     private void addDummyDataManagerWorker() throws SQLException {
         String query = "INSERT INTO manager_worker(manager_number, worker_number)\n" +
                 "VALUES (4, 2),\n" +
@@ -93,6 +135,10 @@ public class DatabaseManager {
     }
 
 
+    /**
+     * The method uses other private methods to add dummy data to the database
+     * @throws SQLException
+     */
     public void addDummyData() throws SQLException {
         addDummyDataProject();
         addDummyDataTasks();
@@ -102,12 +148,22 @@ public class DatabaseManager {
         addDummyDataWorkerTask();
         addDummyDataManagerWorker();
     }
+
+    /**
+     * clears all tables in the database
+     * @throws SQLException
+     */
     public void clearAllTables() throws SQLException {
         String query = "DELETE FROM manager_worker cascade; DELETE FROM employee_project cascade; DELETE FROM worker_task cascade; DELETE FROM tasks cascade; DELETE FROM projects cascade;DELETE FROM user_profiles cascade; DELETE FROM employees cascade;";
         PreparedStatement st = conn.prepareStatement(query);
         st.executeUpdate();
     }
 
+
+    /**
+     * resets all sequences in the database
+     * @throws SQLException
+     */
     public void resetSequences() throws SQLException {
         String query = "ALTER SEQUENCE projects_id_seq RESTART WITH 1; ALTER SEQUENCE tasks_id_seq RESTART WITH 1; ALTER SEQUENCE employees_working_number_seq RESTART WITH 1000;";
         PreparedStatement statement = conn.prepareStatement(query);

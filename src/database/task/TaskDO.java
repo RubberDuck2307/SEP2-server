@@ -2,6 +2,11 @@ package database.task;
 
 import model.Task;
 
+/**
+ * The class that is used to convert attributes of an object of Task class to strings so that they can be used in SQL query.
+ * @author Anna Andrlova, Alex Bolfa, Cosmin Demian, Jan Metela, Arturs Ricards Rijnieks
+ * @version 1.0 - May 2023
+ */
 public class TaskDO {
 
     String id;
@@ -13,6 +18,12 @@ public class TaskDO {
     String startingDate;
     String estimatedTime;
     String projectId;
+
+    /**
+     * The constructor takes an Employee object and converts all of its attributes to string attributes of this class that can be used in SQL query.
+     * @param task
+     * @throws RuntimeException if any of the attributes of the task is null and the attribute cannot be null in the database.
+     */
 
     public TaskDO(Task task) {
         if (task.getId() == null) {

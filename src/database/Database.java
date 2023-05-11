@@ -15,12 +15,27 @@ import java.util.ArrayList;
 
 public class Database implements DatabaseConnection {
 
+    /**
+     * The class responsible for connecting to the database and integrating all the services. The functionality is delegated to the services.
+     * @author Anna Andrlova, Alex Bolfa, Cosmin Demian, Jan Metela, Arturs Ricards Rijnieks
+     * @version 1.0 - May 2023
+     */
+
+    /**
+     * The connection to the database
+     */
     private Connection conn;
     private EmployeeService employeeService;
+
     private ProjectService projectService;
+
     private TaskService taskService;
+
     private DatabaseManager databaseManager;
 
+    /**
+     * The constructor connecting to the database and initializing all the services
+     */
     public Database() {
         connect();
         this.employeeService = new EmployeeService(conn);
@@ -30,6 +45,9 @@ public class Database implements DatabaseConnection {
 
     }
 
+    /**
+     * The method connecting to the database
+     */
     private void connect() {
         conn = null;
         try {
@@ -43,6 +61,10 @@ public class Database implements DatabaseConnection {
         }
 
     }
+
+    /**
+     * The method disconnecting from the database
+     */
 
     public void disconnect() {
         try {

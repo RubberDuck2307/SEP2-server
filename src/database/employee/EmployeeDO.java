@@ -3,6 +3,14 @@ package database.employee;
 import model.Employee;
 import model.EmployeeRole;
 
+
+/**
+ * The class that is used to convert attributes of an object of Employee class to strings so that they can be used in SQL query.
+ *
+ * @author Anna Andrlova, Alex Bolfa, Cosmin Demian, Jan Metela, Arturs Ricards Rijnieks
+ * @version 1.0 - May 2023
+ */
+
 public class EmployeeDO {
 
     private String name;
@@ -13,6 +21,11 @@ public class EmployeeDO {
     private String email;
     private String role;
 
+    /**
+     * The constructor takes an Employee object and converts all of its attributes to string attributes of this class that can be used in SQL query.
+     * @param employee
+     * @throws RuntimeException if any of the attributes of the employee is null and the attribute cannot be null in the database or if the role of employee is invalid.
+     */
     public EmployeeDO(Employee employee) {
         if (employee.getName() == null) {
             throw new RuntimeException("Name cannot be null");

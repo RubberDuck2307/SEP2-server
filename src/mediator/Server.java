@@ -11,6 +11,11 @@ import java.rmi.server.UnicastRemoteObject;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+/**
+ *  the class is responsible for creating the local registry and exporting the remote object. It delegates the method calls to the model.
+ *  * @author Anna Andrlova, Alex Bolfa, Cosmin Demian, Jan Metela, Arturs Ricards Rijnieks
+ *  * @version 1.0 - May 2023
+ */
 public class Server implements RemoteModel {
 
     private Model model;

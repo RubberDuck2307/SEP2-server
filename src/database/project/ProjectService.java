@@ -7,15 +7,30 @@ import model.ProjectList;
 import java.sql.*;
 import java.util.ArrayList;
 
+/**
+ * The class that handles all the database operations related to projects table.
+ * @author Anna Andrlova, Alex Bolfa, Cosmin Demian, Jan Metela, Arturs Ricards Rijnieks
+ * @version 1.0 - May 2023
+ */
 public class ProjectService {
 
     private Connection conn;
     private SetParser setParser;
+
+    /**
+     * The constructor sets the connection to the given parameter and initializes the SetParser.
+     * @param conn
+     */
     public ProjectService(Connection conn) {
         this.conn = conn;
         setParser = new SetParser();
     }
 
+    /**
+     * saves the project to the database
+     * @param project
+     * @throws SQLException
+     */
     public void saveProject(Project project) throws SQLException {
         ProjectDO projectDO = new ProjectDO(project);
 
@@ -24,6 +39,11 @@ public class ProjectService {
         statement.executeUpdate(query);
     }
 
+    /**
+     * updates the project in the database
+     * @param project
+     * @throws SQLException
+     */
     public void updateProject(Project project) throws SQLException {
         ProjectDO projectDO = new ProjectDO(project);
         String query = "UPDATE projects SET name = " + projectDO.getName() + ", description = " + projectDO.getDescription() + ", deadline = " + projectDO.getDeadline() + " WHERE id = " + projectDO.getId() + ";";
@@ -31,11 +51,24 @@ public class ProjectService {
         statement.executeUpdate(query);
     }
 
+    /**
+     * creates a new record in the employee_project table
+     * @param workingNumber working number of employee
+     * @param projectID id of the project
+     * @throws SQLException
+     */
     public void assignEmployeeToProject(Integer workingNumber, Long projectID) throws SQLException {
         String query = "INSERT INTO employee_project VALUES(" + workingNumber.toString() + ", " + projectID.toString() + ");";
         PreparedStatement st = conn.prepareStatement(query);
         st.executeUpdate();
     }
+
+    /**
+     * removes the record from the employee_project table
+     * @param workingNumber working number of employee
+     * @param projectID id of the project
+     * @throws SQLException
+     */
 
     public void removeEmployeeFromProject(Integer workingNumber, Long projectID) throws SQLException {
         String query = "DELETE FROM employee_project WHERE working_number = " + workingNumber.toString() + " AND project_id = " + projectID.toString() + ";";
@@ -43,6 +76,11 @@ public class ProjectService {
         st.executeUpdate();
     }
 
+    /**
+     * @param workingNumber working number of employee
+     * @return all projects of an employee
+     * @throws SQLException
+     */
     public ProjectList getAllProjectsOfEmployee(int workingNumber) throws SQLException {
         String query = "SELECT * FROM projects WHERE id in (SELECT id FROM employee_project WHERE working_number = " + workingNumber + " );";
         PreparedStatement st = conn.prepareStatement(query);
@@ -50,6 +88,13 @@ public class ProjectService {
         ProjectList projectList = setParser.getAllProjectsFromSet(set);
         return projectList;
     }
+
+    /**
+     * assigns employees to a project by creating multiple records in the employee_project table. One for each employee working number in the list.
+     * @param employeeWorkingNumbers working numbers of employees
+     * @param ProjectID id of the project
+     * @throws SQLException
+     */
 
     public void assignEmployeesToProject(ArrayList<Integer> employeeWorkingNumbers, Long ProjectID) throws SQLException {
         String query = "INSERT INTO employee_project VALUES";
@@ -64,6 +109,11 @@ public class ProjectService {
         st.executeUpdate();
     }
 
+    /**
+     *
+     * @return all the projects in the database
+     * @throws SQLException
+     */
     public ProjectList getAllProjects() throws SQLException {
         String query = "SELECT * FROM projects;";
         PreparedStatement statement = conn.prepareStatement(query);

@@ -7,10 +7,18 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+/**
+ * The class is used to parse the result sets from the database into the model objects.
+ * @author Anna Andrlova, Alex Bolfa, Cosmin Demian, Jan Metela, Arturs Ricards Rijnieks
+ * @version 1.0 - May 2023
+ */
 public class SetParser {
-
-
-
+    /**
+     * The method parses the result set from the database into the EmployeeList object.
+     * @param set the result set from the database
+     * @return EmployeeList
+     * @throws SQLException
+     */
     public EmployeeList getAllEmployeesFromSet(ResultSet set) throws SQLException {
         ArrayList<Employee> employees = new ArrayList<>();
         while (set.next()) {
@@ -51,6 +59,12 @@ public class SetParser {
         return employeeList;
     }
 
+    /**
+     * The method parses the result set from the database into the ProjectList object.
+     * @param set the result set from the database
+     * @return ProjectList
+     * @throws SQLException
+     */
     public ProjectList getAllProjectsFromSet(ResultSet set) throws SQLException {
         ProjectList projectList = new ProjectList();
         while (set.next()) {
@@ -70,6 +84,12 @@ public class SetParser {
         return projectList;
     }
 
+    /**
+     * The method parses the result set from the database into the TaskList object.
+     * @param set the result set from the database
+     * @return TaskList
+     * @throws SQLException
+     */
     public TaskList getTasksFromSet(ResultSet set) throws SQLException {
         TaskList taskList = new TaskList();
         while (set.next()) {

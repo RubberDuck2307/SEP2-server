@@ -7,15 +7,30 @@ import model.UserProfile;
 
 import java.sql.*;
 
+/**
+ * The class that handles the database operations related to the employees table and user_profiles table.
+ * @author Anna Andrlova, Alex Bolfa, Cosmin Demian, Jan Metela, Arturs Ricards Rijnieks
+ * @version 1.0 - May 2023
+ */
 public class EmployeeService {
+
+
     private Connection conn;
     private SetParser setParser;
+
+    /**
+     * The constructor sets the connection to the parameter and initializes the SetParser.
+     * @param connection connection to the database
+     */
 
     public EmployeeService(Connection connection) {
         this.conn = connection;
         setParser = new SetParser();
     }
 
+    /**
+     * @return all the projectManagers from the database.
+     */
     public EmployeeList getAllProjectManagers(){
         EmployeeList employeeList = new EmployeeList();
         try {
@@ -29,6 +44,13 @@ public class EmployeeService {
         }
         return employeeList;
     }
+
+    /**
+     * saves employee object and a user profile created to the database
+     * @param employee the employee to be stored into the database
+     * @param password the password of the user profile to be stored into the database
+     * @return the working number generated for the employee
+     */
 
     public Integer saveEmployee(Employee employee, String password) throws SQLException {
         EmployeeDO employeeDO = new EmployeeDO(employee);
@@ -51,12 +73,24 @@ public class EmployeeService {
         return userProfile.getWorkingNumber();
     }
 
+    /**
+     * saves UserProfile object to the database
+     * @param userProfile the user profile to be stored into the database
+     * @throws SQLException
+     */
     public void addUserProfile(UserProfile userProfile) throws SQLException {
         UserProfileDO userProfileDO = new UserProfileDO(userProfile);
         String query = "INSERT INTO user_profiles (working_number, password) VALUES (" + userProfileDO.getWorkingNumber() + ", " + userProfileDO.getPassword() + ");";
         Statement statement = conn.createStatement();
         statement.executeUpdate(query);
     }
+
+    /**
+     * checks if the given userProfile is in the database and if so returns the employee related to the userProfile
+     * @param userProfile the user profile to be checked
+     * @return employee related to the userProfile or null if the userProfile is not in the database
+     * @throws SQLException
+     */
 
     public Employee login(UserProfile userProfile) throws SQLException {
         UserProfileDO userProfileDO = new UserProfileDO(userProfile);
@@ -76,6 +110,12 @@ public class EmployeeService {
         }
     }
 
+    /**
+     *
+     * @param managerNumber the working number of the manager
+     * @return all employees assigned to the manager
+     * @throws SQLException
+     */
     public EmployeeList getEmployeesAssignedToManager(int managerNumber) throws SQLException {
         String query = "SELECT * FROM employees WHERE working_number in (SELECT worker_number FROM manager_worker WHERE manager_number = " + managerNumber + ");";
         PreparedStatement st = conn.prepareStatement(query);
@@ -85,6 +125,11 @@ public class EmployeeService {
         return employeeList;
     }
 
+    /**
+     * @param TaskId the id of the task
+     * @return all employees assigned to the task
+     * @throws SQLException
+     */
     public EmployeeList getEmployeesOfTask(Long TaskId) throws SQLException {
         String query = "SELECT * FROM employees WHERE working_number in (SELECT working_number FROM worker_task WHERE task_id = " + TaskId + ");";
         PreparedStatement st = conn.prepareStatement(query);
@@ -93,12 +138,24 @@ public class EmployeeService {
         return employeeList;
     }
 
+    /**
+     * add a record to the manager_worker table
+     * @param managerNumber the working number of the manager
+     * @param workerNumber the working number of the worker
+     * @throws SQLException
+     */
     public void assignWorkerToManager(int managerNumber, int workerNumber) throws SQLException {
         String query = "INSERT INTO worker_task VALUES(" + managerNumber + ", " + workerNumber + ");";
         PreparedStatement st = conn.prepareStatement(query);
         st.executeUpdate();
     }
 
+    /**
+     *
+     * @param projectId the id of the project
+     * @return returns all employees assigned to the project
+     * @throws SQLException
+     */
     public EmployeeList getAllEmployeesAssignedToProject(Long projectId) throws SQLException {
         String query = "SELECT * FROM employees WHERE working_number in (SELECT working_number FROM employee_project WHERE project_id = " + projectId + " );";
         PreparedStatement st = conn.prepareStatement(query);
@@ -107,6 +164,12 @@ public class EmployeeService {
         return employees;
 
     }
+
+    /**
+     *
+     * @return all employees in the database
+     * @throws SQLException
+     */
     public EmployeeList getAllEmployees() throws SQLException {
         String query = "SELECT * FROM employees;";
         PreparedStatement st = conn.prepareStatement(query);
@@ -115,11 +178,18 @@ public class EmployeeService {
         return employees;
 
     }
+
+    /**
+     *
+     * @param workingNumber the working number of the employee
+     * @return the employee with the given working number
+     * @throws SQLException
+     */
     public Employee getEmployeeByWorkingNumber(int workingNumber) throws SQLException {
         String query = "SELECT * FROM employees WHERE working_number = " + workingNumber + ";";
         PreparedStatement st = conn.prepareStatement(query);
         ResultSet set = st.executeQuery();
-        Employee employee = setParser.getAllEmployeesFromSet(set).getEmployee(0);
+        Employee employee = setParser.getAllEmployeesFromSet(set).get(0);
         return employee;
 
     }
