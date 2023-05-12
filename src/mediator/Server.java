@@ -117,6 +117,11 @@ public class Server implements RemoteModel {
         return model.getAllProjectManagers();
     }
 
+    @Override public EmployeeList getAllWorkers() throws RemoteException
+    {
+        return model.getAllWorkers();
+    }
+
     @Override
     public void updateProject(Project project) throws RemoteException {
         model.updateProject(project);

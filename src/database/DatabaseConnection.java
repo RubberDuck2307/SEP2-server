@@ -23,6 +23,7 @@ public interface DatabaseConnection {
     Integer saveEmployee(Employee employee, String password) throws SQLException;
 
     EmployeeList getAllProjectManagers() throws SQLException;
+    EmployeeList getAllWorkers() throws SQLException;
 
     void updateProject(Project project) throws SQLException;
 

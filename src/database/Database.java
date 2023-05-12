@@ -79,6 +79,11 @@ public class Database implements DatabaseConnection {
         return employeeService.getAllProjectManagers();
     }
 
+    @Override public EmployeeList getAllWorkers() throws SQLException
+    {
+        return employeeService.getAllWorkers();
+    }
+
     public Integer saveEmployee(Employee employee, String password) throws SQLException {
         return employeeService.saveEmployee(employee, password);
     }

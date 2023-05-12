@@ -167,6 +167,19 @@ public class ModelManager implements Model {
         }
     }
 
+    @Override public EmployeeList getAllWorkers()
+    {
+        try
+        {
+            return databaseConnection.getAllWorkers();
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
     @Override
     public Integer saveEmployee(Employee employee, String password) {
         try {
