@@ -144,8 +144,21 @@ public class EmployeeService {
      * @param workerNumber the working number of the worker
      * @throws SQLException
      */
-    public void assignWorkerToManager(int managerNumber, int workerNumber) throws SQLException {
+    public void assignWorkerToManager(Integer managerNumber, Integer workerNumber) throws SQLException {
+        String query = "INSERT INTO manager_worker VALUES(" + managerNumber.toString() + ", " + workerNumber.toString() + ");";
+        PreparedStatement st = conn.prepareStatement(query);
+        st.executeUpdate();
+    }
+
+    /**
+     * remove a record from the manager_worker table
+     * @param managerNumber the working number of the manager
+     * @param workerNumber the working number of the worker
+     * @throws SQLException
+     */
+    public void removeWorkerFromManager(Integer managerNumber, Integer workerNumber) throws SQLException {
         String query = "INSERT INTO worker_task VALUES(" + managerNumber + ", " + workerNumber + ");";
+        query = "DELETE FROM manager_worker WHERE manager_number = " + managerNumber.toString() + " AND worker_number = " + workerNumber.toString() + ";";
         PreparedStatement st = conn.prepareStatement(query);
         st.executeUpdate();
     }

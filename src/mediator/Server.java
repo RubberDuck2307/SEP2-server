@@ -100,6 +100,18 @@ public class Server implements RemoteModel {
         model.removeEmployeeFromProject(workingNumber, projectID);
     }
 
+    @Override public void assignWorkerToManager(int managerNumber,
+        int workerNumber) throws RemoteException
+    {
+        model.assignWorkerToManager(managerNumber, workerNumber);
+    }
+
+    @Override public void removeWorkerFromManager(int managerNumber,
+        int workerNumber) throws RemoteException
+    {
+        model.removeWorkerFromManager(managerNumber, workerNumber);
+    }
+
     @Override
     public EmployeeList getAllProjectManagers() throws RemoteException {
         return model.getAllProjectManagers();

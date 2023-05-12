@@ -21,6 +21,9 @@ public interface Model {
     void assignEmployeeToProject(Integer workingNumber, Long projectID);
     void removeEmployeeFromProject(Integer workingNumber, Long projectID);
 
+    void assignWorkerToManager(int managerNumber, int workerNumber);
+    void removeWorkerFromManager(int managerNumber, int workerNumber);
+
     Employee login(UserProfile userProfile);
 
     Integer saveEmployee(Employee employee, String password);

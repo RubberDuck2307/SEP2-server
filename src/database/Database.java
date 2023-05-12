@@ -162,6 +162,10 @@ public class Database implements DatabaseConnection {
         employeeService.assignWorkerToManager(managerNumber, workerNumber);
     }
 
+    public void removeWorkerFromManager(int managerNumber, int workerNumber) throws SQLException {
+        employeeService.removeWorkerFromManager(managerNumber, workerNumber);
+    }
+
     public EmployeeList getEmployeesAssignedToManager(int managerNumber) throws SQLException {
         return employeeService.getEmployeesAssignedToManager(managerNumber);
     }
