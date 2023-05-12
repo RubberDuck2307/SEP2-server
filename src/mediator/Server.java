@@ -152,4 +152,9 @@ public class Server implements RemoteModel {
         return model.getProjectById(projectId);
     }
 
+    @Override public TaskList getAllTasksByUserId(Integer workingNumber) throws RemoteException
+    {
+        return model.getAllTasksByUserId(workingNumber);
+    }
+
 }

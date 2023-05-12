@@ -202,6 +202,17 @@ public class ModelManager implements Model {
         }
     }
 
+    @Override public TaskList getAllTasksByUserId(Integer workingNumber)
+    {
+        try {
+            return databaseConnection.getAllTasksByUserId(workingNumber);
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
     public void updateTask(Task task){
         try {
             databaseConnection.updateTask(task);

@@ -198,4 +198,10 @@ public class Database implements DatabaseConnection {
     {
         return projectService.getProjectById(projectId);
     }
+
+    @Override public TaskList getAllTasksByUserId(Integer workingNumber)
+        throws SQLException
+    {
+        return taskService.getAllTasksByUserId(workingNumber);
+    }
 }

@@ -35,4 +35,5 @@ public interface Model {
     Employee getEmployeeByWorkingNumber(int workingNumber);
     EmployeeList getAllEmployees();
     Project getProjectById(long projectId);
+    TaskList getAllTasksByUserId (Integer workingNumber);
 }
