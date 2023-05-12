@@ -36,4 +36,5 @@ public interface RemoteModel extends Remote {
     EmployeeList getEmployeesOfTask(Long taskId) throws RemoteException;
     Employee getEmployeeByWorkingNumber(int workingNumber) throws RemoteException;
     EmployeeList getAllEmployees() throws RemoteException;
+    Project getProjectById(long projectId) throws RemoteException;
 }

@@ -123,4 +123,12 @@ public class ProjectService {
         return projectList;
     }
 
+  public Project getProjectById(long projectId) throws SQLException
+  {
+      String query = "SELECT * FROM projects;";
+      PreparedStatement statement = conn.prepareStatement(query);
+      ResultSet set = statement.executeQuery();
+      Project project = setParser.getAllProjectsFromSet(set).getProjectByID(projectId);
+      return project;
+  }
 }

@@ -147,4 +147,9 @@ public class Server implements RemoteModel {
         return model.getAllEmployees();
     }
 
+    @Override public Project getProjectById(long projectId) throws RemoteException
+    {
+        return model.getProjectById(projectId);
+    }
+
 }

@@ -193,4 +193,9 @@ public class Database implements DatabaseConnection {
     {
         return employeeService.getAllEmployees();
     }
+
+    @Override public Project getProjectById(long projectId) throws SQLException
+    {
+        return projectService.getProjectById(projectId);
+    }
 }

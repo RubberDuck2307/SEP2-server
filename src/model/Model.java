@@ -34,4 +34,5 @@ public interface Model {
     EmployeeList getEmployeesAssignedToManager(int managerNumber);
     Employee getEmployeeByWorkingNumber(int workingNumber);
     EmployeeList getAllEmployees();
+    Project getProjectById(long projectId);
 }

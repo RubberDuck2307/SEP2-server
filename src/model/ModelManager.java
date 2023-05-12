@@ -191,6 +191,17 @@ public class ModelManager implements Model {
         }
     }
 
+    @Override public Project getProjectById(long projectId)
+    {
+        try {
+            return databaseConnection.getProjectById(projectId);
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
     public void updateTask(Task task){
         try {
             databaseConnection.updateTask(task);
