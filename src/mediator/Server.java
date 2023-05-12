@@ -57,6 +57,9 @@ public class Server implements RemoteModel {
        return model.saveTask(task);
     }
 
+    public ProjectList getAllProjects() throws RemoteException{
+        return model.getAllProjects();
+    }
     @Override
     public void saveProject(Project project) throws RemoteException {
         model.saveProject(project);
@@ -71,6 +74,10 @@ public class Server implements RemoteModel {
     @Override
     public Employee login(UserProfile userProfile) throws RemoteException {
         return model.login(userProfile);
+    }
+
+    public Task getTask(Long projectId) throws RemoteException{
+        return model.getTask(projectId);
     }
 
     public void unassignEmployeesFromTask(ArrayList<Integer> employeeWorkingNumbers, Long TaskID) throws RemoteException{
