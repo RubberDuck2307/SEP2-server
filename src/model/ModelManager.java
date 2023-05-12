@@ -18,7 +18,14 @@ public class ModelManager implements Model {
     public ModelManager(DatabaseConnection databaseConnection) {
         this.databaseConnection = databaseConnection;
     }
-
+    public Task getTask(Long projectId){
+        try {
+            return databaseConnection.getTask(projectId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
     public TaskList getAllTasksOfProject(Long id) {
 
         try {
@@ -34,6 +41,15 @@ public class ModelManager implements Model {
 
         try {
             return databaseConnection.getAllProjectsOfEmployee(workingNumber);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    public ProjectList getAllProjects(){
+        try {
+            return databaseConnection.getAllProjects();
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException(e);

@@ -82,7 +82,7 @@ public class ProjectService {
      * @throws SQLException
      */
     public ProjectList getAllProjectsOfEmployee(int workingNumber) throws SQLException {
-        String query = "SELECT * FROM projects WHERE id in (SELECT id FROM employee_project WHERE working_number = " + workingNumber + " );";
+        String query = "SELECT * FROM projects WHERE id in (SELECT project_id FROM employee_project WHERE working_number = " + workingNumber + " );";
         PreparedStatement st = conn.prepareStatement(query);
         ResultSet set = st.executeQuery();
         ProjectList projectList = setParser.getAllProjectsFromSet(set);

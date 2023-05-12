@@ -10,6 +10,8 @@ public interface DatabaseConnection {
 
     ProjectList getAllProjectsOfEmployee(int workingNumber) throws SQLException;
 
+    ProjectList getAllProjects() throws SQLException;
+
     TaskList getAllTasksOfProject(Long projectId) throws SQLException;
 
     Long saveTask(Task task) throws SQLException;
@@ -35,7 +37,7 @@ public interface DatabaseConnection {
 
     void assignEmployeeToProject(Integer workingNumber, Long projectID) throws SQLException;
     void removeEmployeeFromProject(Integer workingNumber, Long projectID) throws SQLException;
-
+    Task getTask(Long projectId) throws SQLException;
     EmployeeList getAllEmployeesAssignedToProject(Long projectId) throws SQLException;
     EmployeeList getEmployeesAssignedToManager(int managerNumber) throws SQLException;
     void updateTask(Task task) throws SQLException;

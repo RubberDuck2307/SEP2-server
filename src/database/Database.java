@@ -88,6 +88,10 @@ public class Database implements DatabaseConnection {
         return employeeService.saveEmployee(employee, password);
     }
 
+    public Task getTask(Long projectId) throws SQLException {
+        return taskService.getTask(projectId);
+    }
+
     public void addUserProfile(UserProfile userProfile) throws SQLException {
         employeeService.addUserProfile(userProfile);
     }

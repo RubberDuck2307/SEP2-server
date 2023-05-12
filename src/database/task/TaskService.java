@@ -79,6 +79,22 @@ public class TaskService {
      * @return list of tasks of the given project
      * @throws SQLException
      */
+
+    public Task getTask(Long projectId) throws SQLException {
+        String query = "SELECT * FROM tasks WHERE id = " + projectId + ";";
+        PreparedStatement st = conn.prepareStatement(query);
+        ResultSet set = st.executeQuery();
+        TaskList taskList = setParser.getTasksFromSet(set);
+        Task task = taskList.getTask(0);
+
+        String workerQuery = "SELECT * FROM employees WHERE working_number in (SELECT working_number FROM worker_task WHERE task_id = " + task.getId() + ");";
+        PreparedStatement workerSt = conn.prepareStatement(workerQuery);
+        ResultSet workerSet = workerSt.executeQuery();
+        EmployeeList employees = setParser.getAllEmployeesFromSet(workerSet);
+        task.setWorkers(employees);
+
+        return task;
+    }
     public TaskList getAllTasksOfProject(Long projectId) throws SQLException {
         String query = "SELECT * FROM tasks WHERE project_id = " + projectId + ";";
         PreparedStatement st = conn.prepareStatement(query);
