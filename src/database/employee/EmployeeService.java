@@ -46,6 +46,23 @@ public class EmployeeService {
     }
 
     /**
+     * @return all the workers from the database.
+     */
+    public EmployeeList getAllWorkers(){
+        EmployeeList employeeList = new EmployeeList();
+        try {
+            String query = "SELECT * FROM employees WHERE role = 'WORKER';";
+            PreparedStatement st = conn.prepareStatement(query);
+            ResultSet rs = st.executeQuery();
+            employeeList = setParser.getAllEmployeesFromSet(rs);
+            System.out.println(employeeList);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return employeeList;
+    }
+
+    /**
      * saves employee object and a user profile created to the database
      * @param employee the employee to be stored into the database
      * @param password the password of the user profile to be stored into the database
@@ -144,8 +161,21 @@ public class EmployeeService {
      * @param workerNumber the working number of the worker
      * @throws SQLException
      */
-    public void assignWorkerToManager(int managerNumber, int workerNumber) throws SQLException {
+    public void assignWorkerToManager(Integer managerNumber, Integer workerNumber) throws SQLException {
+        String query = "INSERT INTO manager_worker VALUES(" + managerNumber.toString() + ", " + workerNumber.toString() + ");";
+        PreparedStatement st = conn.prepareStatement(query);
+        st.executeUpdate();
+    }
+
+    /**
+     * remove a record from the manager_worker table
+     * @param managerNumber the working number of the manager
+     * @param workerNumber the working number of the worker
+     * @throws SQLException
+     */
+    public void removeWorkerFromManager(Integer managerNumber, Integer workerNumber) throws SQLException {
         String query = "INSERT INTO worker_task VALUES(" + managerNumber + ", " + workerNumber + ");";
+        query = "DELETE FROM manager_worker WHERE manager_number = " + managerNumber.toString() + " AND worker_number = " + workerNumber.toString() + ";";
         PreparedStatement st = conn.prepareStatement(query);
         st.executeUpdate();
     }
@@ -191,7 +221,6 @@ public class EmployeeService {
         ResultSet set = st.executeQuery();
         Employee employee = setParser.getAllEmployeesFromSet(set).get(0);
         return employee;
-
     }
 
 

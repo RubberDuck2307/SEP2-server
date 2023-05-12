@@ -23,12 +23,15 @@ public interface DatabaseConnection {
     Integer saveEmployee(Employee employee, String password) throws SQLException;
 
     EmployeeList getAllProjectManagers() throws SQLException;
+    EmployeeList getAllWorkers() throws SQLException;
 
     void updateProject(Project project) throws SQLException;
 
     void assignWorkerToTask(Integer workingNumber, Long taskID) throws SQLException;
     void removeWorkerFromTask(Integer workingNumber, Long taskID) throws SQLException;
 
+    void assignWorkerToManager(int managerNumber, int workerNumber) throws SQLException;
+    void removeWorkerFromManager(int managerNumber, int workerNumber) throws SQLException;
 
     void assignEmployeeToProject(Integer workingNumber, Long projectID) throws SQLException;
     void removeEmployeeFromProject(Integer workingNumber, Long projectID) throws SQLException;

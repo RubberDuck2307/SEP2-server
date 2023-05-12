@@ -21,6 +21,9 @@ public interface Model {
     void assignEmployeeToProject(Integer workingNumber, Long projectID);
     void removeEmployeeFromProject(Integer workingNumber, Long projectID);
 
+    void assignWorkerToManager(int managerNumber, int workerNumber);
+    void removeWorkerFromManager(int managerNumber, int workerNumber);
+
     Employee login(UserProfile userProfile);
 
     Integer saveEmployee(Employee employee, String password);
@@ -29,6 +32,7 @@ public interface Model {
     void updateTask(Task task);
     void assignEmployeesToTask(ArrayList<Integer> employeeWorkingNumbers, Long TaskID);
     EmployeeList getAllProjectManagers();
+    EmployeeList getAllWorkers();
     EmployeeList getEmployeesOfTask(Long TaskId);
     EmployeeList getAllEmployeesAssignedToProject(Long projectId);
     EmployeeList getEmployeesAssignedToManager(int managerNumber);

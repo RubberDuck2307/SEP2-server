@@ -79,6 +79,11 @@ public class Database implements DatabaseConnection {
         return employeeService.getAllProjectManagers();
     }
 
+    @Override public EmployeeList getAllWorkers() throws SQLException
+    {
+        return employeeService.getAllWorkers();
+    }
+
     public Integer saveEmployee(Employee employee, String password) throws SQLException {
         return employeeService.saveEmployee(employee, password);
     }
@@ -160,6 +165,10 @@ public class Database implements DatabaseConnection {
 
     public void assignWorkerToManager(int managerNumber, int workerNumber) throws SQLException {
         employeeService.assignWorkerToManager(managerNumber, workerNumber);
+    }
+
+    public void removeWorkerFromManager(int managerNumber, int workerNumber) throws SQLException {
+        employeeService.removeWorkerFromManager(managerNumber, workerNumber);
     }
 
     public EmployeeList getEmployeesAssignedToManager(int managerNumber) throws SQLException {

@@ -119,6 +119,34 @@ public class ModelManager implements Model {
         }
     }
 
+    @Override public void assignWorkerToManager(int managerNumber,
+        int workerNumber)
+    {
+        try
+        {
+            databaseConnection.assignWorkerToManager(managerNumber, workerNumber);
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override public void removeWorkerFromManager(int managerNumber,
+        int workerNumber)
+    {
+        try
+        {
+            databaseConnection.removeWorkerFromManager(managerNumber, workerNumber);
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
     @Override
     public Employee login(UserProfile userProfile) {
        try {
@@ -134,6 +162,19 @@ public class ModelManager implements Model {
         try {
             return databaseConnection.getAllProjectManagers();
         } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override public EmployeeList getAllWorkers()
+    {
+        try
+        {
+            return databaseConnection.getAllWorkers();
+        }
+        catch (SQLException e)
+        {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
