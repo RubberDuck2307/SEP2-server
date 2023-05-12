@@ -213,4 +213,10 @@ public class Database implements DatabaseConnection {
     {
         return taskService.getAllTasksByUserId(workingNumber);
     }
+
+    @Override public EmployeeList getAllWorkersManagersByWorkerWorkingNumber(
+        Integer workingNumber) throws SQLException
+    {
+        return employeeService.getAllWorkersManagersByWorkerWorkingNumber(workingNumber);
+    }
 }

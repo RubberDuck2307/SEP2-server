@@ -254,6 +254,17 @@ public class ModelManager implements Model {
         }
     }
 
+    @Override public EmployeeList getAllWorkersManagersByWorkerWorkingNumber(
+        Integer workingNumber)
+    {
+        try {
+            return databaseConnection.getAllWorkersManagersByWorkerWorkingNumber(workingNumber);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
     public void updateTask(Task task){
         try {
             databaseConnection.updateTask(task);
