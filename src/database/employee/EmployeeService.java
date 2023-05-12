@@ -46,6 +46,23 @@ public class EmployeeService {
     }
 
     /**
+     * @return all the workers from the database.
+     */
+    public EmployeeList getAllWorkers(){
+        EmployeeList employeeList = new EmployeeList();
+        try {
+            String query = "SELECT * FROM employees WHERE role = 'WORKER';";
+            PreparedStatement st = conn.prepareStatement(query);
+            ResultSet rs = st.executeQuery();
+            employeeList = setParser.getAllEmployeesFromSet(rs);
+            System.out.println(employeeList);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return employeeList;
+    }
+
+    /**
      * saves employee object and a user profile created to the database
      * @param employee the employee to be stored into the database
      * @param password the password of the user profile to be stored into the database
@@ -204,7 +221,6 @@ public class EmployeeService {
         ResultSet set = st.executeQuery();
         Employee employee = setParser.getAllEmployeesFromSet(set).get(0);
         return employee;
-
     }
 
 

@@ -183,6 +183,19 @@ public class ModelManager implements Model {
         }
     }
 
+    @Override public EmployeeList getAllWorkers()
+    {
+        try
+        {
+            return databaseConnection.getAllWorkers();
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
     @Override
     public Integer saveEmployee(Employee employee, String password) {
         try {
@@ -228,6 +241,28 @@ public class ModelManager implements Model {
     {
         try {
             return databaseConnection.getAllEmployees();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override public Project getProjectById(long projectId)
+    {
+        try {
+            return databaseConnection.getProjectById(projectId);
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override public TaskList getAllTasksByUserId(Integer workingNumber)
+    {
+        try {
+            return databaseConnection.getAllTasksByUserId(workingNumber);
         }
         catch (SQLException e) {
             e.printStackTrace();

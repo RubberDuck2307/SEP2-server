@@ -1,10 +1,7 @@
 package database.task;
 
 import database.SetParser;
-import model.EmployeeList;
-import model.Task;
-import model.TaskList;
-import model.UserProfile;
+import model.*;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -191,4 +188,13 @@ public class TaskService {
         PreparedStatement st = conn.prepareStatement(query);
         st.executeUpdate();
     }
+
+  public TaskList getAllTasksByUserId(Integer workingNumber) throws SQLException
+  {
+      String query = "SELECT * FROM tasks WHERE id in (SELECT id FROM worker_task WHERE working_number = " + workingNumber + " );";
+      PreparedStatement st = conn.prepareStatement(query);
+      ResultSet set = st.executeQuery();
+      TaskList taskList = setParser.getTasksFromSet(set);
+      return taskList;
+  }
 }

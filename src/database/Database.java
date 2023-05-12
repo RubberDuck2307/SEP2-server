@@ -79,6 +79,11 @@ public class Database implements DatabaseConnection {
         return employeeService.getAllProjectManagers();
     }
 
+    @Override public EmployeeList getAllWorkers() throws SQLException
+    {
+        return employeeService.getAllWorkers();
+    }
+
     public Integer saveEmployee(Employee employee, String password) throws SQLException {
         return employeeService.saveEmployee(employee, password);
     }
@@ -200,5 +205,16 @@ public class Database implements DatabaseConnection {
     @Override public EmployeeList getAllEmployees() throws SQLException
     {
         return employeeService.getAllEmployees();
+    }
+
+    @Override public Project getProjectById(long projectId) throws SQLException
+    {
+        return projectService.getProjectById(projectId);
+    }
+
+    @Override public TaskList getAllTasksByUserId(Integer workingNumber)
+        throws SQLException
+    {
+        return taskService.getAllTasksByUserId(workingNumber);
     }
 }

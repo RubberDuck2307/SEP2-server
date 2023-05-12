@@ -124,6 +124,11 @@ public class Server implements RemoteModel {
         return model.getAllProjectManagers();
     }
 
+    @Override public EmployeeList getAllWorkers() throws RemoteException
+    {
+        return model.getAllWorkers();
+    }
+
     @Override
     public void updateProject(Project project) throws RemoteException {
         model.updateProject(project);
@@ -164,6 +169,16 @@ public class Server implements RemoteModel {
     @Override public EmployeeList getAllEmployees() throws RemoteException
     {
         return model.getAllEmployees();
+    }
+
+    @Override public Project getProjectById(long projectId) throws RemoteException
+    {
+        return model.getProjectById(projectId);
+    }
+
+    @Override public TaskList getAllTasksByUserId(Integer workingNumber) throws RemoteException
+    {
+        return model.getAllTasksByUserId(workingNumber);
     }
 
 }
