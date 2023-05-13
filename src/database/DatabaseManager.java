@@ -134,6 +134,19 @@ public class DatabaseManager {
         statement.executeUpdate(query);
     }
 
+    private void addDummyDataEmployeeNotes() throws SQLException
+    {
+        String query = "Insert into employee_notes(working_number, title, note_text, creation_date)" +
+            "VALUES (1, 'I like fathers', 'This should be the first employees note text', '1999-12-9')," +
+            "(2, 'I like mothers', 'This should be the second employees note text', '1999-12-9')," +
+            "(3, 'I like daughters', 'This should be the third employees note text',  '1999-12-9')," +
+            "(4, 'I like brothers', 'This should be the fourth employees note text', '1999-12-9')," +
+            "(5, 'I like sisters', 'This should be the fifth employees note text', '1999-12-9')," +
+            "(6, 'I like grandfathers', 'This should be the sixth employees note text', '1999-12-9');";
+        Statement statement = conn.createStatement();
+        statement.executeUpdate(query);
+    }
+
 
     /**
      * The method uses other private methods to add dummy data to the database
@@ -147,6 +160,7 @@ public class DatabaseManager {
         addDummyDataEmployeeProject();
         addDummyDataWorkerTask();
         addDummyDataManagerWorker();
+        addDummyDataEmployeeNotes();
     }
 
     /**
@@ -154,7 +168,7 @@ public class DatabaseManager {
      * @throws SQLException
      */
     public void clearAllTables() throws SQLException {
-        String query = "DELETE FROM manager_worker cascade; DELETE FROM employee_project cascade; DELETE FROM worker_task cascade; DELETE FROM tasks cascade; DELETE FROM projects cascade;DELETE FROM user_profiles cascade; DELETE FROM employees cascade;";
+        String query = "DELETE FROM manager_worker cascade; DELETE FROM employee_project cascade; DELETE FROM worker_task cascade; DELETE FROM tasks cascade; DELETE FROM projects cascade;DELETE FROM user_profiles cascade; DELETE FROM employees cascade;DELETE FROM employee_notes cascade;";
         PreparedStatement st = conn.prepareStatement(query);
         st.executeUpdate();
     }

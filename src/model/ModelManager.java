@@ -281,6 +281,36 @@ public class ModelManager implements Model {
         }
     }
 
+    @Override public void updateNote(Note note)
+    {
+        try {
+            databaseConnection.updateNote(note);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override public void saveNote(Note note)
+    {
+        try {
+            databaseConnection.saveNote(note);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override public NoteList getAllNotesSavedByEmployee(Integer workingNumber)
+    {
+        try {
+            return databaseConnection.getAllNotesSavedByEmployee(workingNumber);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
     public void updateTask(Task task){
         try {
             databaseConnection.updateTask(task);

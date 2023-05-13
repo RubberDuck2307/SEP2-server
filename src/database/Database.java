@@ -1,5 +1,6 @@
 package database;
 
+import database.NoteDO.NoteService;
 import database.employee.EmployeeDO;
 import database.employee.EmployeeService;
 import database.employee.UserProfileDO;
@@ -33,6 +34,8 @@ public class Database implements DatabaseConnection {
 
     private DatabaseManager databaseManager;
 
+    private NoteService noteService;
+
     /**
      * The constructor connecting to the database and initializing all the services
      */
@@ -42,6 +45,7 @@ public class Database implements DatabaseConnection {
         this.projectService = new ProjectService(conn);
         this.taskService = new TaskService(conn);
         this.databaseManager = new DatabaseManager(conn);
+        this.noteService = new NoteService(conn);
 
     }
 
@@ -222,5 +226,20 @@ public class Database implements DatabaseConnection {
         Integer workingNumber) throws SQLException
     {
         return employeeService.getAllWorkersManagersByWorkerWorkingNumber(workingNumber);
+    }
+
+    public void saveNote(Note note) throws SQLException
+    {
+        noteService.saveNote(note);
+    }
+
+    public void updateNote(Note note) throws SQLException
+    {
+        noteService.updateNote(note);
+    }
+
+    public NoteList getAllNotesSavedByEmployee(Integer workingNumber)  throws SQLException
+    {
+        return noteService.getAllNotesSavedByEmployee(workingNumber);
     }
 }

@@ -49,4 +49,7 @@ public interface RemoteModel extends Remote {
     Project getProjectById(long projectId) throws RemoteException;
     TaskList getAllTasksByUserId (Integer workingNumber) throws RemoteException;
     EmployeeList getAllWorkersManagersByWorkerWorkingNumber(Integer workingNumber) throws RemoteException;
+    void updateNote(Note note) throws RemoteException;
+    void saveNote(Note note) throws RemoteException;
+    NoteList getAllNotesSavedByEmployee(Integer workingNumber)  throws RemoteException;
 }

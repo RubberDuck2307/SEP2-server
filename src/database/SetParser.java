@@ -117,4 +117,28 @@ public class SetParser {
         return taskList;
     }
 
+    public NoteList getAllNotesFromSet(ResultSet set) throws SQLException
+    {
+        NoteList noteList = new NoteList();
+        while (set.next())
+        {
+            Long id = set.getLong("id");
+            Long note_id = set.getLong("note_id");
+            String title = set.getString("title");
+            String noteText = set.getString("noteText");
+            LocalDate creationDate;
+
+            try
+            {
+                creationDate = set.getDate("creationDate").toLocalDate();
+            }
+            catch (NullPointerException e)
+            {
+                creationDate = null;
+            }
+            noteList.addNote((new Note(id, title, noteText, creationDate)));
+        }
+        return noteList;
+    }
+
 }

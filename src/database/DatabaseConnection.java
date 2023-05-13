@@ -48,4 +48,8 @@ public interface DatabaseConnection {
     Project getProjectById(long projectId) throws SQLException;
     TaskList getAllTasksByUserId(Integer workingNumber) throws SQLException;
     EmployeeList getAllWorkersManagersByWorkerWorkingNumber(Integer workingNumber) throws SQLException;
+    void updateNote(Note note) throws SQLException;
+    void saveNote(Note note) throws SQLException;
+    NoteList getAllNotesSavedByEmployee(Integer workingNumber)  throws SQLException;
+
 }

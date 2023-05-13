@@ -187,4 +187,20 @@ public class Server implements RemoteModel {
         return model.getAllWorkersManagersByWorkerWorkingNumber(workingNumber);
     }
 
+    @Override public void updateNote(Note note) throws RemoteException
+    {
+        model.updateNote(note);
+    }
+
+    @Override public void saveNote(Note note) throws RemoteException
+    {
+        model.saveNote(note);
+    }
+
+    @Override public NoteList getAllNotesSavedByEmployee(Integer workingNumber)
+        throws RemoteException
+    {
+        return model.getAllNotesSavedByEmployee(workingNumber);
+    }
+
 }

@@ -43,5 +43,7 @@ public interface Model {
     Project getProjectById(long projectId);
     TaskList getAllTasksByUserId (Integer workingNumber);
     EmployeeList getAllWorkersManagersByWorkerWorkingNumber(Integer workingNumber);
-
+    void updateNote(Note note);
+    void saveNote(Note note);
+    NoteList getAllNotesSavedByEmployee(Integer workingNumber);
 }
