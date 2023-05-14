@@ -136,13 +136,13 @@ public class DatabaseManager {
 
     private void addDummyDataEmployeeNotes() throws SQLException
     {
-        String query = "Insert into employee_notes(working_number, title, note_text, creation_date)" +
-            "VALUES (1, 'I like fathers', 'This should be the first employees note text', '1999-12-9')," +
-            "(2, 'I like mothers', 'This should be the second employees note text', '1999-12-9')," +
-            "(3, 'I like daughters', 'This should be the third employees note text',  '1999-12-9')," +
-            "(4, 'I like brothers', 'This should be the fourth employees note text', '1999-12-9')," +
-            "(5, 'I like sisters', 'This should be the fifth employees note text', '1999-12-9')," +
-            "(6, 'I like grandfathers', 'This should be the sixth employees note text', '1999-12-9');";
+        String query = "INSERT INTO employee_notes(working_number, title, note_text, creation_date)" +
+            "VALUES (1, 'I like Mango', 'This should be the first employees note text', '1999-12-9')," +
+            "(2, 'I like Pineapple', 'This should be the second employees note text', '1999-12-9')," +
+            "(3, 'I like Papaya', 'This should be the third employees note text',  '1999-12-9')," +
+            "(4, 'I like Kiwi', 'This should be the fourth employees note text', '1999-12-9')," +
+            "(5, 'I like Dragon-fruit', 'This should be the fifth employees note text', '1999-12-9')," +
+            "(6, 'I like Guava', 'This should be the sixth employees note text', '1999-12-9');";
         Statement statement = conn.createStatement();
         statement.executeUpdate(query);
     }
@@ -179,7 +179,7 @@ public class DatabaseManager {
      * @throws SQLException
      */
     public void resetSequences() throws SQLException {
-        String query = "ALTER SEQUENCE projects_id_seq RESTART WITH 1; ALTER SEQUENCE tasks_id_seq RESTART WITH 1; ALTER SEQUENCE employees_working_number_seq RESTART WITH 1000;";
+        String query = "ALTER SEQUENCE projects_id_seq RESTART WITH 1; ALTER SEQUENCE tasks_id_seq RESTART WITH 1; ALTER SEQUENCE employees_working_number_seq RESTART WITH 1000; ALTER SEQUENCE employee_notes_id_seq RESTART WITH 1;";
         PreparedStatement statement = conn.prepareStatement(query);
         statement.executeUpdate();
     }

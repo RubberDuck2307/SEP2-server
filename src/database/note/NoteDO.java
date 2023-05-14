@@ -1,4 +1,4 @@
-package database.NoteDO;
+package database.note;
 
 import model.Note;
 

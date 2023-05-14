@@ -1,9 +1,8 @@
-package database.NoteDO;
+package database.note;
 
 import database.SetParser;
 import model.Note;
 import model.NoteList;
-import model.ProjectList;
 
 import java.sql.*;
 
@@ -22,7 +21,7 @@ public class NoteService
   {
     NoteDO noteDO = new NoteDO(note);
 
-    String query = "INSERT INTO employee_notes (working_number, title, note_text, creation_date) VALUES (" + noteDO.getTitle() + ", " + noteDO.getNoteText() + ", " + noteDO.getCreationDate() + ");";
+    String query = "INSERT INTO employee_notes (title, note_text, creation_date) VALUES (" + noteDO.getTitle() + ", " + noteDO.getNoteText() + ", " + noteDO.getCreationDate() + ");";
     Statement statement = conn.createStatement();
     statement.executeUpdate(query);
   }
@@ -39,7 +38,7 @@ public class NoteService
 
   public NoteList getAllNotesSavedByEmployee(Integer workingNumber) throws SQLException
   {
-    String query = "SELECT * FROM employee_notes WHERE id in (SELECT note_id FROM employee_note WHERE working_number = " + workingNumber + " );";
+    String query = "SELECT * FROM employee_notes WHERE id in (SELECT id FROM employee_notes WHERE working_number = " + workingNumber + " );";
     PreparedStatement st = conn.prepareStatement(query);
     ResultSet set = st.executeQuery();
     NoteList noteList = setParser.getAllNotesFromSet(set);

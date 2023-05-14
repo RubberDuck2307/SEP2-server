@@ -1,17 +1,12 @@
 package database;
 
-import database.NoteDO.NoteService;
-import database.employee.EmployeeDO;
+import database.note.NoteService;
 import database.employee.EmployeeService;
-import database.employee.UserProfileDO;
-import database.project.ProjectDO;
 import database.project.ProjectService;
-import database.task.TaskDO;
 import database.task.TaskService;
 import model.*;
 
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Database implements DatabaseConnection {
