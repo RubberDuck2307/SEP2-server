@@ -123,20 +123,20 @@ public class SetParser {
         while (set.next())
         {
             Long id = set.getLong("id");
-            Long note_id = set.getLong("note_id");
+            //Integer working_number = set.getInt("working_number");
             String title = set.getString("title");
-            String noteText = set.getString("noteText");
-            LocalDate creationDate;
+            String note_text = set.getString("note_text");
+            LocalDate creation_date;
 
             try
             {
-                creationDate = set.getDate("creationDate").toLocalDate();
+                creation_date = set.getDate("creation_date").toLocalDate();
             }
             catch (NullPointerException e)
             {
-                creationDate = null;
+                creation_date = null;
             }
-            noteList.addNote((new Note(id, title, noteText, creationDate)));
+            noteList.addNote((new Note(id, title, note_text, creation_date)));
         }
         return noteList;
     }
