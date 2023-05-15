@@ -179,7 +179,7 @@ public class DatabaseManager {
      * @throws SQLException
      */
     public void resetSequences() throws SQLException {
-        String query = "ALTER SEQUENCE projects_id_seq RESTART WITH 1; ALTER SEQUENCE tasks_id_seq RESTART WITH 1; ALTER SEQUENCE employees_working_number_seq RESTART WITH 1000; ALTER SEQUENCE employee_notes_id_seq RESTART WITH 1;";
+        String query = "ALTER SEQUENCE projects_id_seq RESTART WITH 1; ALTER SEQUENCE tasks_id_seq RESTART WITH 1; ALTER SEQUENCE employees_working_number_seq RESTART WITH 1000; ALTER SEQUENCE notes_id_seq RESTART WITH 1;";
         PreparedStatement statement = conn.prepareStatement(query);
         statement.executeUpdate();
     }
