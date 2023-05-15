@@ -223,5 +223,12 @@ public class EmployeeService {
         return employee;
     }
 
-
+    public EmployeeList getAllWorkersManagersByWorkerWorkingNumber(Integer workingNumber) throws SQLException
+    {
+        String query = "SELECT * FROM employees WHERE working_number in (SELECT manager_number FROM manager_worker WHERE worker_number = " + workingNumber + " );";
+        PreparedStatement st = conn.prepareStatement(query);
+        ResultSet set = st.executeQuery();
+        EmployeeList employees = setParser.getAllEmployeesFromSet(set);
+        return employees;
+    }
 }

@@ -193,7 +193,7 @@ public class TaskService {
 
   public TaskList getAllTasksByUserId(Integer workingNumber) throws SQLException
   {
-      String query = "SELECT * FROM tasks WHERE id in (SELECT id FROM worker_task WHERE working_number = " + workingNumber + " );";
+      String query = "SELECT * FROM tasks WHERE id in (SELECT task_id FROM worker_task WHERE working_number = " + workingNumber + " );";
       PreparedStatement st = conn.prepareStatement(query);
       ResultSet set = st.executeQuery();
       TaskList taskList = setParser.getTasksFromSet(set);

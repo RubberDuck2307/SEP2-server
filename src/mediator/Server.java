@@ -181,4 +181,10 @@ public class Server implements RemoteModel {
         return model.getAllTasksByUserId(workingNumber);
     }
 
+    @Override public EmployeeList getAllWorkersManagersByWorkerWorkingNumber(
+        Integer workingNumber)
+    {
+        return model.getAllWorkersManagersByWorkerWorkingNumber(workingNumber);
+    }
+
 }
