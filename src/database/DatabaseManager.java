@@ -154,7 +154,7 @@ public class DatabaseManager {
      * @throws SQLException
      */
     public void clearAllTables() throws SQLException {
-        String query = "DELETE FROM manager_worker cascade; DELETE FROM employee_project cascade; DELETE FROM worker_task cascade; DELETE FROM tasks cascade; DELETE FROM projects cascade;DELETE FROM user_profiles cascade; DELETE FROM employees cascade;";
+        String query = "DELETE FROM employee_notes cascade; DELETE FROM tag_task cascade; DELETE FROM manager_worker cascade; DELETE FROM employee_project cascade; DELETE FROM worker_task cascade; DELETE FROM tasks cascade; DELETE FROM projects cascade;DELETE FROM user_profiles cascade; DELETE FROM employees cascade; Delete FROM tags cascade;";
         PreparedStatement st = conn.prepareStatement(query);
         st.executeUpdate();
     }
@@ -165,8 +165,10 @@ public class DatabaseManager {
      * @throws SQLException
      */
     public void resetSequences() throws SQLException {
-        String query = "ALTER SEQUENCE projects_id_seq RESTART WITH 1; ALTER SEQUENCE tasks_id_seq RESTART WITH 1; ALTER SEQUENCE employees_working_number_seq RESTART WITH 1000;";
+        String query = "ALTER SEQUENCE projects_id_seq RESTART WITH 1; ALTER SEQUENCE tasks_id_seq RESTART WITH 1; ALTER SEQUENCE employees_working_number_seq RESTART WITH 1000; ALTER SEQUENCE tags_id_seq RESTART WITH 1;";
         PreparedStatement statement = conn.prepareStatement(query);
         statement.executeUpdate();
     }
+
+
 }

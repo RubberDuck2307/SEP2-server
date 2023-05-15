@@ -117,4 +117,14 @@ public class SetParser {
         return taskList;
     }
 
+    public TagList getTagsFromSet(ResultSet set) throws SQLException {
+        TagList tagList = new TagList();
+
+        while (set.next()){
+            Long id = set.getLong("id");
+            String name = set.getString("name");
+            tagList.addTag(new Tag(name, id));
+        }
+        return tagList;
+    }
 }

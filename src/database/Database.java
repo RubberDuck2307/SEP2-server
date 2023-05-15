@@ -5,6 +5,7 @@ import database.employee.EmployeeService;
 import database.employee.UserProfileDO;
 import database.project.ProjectDO;
 import database.project.ProjectService;
+import database.tag.TagService;
 import database.task.TaskDO;
 import database.task.TaskService;
 import model.*;
@@ -32,6 +33,7 @@ public class Database implements DatabaseConnection {
     private TaskService taskService;
 
     private DatabaseManager databaseManager;
+    private TagService tagService;
 
     /**
      * The constructor connecting to the database and initializing all the services
@@ -42,6 +44,7 @@ public class Database implements DatabaseConnection {
         this.projectService = new ProjectService(conn);
         this.taskService = new TaskService(conn);
         this.databaseManager = new DatabaseManager(conn);
+        this.tagService = new TagService(conn);
 
     }
 
@@ -115,6 +118,30 @@ public class Database implements DatabaseConnection {
 
     public void updateProject(Project project) throws SQLException {
         projectService.updateProject(project);
+    }
+
+    @Override
+    public Long saveTag(Tag tag) throws SQLException {
+        return tagService.saveTag(tag);
+    }
+
+    public Tag getTag(Long tagId) throws SQLException {
+        return tagService.getTag(tagId);
+    }
+
+    @Override
+    public TagList getAllTags() throws SQLException {
+        return tagService.getAllTags();
+    }
+
+    @Override
+    public TagList getTagsOfTask(Long taskId) throws SQLException {
+        return tagService.getTagsOfTask(taskId);
+    }
+
+    @Override
+    public void addTagToTask(Long taskId, Long tagId) throws SQLException {
+        taskService.addTagToTask(taskId, tagId);
     }
 
     public ProjectList getAllProjectsOfEmployee(int workingNumber) throws SQLException {

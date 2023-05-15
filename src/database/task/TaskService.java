@@ -1,6 +1,7 @@
 package database.task;
 
 import database.SetParser;
+import database.tag.TagService;
 import model.*;
 
 import java.sql.*;
@@ -17,17 +18,22 @@ public class TaskService {
     private Connection conn;
     private SetParser setParser;
 
+    private TagService tagService;
+
     /**
      * The constructor sets the connection to the given parameter and initializes the SetParser.
+     *
      * @param conn
      */
     public TaskService(Connection conn) {
         this.conn = conn;
         setParser = new SetParser();
+        tagService = new TagService(conn);
     }
 
     /**
      * saves the task to the database
+     *
      * @param task
      * @return the generated id of the task.
      * @throws SQLException
@@ -57,6 +63,7 @@ public class TaskService {
 
     /**
      * updates the task in the database
+     *
      * @param task
      * @throws SQLException
      */
@@ -74,7 +81,6 @@ public class TaskService {
     }
 
     /**
-     *
      * @param projectId id of the project
      * @return list of tasks of the given project
      * @throws SQLException
@@ -93,8 +99,11 @@ public class TaskService {
         EmployeeList employees = setParser.getAllEmployeesFromSet(workerSet);
         task.setWorkers(employees);
 
+        task.setTags(tagService.getTagsOfTask(task.getId()));
+
         return task;
     }
+
     public TaskList getAllTasksOfProject(Long projectId) throws SQLException {
         String query = "SELECT * FROM tasks WHERE project_id = " + projectId + ";";
         PreparedStatement st = conn.prepareStatement(query);
@@ -107,15 +116,18 @@ public class TaskService {
             ResultSet workerSet = workerSt.executeQuery();
             EmployeeList employees = setParser.getAllEmployeesFromSet(workerSet);
             taskList.getTask(i).setWorkers(employees);
+
+            taskList.getTask(i).setTags(tagService.getTagsOfTask(taskList.getTask(i).getId()));
         }
 
         return taskList;
     }
 
     /**
-     *  assigns worker to the task by creating new row in the worker_task table
+     * assigns worker to the task by creating new row in the worker_task table
+     *
      * @param workingNumber id of the worker
-     * @param taskID id of the task
+     * @param taskID        id of the task
      * @throws SQLException
      */
     public void assignWorkerToTask(Integer workingNumber, Long taskID) throws SQLException {
@@ -126,8 +138,9 @@ public class TaskService {
 
     /**
      * removes worker from the task by deleting the row in the worker_task table
+     *
      * @param workingNumber id of the worker
-     * @param taskID id of the task
+     * @param taskID        id of the task
      * @throws SQLException
      */
     public void removeWorkerFromTask(Integer workingNumber, Long taskID) throws SQLException {
@@ -137,7 +150,6 @@ public class TaskService {
     }
 
     /**
-     *
      * @return all tasks from the database
      * @throws SQLException
      */
@@ -151,8 +163,9 @@ public class TaskService {
 
     /**
      * assigns employees to a task by creating multiple records in the worker_task table. One for each employee working number in the list.
+     *
      * @param employeeWorkingNumbers list of working numbers of the employees
-     * @param TaskID id of the task
+     * @param TaskID                 id of the task
      * @throws SQLException
      */
     public void assignEmployeesToTask(ArrayList<Integer> employeeWorkingNumbers, Long TaskID) throws SQLException {
@@ -166,15 +179,17 @@ public class TaskService {
                 query += ", ";
             }
         }
-        query += ";";;
+        query += ";";
+        ;
         PreparedStatement st = conn.prepareStatement(query);
         st.executeUpdate();
     }
 
     /**
      * unassigns employees from a task by deleting multiple records in the worker_task table. One for each employee working number in the list.
+     *
      * @param employeeWorkingNumbers list of working numbers of the employees
-     * @param TaskID id of the task
+     * @param TaskID                 id of the task
      * @throws SQLException
      */
     public void unassignEmployeesFromTask(ArrayList<Integer> employeeWorkingNumbers, Long TaskID) throws SQLException {
@@ -191,19 +206,27 @@ public class TaskService {
         st.executeUpdate();
     }
 
-  public TaskList getAllTasksByUserId(Integer workingNumber) throws SQLException
-  {
-      String query = "SELECT * FROM tasks WHERE id in (SELECT task_id FROM worker_task WHERE working_number = " + workingNumber + " );";
-      PreparedStatement st = conn.prepareStatement(query);
-      ResultSet set = st.executeQuery();
-      TaskList taskList = setParser.getTasksFromSet(set);
-      return taskList;}
+    public TaskList getAllTasksByUserId(Integer workingNumber) throws SQLException {
+        String query = "SELECT * FROM tasks WHERE id in (SELECT task_id FROM worker_task WHERE working_number = " + workingNumber + " );";
+        PreparedStatement st = conn.prepareStatement(query);
+        ResultSet set = st.executeQuery();
+        TaskList taskList = setParser.getTasksFromSet(set);
+        return taskList;
+    }
 
     public void changeTaskStatus(Long taskId, String status) throws SQLException {
         String query = "UPDATE tasks SET status = ? WHERE id = ? ;";
         PreparedStatement st = conn.prepareStatement(query);
         st.setString(1, status);
         st.setLong(2, taskId);
+        st.executeUpdate();
+    }
+
+    public void addTagToTask(Long taskId, Long tagId) throws SQLException{
+        String query = "INSERT INTO tag_task VALUES(?, ?);";
+        PreparedStatement st = conn.prepareStatement(query);
+        st.setLong(1, taskId);
+        st.setLong(2, tagId);
         st.executeUpdate();
     }
 }

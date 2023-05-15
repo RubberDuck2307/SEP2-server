@@ -7,7 +7,14 @@ import java.util.ArrayList;
 
 public interface DatabaseConnection {
 
+    Long saveTag(Tag tag) throws SQLException;
+    TagList getAllTags() throws SQLException;
 
+    TagList getTagsOfTask(Long taskId) throws SQLException;
+
+    void addTagToTask(Long taskId, Long tagId) throws SQLException;
+
+    Tag getTag(Long tagId) throws SQLException;
     ProjectList getAllProjectsOfEmployee(int workingNumber) throws SQLException;
 
     ProjectList getAllProjects() throws SQLException;
