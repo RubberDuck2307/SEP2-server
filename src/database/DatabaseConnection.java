@@ -56,4 +56,6 @@ public interface DatabaseConnection {
     TaskList getAllTasksByUserId(Integer workingNumber) throws SQLException;
     EmployeeList getAllWorkersManagersByWorkerWorkingNumber(Integer workingNumber) throws SQLException;
     void changeTaskStatus(Long taskId, String status) throws SQLException;
+    void updateEmployee(Employee employee) throws SQLException;
+    void changePassword(Employee employee, String password) throws SQLException;
 }

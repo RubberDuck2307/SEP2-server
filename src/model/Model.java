@@ -43,5 +43,8 @@ public interface Model {
     Project getProjectById(long projectId);
     TaskList getAllTasksByUserId (Integer workingNumber);
     EmployeeList getAllWorkersManagersByWorkerWorkingNumber(Integer workingNumber);
+    void updateEmployee(Employee employee);
+
+    void changePassword(Employee employee, String password);
 
 }

@@ -281,6 +281,26 @@ public class ModelManager implements Model {
         }
     }
 
+    @Override public void changePassword(Employee employee, String password)
+    {
+        try {
+            databaseConnection.changePassword(employee,password);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override public void updateEmployee(Employee employee)
+    {
+        try {
+            databaseConnection.updateEmployee(employee);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
     public void updateTask(Task task){
         try {
             databaseConnection.updateTask(task);

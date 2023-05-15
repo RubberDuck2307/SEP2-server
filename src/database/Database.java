@@ -254,4 +254,15 @@ public class Database implements DatabaseConnection {
     public void changeTaskStatus(Long taskId, String status) throws SQLException{
         taskService.changeTaskStatus(taskId, status);
     }
+
+    @Override public void updateEmployee(Employee employee) throws SQLException
+    {
+        employeeService.updateEmployee(employee);
+    }
+
+    @Override public void changePassword(Employee employee, String password)
+        throws SQLException
+    {
+        employeeService.changePassword(employee, password);
+    }
 }
