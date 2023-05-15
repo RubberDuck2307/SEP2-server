@@ -21,7 +21,7 @@ public class NoteService
   {
     NoteDO noteDO = new NoteDO(note);
 
-    String query = "INSERT INTO employee_notes (title, note_text, creation_date) VALUES (" + noteDO.getTitle() + ", " + noteDO.getNoteText() + ", " + noteDO.getCreationDate() + ");";
+    String query = "INSERT INTO notes (title, note_text, creation_date) VALUES (" + noteDO.getTitle() + ", " + noteDO.getNoteText() + ", " + noteDO.getCreationDate() + ");";
     Statement statement = conn.createStatement();
     statement.executeUpdate(query);
   }
@@ -30,7 +30,7 @@ public class NoteService
   {
     NoteDO noteDO = new NoteDO(note);
 
-    String query = "UPDATE employee_notes SET title = " + noteDO.getTitle() + ", note_text = " + noteDO.getNoteText() + ", creation_date = "
+    String query = "UPDATE notes SET title = " + noteDO.getTitle() + ", note_text = " + noteDO.getNoteText() + ", creation_date = "
         + noteDO.getCreationDate() + " WHERE id = " + noteDO.getId() + ";";
     Statement statement = conn.createStatement();
     statement.executeUpdate(query);
@@ -38,7 +38,7 @@ public class NoteService
 
   public NoteList getAllNotesSavedByEmployee(Integer workingNumber) throws SQLException
   {
-    String query = "SELECT * FROM employee_notes WHERE id in (SELECT id FROM employee_notes WHERE working_number = " + workingNumber + " );";
+    String query = "SELECT * FROM notes WHERE id in (SELECT id FROM notes WHERE working_number = " + workingNumber + " );";
     PreparedStatement st = conn.prepareStatement(query);
     ResultSet set = st.executeQuery();
     NoteList noteList = setParser.getAllNotesFromSet(set);

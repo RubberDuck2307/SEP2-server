@@ -136,7 +136,7 @@ public class DatabaseManager {
 
     private void addDummyDataEmployeeNotes() throws SQLException
     {
-        String query = "INSERT INTO employee_notes(working_number, title, note_text, creation_date)" +
+        String query = "INSERT INTO notes(working_number, title, note_text, creation_date)" +
             "VALUES (1, 'I like Mango', 'This should be the first employees note text', '1999-12-9')," +
             "(2, 'I like Pineapple', 'This should be the second employees note text', '1999-12-9')," +
             "(3, 'I like Papaya', 'This should be the third employees note text',  '1999-12-9')," +
@@ -168,7 +168,7 @@ public class DatabaseManager {
      * @throws SQLException
      */
     public void clearAllTables() throws SQLException {
-        String query = "DELETE FROM manager_worker cascade; DELETE FROM employee_project cascade; DELETE FROM worker_task cascade; DELETE FROM tasks cascade; DELETE FROM projects cascade;DELETE FROM user_profiles cascade; DELETE FROM employees cascade;DELETE FROM employee_notes cascade;";
+        String query = "DELETE FROM manager_worker cascade; DELETE FROM employee_project cascade; DELETE FROM worker_task cascade; DELETE FROM tasks cascade; DELETE FROM projects cascade;DELETE FROM user_profiles cascade; DELETE FROM employees cascade;DELETE FROM notes cascade;";
         PreparedStatement st = conn.prepareStatement(query);
         st.executeUpdate();
     }
