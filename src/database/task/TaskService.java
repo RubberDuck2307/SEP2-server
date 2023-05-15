@@ -156,6 +156,9 @@ public class TaskService {
      * @throws SQLException
      */
     public void assignEmployeesToTask(ArrayList<Integer> employeeWorkingNumbers, Long TaskID) throws SQLException {
+        if (employeeWorkingNumbers.size() == 0) {
+            return;
+        }
         String query = "INSERT INTO worker_task VALUES";
         for (int i = 0; i < employeeWorkingNumbers.size(); i++) {
             query += "(" + employeeWorkingNumbers.get(i) + ", " + TaskID + ")";
@@ -163,8 +166,7 @@ public class TaskService {
                 query += ", ";
             }
         }
-        query += ";";
-        System.out.println(query);
+        query += ";";;
         PreparedStatement st = conn.prepareStatement(query);
         st.executeUpdate();
     }

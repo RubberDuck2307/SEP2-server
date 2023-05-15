@@ -82,6 +82,7 @@ public class ProjectService {
      * @throws SQLException
      */
     public ProjectList getAllProjectsOfEmployee(int workingNumber) throws SQLException {
+        System.out.println("working number: " + workingNumber);
         String query = "SELECT * FROM projects WHERE id in (SELECT project_id FROM employee_project WHERE working_number = " + workingNumber + " );";
         PreparedStatement st = conn.prepareStatement(query);
         ResultSet set = st.executeQuery();
@@ -97,6 +98,9 @@ public class ProjectService {
      */
 
     public void assignEmployeesToProject(ArrayList<Integer> employeeWorkingNumbers, Long ProjectID) throws SQLException {
+        if (employeeWorkingNumbers.size() == 0) {
+            return;
+        }
         String query = "INSERT INTO employee_project VALUES";
         for (int i = 0; i < employeeWorkingNumbers.size(); i++) {
             query += "(" + employeeWorkingNumbers.get(i) + ", " + ProjectID + ")";
