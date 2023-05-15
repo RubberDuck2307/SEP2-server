@@ -123,7 +123,8 @@ public class SetParser {
         while (set.next()){
             Long id = set.getLong("id");
             String name = set.getString("name");
-            tagList.addTag(new Tag(name, id));
+            String color = set.getString("color");
+            tagList.addTag(new Tag(name, id, color));
         }
         return tagList;
     }

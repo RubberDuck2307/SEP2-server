@@ -35,9 +35,10 @@ public class TagsTest {
     @Test
     @Order(1)
     void addOneTag() throws SQLException {
-        assertDoesNotThrow(() -> database.saveTag(new Tag("hello")));
+        assertDoesNotThrow(() -> database.saveTag(new Tag("hello", "red")));
         Tag tag = database.getTag(1L);
         assertEquals("hello", tag.getName());
+        assertEquals("red", tag.getColor());
     }
 
     @Test
@@ -45,7 +46,7 @@ public class TagsTest {
     void addMultipleTags() throws SQLException{
         for (int i = 0; i < 5; i++) {
             int finalI = i;
-            assertDoesNotThrow(() -> database.saveTag(new Tag("hello" + finalI)));
+            assertDoesNotThrow(() -> database.saveTag(new Tag("hello" + finalI, "red")));
         }
     }
 
@@ -59,7 +60,7 @@ public class TagsTest {
         assertDoesNotThrow(() -> database.addTagToTask(1L, 1L));
         task = database.getTask(1L);
         assertEquals(1, task.getTags().size());
-        assert task.getTags().containsById(new Tag("hello", 1L));
+        assert task.getTags().containsById(new Tag("hello", 1L, "red"));
     }
 
     @Test
@@ -72,7 +73,7 @@ public class TagsTest {
     @Test
     @Order(5)
     void addTagWithNullName(){
-        Tag tag = new Tag(null);
+        Tag tag = new Tag(null, null);
         assertThrows(IllegalArgumentException.class, () -> database.saveTag(tag));
     }
 }
