@@ -32,7 +32,7 @@ public interface Model {
     void updateTask(Task task);
     void assignEmployeesToTask(ArrayList<Integer> employeeWorkingNumbers, Long TaskID);
     EmployeeList getAllProjectManagers();
-
+    void changeTaskStatus(Long taskId, String status);
     ProjectList getAllProjects();
     EmployeeList getAllWorkers();
     EmployeeList getEmployeesOfTask(Long TaskId);

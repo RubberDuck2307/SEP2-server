@@ -156,6 +156,9 @@ public class TaskService {
      * @throws SQLException
      */
     public void assignEmployeesToTask(ArrayList<Integer> employeeWorkingNumbers, Long TaskID) throws SQLException {
+        if (employeeWorkingNumbers.size() == 0) {
+            return;
+        }
         String query = "INSERT INTO worker_task VALUES";
         for (int i = 0; i < employeeWorkingNumbers.size(); i++) {
             query += "(" + employeeWorkingNumbers.get(i) + ", " + TaskID + ")";
@@ -163,8 +166,7 @@ public class TaskService {
                 query += ", ";
             }
         }
-        query += ";";
-        System.out.println(query);
+        query += ";";;
         PreparedStatement st = conn.prepareStatement(query);
         st.executeUpdate();
     }
@@ -195,6 +197,13 @@ public class TaskService {
       PreparedStatement st = conn.prepareStatement(query);
       ResultSet set = st.executeQuery();
       TaskList taskList = setParser.getTasksFromSet(set);
-      return taskList;
-  }
+      return taskList;}
+
+    public void changeTaskStatus(Long taskId, String status) throws SQLException {
+        String query = "UPDATE tasks SET status = ? WHERE id = ? ;";
+        PreparedStatement st = conn.prepareStatement(query);
+        st.setString(1, status);
+        st.setLong(2, taskId);
+        st.executeUpdate();
+    }
 }
