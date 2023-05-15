@@ -197,6 +197,13 @@ public class TaskService {
       PreparedStatement st = conn.prepareStatement(query);
       ResultSet set = st.executeQuery();
       TaskList taskList = setParser.getTasksFromSet(set);
-      return taskList;
-  }
+      return taskList;}
+
+    public void changeTaskStatus(Long taskId, String status) throws SQLException {
+        String query = "UPDATE tasks SET status = ? WHERE id = ? ;";
+        PreparedStatement st = conn.prepareStatement(query);
+        st.setString(1, status);
+        st.setLong(2, taskId);
+        st.executeUpdate();
+    }
 }

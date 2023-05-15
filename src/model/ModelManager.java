@@ -309,4 +309,13 @@ public class ModelManager implements Model {
         }
     }
 
+    public void changeTaskStatus(Long taskId, String status) {
+        try {
+            databaseConnection.changeTaskStatus(taskId, status);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
 }
