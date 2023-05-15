@@ -57,6 +57,8 @@ public class ProjectService {
      * @throws SQLException
      */
     public void updateProject(Project project) throws SQLException {
+        System.out.println("I am here");
+        System.out.println(project);
         ProjectDO projectDO = new ProjectDO(project);
         String query = "UPDATE projects SET name = " + projectDO.getName() + ", description = " + projectDO.getDescription() + ", deadline = " + projectDO.getDeadline() + " WHERE id = " + projectDO.getId() + ";";
         Statement statement = conn.createStatement();
@@ -124,7 +126,21 @@ public class ProjectService {
         PreparedStatement st = conn.prepareStatement(query);
         st.executeUpdate();
     }
-
+    
+    public void dismissEmployeesFromProject(ArrayList<Integer> employeeWorkingNumbers, Long projectID) throws SQLException
+    {
+        String query = "DELETE FROM employee_project WHERE project_id = " + projectID + " AND working_number IN (";
+        for (int i = 0; i < employeeWorkingNumbers.size(); i++) {
+            query += employeeWorkingNumbers.get(i);
+            if (i != employeeWorkingNumbers.size() - 1) {
+                query += ", ";
+            }
+        }
+        query += ");";
+        System.out.println(query);
+        PreparedStatement st = conn.prepareStatement(query);
+        st.executeUpdate();
+    }
     /**
      *
      * @return all the projects in the database
@@ -138,8 +154,8 @@ public class ProjectService {
 
         return projectList;
     }
-
-  public Project getProjectById(long projectId) throws SQLException
+    
+    public Project getProjectById(long projectId) throws SQLException
   {
       String query = "SELECT * FROM projects;";
       PreparedStatement statement = conn.prepareStatement(query);

@@ -280,7 +280,27 @@ public class ModelManager implements Model {
             throw new RuntimeException(e);
         }
     }
-
+    @Override
+    public void dismissEmployeesFromProject(ArrayList<Integer> employeeWorkingNumbers, Long projectID)
+    {
+        try {
+            databaseConnection.dismissEmployeesFromProject(employeeWorkingNumbers, projectID);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+    @Override
+    public void assignEmployeesToProject(ArrayList<Integer> addedEmployees, Long id)
+    {
+        try {
+            databaseConnection.assignEmployeesToProject(addedEmployees, id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+    
     public void updateTask(Task task){
         try {
             databaseConnection.updateTask(task);

@@ -43,5 +43,8 @@ public interface Model {
     Project getProjectById(long projectId);
     TaskList getAllTasksByUserId (Integer workingNumber);
     EmployeeList getAllWorkersManagersByWorkerWorkingNumber(Integer workingNumber);
-
+    
+    void dismissEmployeesFromProject(ArrayList<Integer> employeeWorkingNumbers, Long projectID);
+    
+    void assignEmployeesToProject(ArrayList<Integer> addedEmployees, Long id);
 }
