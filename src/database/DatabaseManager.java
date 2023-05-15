@@ -86,6 +86,21 @@ public class DatabaseManager {
         statement.executeUpdate(query);
     }
 
+
+    private void addDummyDataNotes() throws SQLException
+    {
+        String query = "INSERT INTO notes(working_number, title, note_text, creation_date)" +
+                "VALUES (1, 'I like Mango', 'This should be the first employees note text', '1999-12-9')," +
+                "(2, 'I like Pineapple', 'This should be the second employees note text', '1999-12-9')," +
+                "(3, 'I like Papaya', 'This should be the third employees note text',  '1999-12-9')," +
+                "(4, 'I like Kiwi', 'This should be the fourth employees note text', '1999-12-9')," +
+                "(5, 'I like Dragon-fruit', 'This should be the fifth employees note text', '1999-12-9')," +
+                "(6, 'I like Guava', 'This should be the sixth employees note text', '1999-12-9');";
+        Statement statement = conn.createStatement();
+        statement.executeUpdate(query);
+    }
+
+
     /**
      * adds dummy data to employee_project table
      * @throws SQLException
@@ -147,6 +162,7 @@ public class DatabaseManager {
         addDummyDataEmployeeProject();
         addDummyDataWorkerTask();
         addDummyDataManagerWorker();
+        addDummyDataNotes();
     }
 
     /**
@@ -154,7 +170,7 @@ public class DatabaseManager {
      * @throws SQLException
      */
     public void clearAllTables() throws SQLException {
-        String query = "DELETE FROM employee_notes cascade; DELETE FROM tag_task cascade; DELETE FROM manager_worker cascade; DELETE FROM employee_project cascade; DELETE FROM worker_task cascade; DELETE FROM tasks cascade; DELETE FROM projects cascade;DELETE FROM user_profiles cascade; DELETE FROM employees cascade; Delete FROM tags cascade;";
+        String query = "DELETE FROM notes cascade; DELETE FROM tag_task cascade; DELETE FROM manager_worker cascade; DELETE FROM employee_project cascade; DELETE FROM worker_task cascade; DELETE FROM tasks cascade; DELETE FROM projects cascade;DELETE FROM user_profiles cascade; DELETE FROM employees cascade; Delete FROM tags cascade;";
         PreparedStatement st = conn.prepareStatement(query);
         st.executeUpdate();
     }

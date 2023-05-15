@@ -195,9 +195,20 @@ public class Server implements RemoteModel {
     }
 
     @Override public EmployeeList getAllWorkersManagersByWorkerWorkingNumber(
-        Integer workingNumber)
+        Integer workingNumber) throws RemoteException
     {
         return model.getAllWorkersManagersByWorkerWorkingNumber(workingNumber);
+    }
+
+    @Override public void updateEmployee(Employee employee) throws RemoteException
+    {
+        model.updateEmployee(employee);
+    }
+
+    @Override public void changePassword(Employee employee, String password)
+        throws RemoteException
+    {
+        model.changePassword(employee,password);
     }
 
 }
