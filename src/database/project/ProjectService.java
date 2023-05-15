@@ -31,12 +31,24 @@ public class ProjectService {
      * @param project
      * @throws SQLException
      */
-    public void saveProject(Project project) throws SQLException {
+    public Long saveProject(Project project) throws SQLException {
         ProjectDO projectDO = new ProjectDO(project);
 
         String query = "INSERT INTO projects (name, description, deadline) VALUES (" + projectDO.getName() + ", " + projectDO.getDescription() + ", " + projectDO.getDeadline() + ");";
-        Statement statement = conn.createStatement();
-        statement.executeUpdate(query);
+        PreparedStatement statement = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+        int affectedRows = statement.executeUpdate();
+
+        if (affectedRows == 0) {
+            throw new SQLException("Creating project failed, no rows affected.");
+        }
+        ResultSet generatedKeys = statement.getGeneratedKeys();
+        Long id;
+        if (generatedKeys.next()) {
+            id = generatedKeys.getLong("id");
+        } else {
+            throw new SQLException("Creating project failed, no ID obtained.");
+        }
+        return id;
     }
 
     /**

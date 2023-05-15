@@ -105,9 +105,9 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void saveProject(Project project) {
+    public Long saveProject(Project project) {
         try {
-            databaseConnection.saveProject(project);
+            return databaseConnection.saveProject(project);
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException(e);

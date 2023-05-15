@@ -61,8 +61,8 @@ public class Server implements RemoteModel {
         return model.getAllProjects();
     }
     @Override
-    public void saveProject(Project project) throws RemoteException {
-        model.saveProject(project);
+    public Long saveProject(Project project) throws RemoteException {
+        return model.saveProject(project);
     }
 
     @Override

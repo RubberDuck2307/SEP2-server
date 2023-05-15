@@ -43,14 +43,14 @@ public class TaskService {
         int affectedRows = statement.executeUpdate();
 
         if (affectedRows == 0) {
-            throw new SQLException("Creating user failed, no rows affected.");
+            throw new SQLException("Creating task failed, no rows affected.");
         }
         ResultSet generatedKeys = statement.getGeneratedKeys();
         Long id;
         if (generatedKeys.next()) {
             id = generatedKeys.getLong("id");
         } else {
-            throw new SQLException("Creating user failed, no ID obtained.");
+            throw new SQLException("Creating task failed, no ID obtained.");
         }
         return id;
     }

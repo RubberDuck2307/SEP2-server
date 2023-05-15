@@ -100,8 +100,8 @@ public class Database implements DatabaseConnection {
         return employeeService.login(userProfile);
     }
 
-    public void saveProject(Project project) throws SQLException {
-        projectService.saveProject(project);
+    public Long saveProject(Project project) throws SQLException {
+        return projectService.saveProject(project);
     }
 
     public void updateTask(Task task) throws SQLException {

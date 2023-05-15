@@ -14,7 +14,7 @@ public interface Model {
 
     void unassignEmployeesFromTask(ArrayList<Integer> employeeWorkingNumbers, Long TaskID);
 
-    void saveProject(Project project);
+    Long saveProject(Project project);
     void assignWorkerToTask(Integer workingNumber, Long taskID);
     void removeWorkerFromTask(Integer workingNumber, Long taskID);
 
