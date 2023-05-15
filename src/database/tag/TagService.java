@@ -38,9 +38,10 @@ public class TagService {
         if (validateTag(tag)) {
 
 
-            String query = "INSERT INTO tags (name) VALUES (?);";
+            String query = "INSERT INTO tags (name, color) VALUES (?, ?);";
             PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, tag.getName());
+            statement.setString(2, tag.getColor());
             int affectedRows = statement.executeUpdate();
             if (affectedRows == 0) {
                 throw new SQLException("Creating tag failed, no rows affected.");
@@ -81,6 +82,9 @@ public class TagService {
         }
         if (tag.getName() == null) {
             throw new IllegalArgumentException("Tag name is null");
+        }
+        if (tag.getColor() == null) {
+            throw new IllegalArgumentException("Tag color is null");
         }
         return true;
     }
