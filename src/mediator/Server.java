@@ -76,6 +76,9 @@ public class Server implements RemoteModel {
         return model.login(userProfile);
     }
 
+    public void changeTaskStatus(Long taskId, String status) throws RemoteException{
+        model.changeTaskStatus(taskId, status);
+    }
     public Task getTask(Long projectId) throws RemoteException{
         return model.getTask(projectId);
     }

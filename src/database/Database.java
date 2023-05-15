@@ -223,4 +223,8 @@ public class Database implements DatabaseConnection {
     {
         return employeeService.getAllWorkersManagersByWorkerWorkingNumber(workingNumber);
     }
+
+    public void changeTaskStatus(Long taskId, String status) throws SQLException{
+        taskService.changeTaskStatus(taskId, status);
+    }
 }

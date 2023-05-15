@@ -17,6 +17,8 @@ public interface RemoteModel extends Remote {
 
     ProjectList getAllProjects() throws RemoteException;
 
+    void changeTaskStatus(Long taskId, String status) throws RemoteException;
+
     Long saveProject(Project project)throws RemoteException;
 
     void unassignEmployeesFromTask(ArrayList<Integer> employeeWorkingNumbers, Long TaskID) throws RemoteException;
