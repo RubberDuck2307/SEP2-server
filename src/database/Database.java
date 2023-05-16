@@ -175,6 +175,11 @@ public class Database implements DatabaseConnection {
     public void assignEmployeesToProject(ArrayList<Integer> employeeWorkingNumbers, Long ProjectID) throws SQLException {
         projectService.assignEmployeesToProject(employeeWorkingNumbers, ProjectID);
     }
+    
+    public void dismissEmployeesFromProject(ArrayList<Integer> employeeWorkingNumbers, Long projectID) throws SQLException
+    {
+        projectService.dismissEmployeesFromProject(employeeWorkingNumbers, projectID);
+    }
 
     public TaskList getAllTasks() throws SQLException {
         return taskService.getAllTasks();

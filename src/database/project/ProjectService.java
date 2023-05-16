@@ -141,6 +141,20 @@ public class ProjectService {
         st.executeUpdate();
     }
 
+    public void dismissEmployeesFromProject(ArrayList<Integer> employeeWorkingNumbers, Long projectID) throws SQLException
+    {
+        String query = "DELETE FROM employee_project WHERE project_id = " + projectID + " AND working_number IN (";
+        for (int i = 0; i < employeeWorkingNumbers.size(); i++) {
+            query += employeeWorkingNumbers.get(i);
+            if (i != employeeWorkingNumbers.size() - 1) {
+                query += ", ";
+            }
+        }
+        query += ");";
+        System.out.println(query);
+        PreparedStatement st = conn.prepareStatement(query);
+        st.executeUpdate();
+    }
     /**
      *
      * @return all the projects in the database
@@ -155,7 +169,7 @@ public class ProjectService {
         return projectList;
     }
 
-  public Project getProjectById(long projectId) throws SQLException
+    public Project getProjectById(long projectId) throws SQLException
   {
       String query = "SELECT * FROM projects;";
       PreparedStatement statement = conn.prepareStatement(query);

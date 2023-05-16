@@ -87,6 +87,16 @@ public class Server implements RemoteModel {
         model.unassignEmployeesFromTask(employeeWorkingNumbers, TaskID);
     }
     @Override
+    public void dismissEmployeesFromProject(ArrayList<Integer> employeeWorkingNumbers, Long projectID) throws RemoteException
+    {
+        model.dismissEmployeesFromProject(employeeWorkingNumbers, projectID);
+    }
+    @Override
+    public void assignEmployeesToProject(ArrayList<Integer> addedEmployees, Long id) throws RemoteException
+    {
+        model.assignEmployeesToProject(addedEmployees, id);
+    }
+    @Override
     public void removeWorkerFromTask(Integer workingNumber, Long taskID) throws RemoteException {
         model.removeWorkerFromTask(workingNumber, taskID);
     }
