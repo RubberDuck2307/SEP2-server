@@ -23,7 +23,7 @@ public class EmployeesTest {
         assertDoesNotThrow(() -> database.resetSequences());
         Project project = new Project(1L, "Very Interesting", "description", LocalDate.now());
         assertDoesNotThrow(() -> database.saveProject(project));
-        Task task = new Task(1L, "Task", "Description", LocalDate.now(), 1, "HIGH", "TO DO", 1L, LocalDate.now());
+        Task task = new Task(1L, "Task", "Description", LocalDate.now(), 1, "HIGH", "TO DO", 1L);
         assertDoesNotThrow(() -> database.saveTask(task));
     }
 

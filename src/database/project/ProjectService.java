@@ -32,10 +32,18 @@ public class ProjectService {
      * @throws SQLException
      */
     public Long saveProject(Project project) throws SQLException {
-        ProjectDO projectDO = new ProjectDO(project);
+        validateProject(project);
 
-        String query = "INSERT INTO projects (name, description, deadline) VALUES (" + projectDO.getName() + ", " + projectDO.getDescription() + ", " + projectDO.getDeadline() + ");";
+
+        String query = "INSERT INTO projects (name, description, deadline) VALUES (?,?,?);";
         PreparedStatement statement = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+        statement.setString(1, project.getName());
+        statement.setString(2, project.getDescription());
+        if (project.getDeadline() != null) {
+            statement.setDate(3, Date.valueOf(project.getDeadline()));
+        } else {
+            statement.setDate(3, null);
+        }
         int affectedRows = statement.executeUpdate();
 
         if (affectedRows == 0) {
@@ -57,10 +65,18 @@ public class ProjectService {
      * @throws SQLException
      */
     public void updateProject(Project project) throws SQLException {
-        ProjectDO projectDO = new ProjectDO(project);
-        String query = "UPDATE projects SET name = " + projectDO.getName() + ", description = " + projectDO.getDescription() + ", deadline = " + projectDO.getDeadline() + " WHERE id = " + projectDO.getId() + ";";
-        Statement statement = conn.createStatement();
-        statement.executeUpdate(query);
+        validateProject(project);
+        String query = "UPDATE projects SET name = ?, description = ?, deadline = ? WHERE id = ?;";
+        PreparedStatement statement = conn.prepareStatement(query);
+        statement.setString(1, project.getName());
+        statement.setString(2, project.getDescription());
+        if (project.getDeadline() != null) {
+            statement.setDate(3, Date.valueOf(project.getDeadline()));
+        } else {
+            statement.setDate(3, null);
+        }
+        statement.setLong(4, project.getId());
+        statement.executeUpdate();
     }
 
     /**
@@ -146,5 +162,11 @@ public class ProjectService {
       ResultSet set = statement.executeQuery();
       Project project = setParser.getAllProjectsFromSet(set).getProjectByID(projectId);
       return project;
+  }
+
+  private void validateProject(Project project){
+    if(project.getName() == null || project.getName().isEmpty()){
+      throw new IllegalArgumentException("Project name cannot be empty");
+    }
   }
 }
