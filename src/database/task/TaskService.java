@@ -40,12 +40,22 @@ public class TaskService {
      */
 
     public Long saveTask(Task task) throws SQLException {
+        validateTask(task);
 
-        TaskDO taskDO = new TaskDO(task);
-
-        String query = "INSERT INTO TASKS (project_id, name, description, status, priority, deadline, estimated_time, starting_date)" +
-                "VALUES (" + taskDO.getProjectId() + ", " + taskDO.getName() + ", " + taskDO.getDescription() + ", " + taskDO.getStatus() + ", " + taskDO.getPriority() + ", " + taskDO.getDeadline() + ", " + taskDO.getEstimatedTime() + ", " + taskDO.getStartingDate() + ");";
+        String query = "INSERT INTO TASKS (project_id, name, description, status, priority, deadline, estimated_time)" +
+                "VALUES (?, ?, ?, ?, ?, ?, ?);";
         PreparedStatement statement = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+        statement.setLong(1, task.getProjectId());
+        statement.setString(2, task.getName());
+        statement.setString(3, task.getDescription());
+        statement.setString(4, task.getStatus());
+        statement.setString(5, task.getPriority());
+        if (task.getDeadline() != null) {
+            statement.setDate(6, Date.valueOf(task.getDeadline()));
+        } else {
+            statement.setDate(6, null);
+        }
+        statement.setInt(7, task.getEstimatedTime());
         int affectedRows = statement.executeUpdate();
 
         if (affectedRows == 0) {
@@ -68,16 +78,27 @@ public class TaskService {
      * @throws SQLException
      */
     public void updateTask(Task task) throws SQLException {
-        TaskDO taskDO = new TaskDO(task);
-
-        if (taskDO.getId() == "NULL") {
+        validateTask(task);
+        if (task.getId() == null) {
             throw new RuntimeException("Id cannot be null");
         }
 
-        String query = "UPDATE tasks SET name = " + taskDO.getName() + ", description = " + taskDO.getDescription() + ", status = " + taskDO.getStatus()
-                + ", priority = " + taskDO.getPriority() + ", deadline = " + taskDO.getDeadline() + ", estimated_time = " + taskDO.getEstimatedTime() + ", starting_date = " + taskDO.getStartingDate() + ", project_id = " + taskDO.getProjectId() + " WHERE id = " + taskDO.getId() + ";";
-        Statement statement = conn.createStatement();
-        statement.executeUpdate(query);
+        String query = "UPDATE tasks SET name = ?, description = ?, status = ?, priority = ?," +
+                "deadline = ?, estimated_time = ?, project_id = ? WHERE id = ?;";
+        PreparedStatement st = conn.prepareStatement(query);
+        st.setString(1, task.getName());
+        st.setString(2, task.getDescription());
+        st.setString(3, task.getStatus());
+        st.setString(4, task.getPriority());
+        if (task.getDeadline() != null) {
+            st.setDate(5, Date.valueOf(task.getDeadline()));
+        } else {
+            st.setDate(5, null);
+        }
+        st.setInt(6, task.getEstimatedTime());
+        st.setLong(7, task.getProjectId());
+        st.setLong(8, task.getId());
+        st.executeUpdate();
     }
 
     /**
@@ -236,5 +257,22 @@ public class TaskService {
         st.setLong(1, taskId);
         st.setLong(2, tagId);
         st.executeUpdate();
+    }
+
+
+    public void validateTask(Task task) {
+        if (task.getName() == null || task.getName().trim().isEmpty()) {
+            throw new IllegalArgumentException("Task name cannot be empty");
+        }
+        if (task.getProjectId() == null) {
+            throw new IllegalArgumentException("Task must be assigned to a project");
+        }
+        if (task.getStatus()== null){
+            throw new IllegalArgumentException("Task must have a status");
+        }
+        if (task.getPriority() == null) {
+            throw new IllegalArgumentException("Task must have a priority");
+        }
+
     }
 }

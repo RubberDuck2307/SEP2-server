@@ -61,6 +61,7 @@ public class TagService {
     }
 
     public void deleteTag(Long id) throws SQLException {
+        dismissTagFromAllTasks(id);
         String query = "DELETE FROM tags WHERE id = ?;";
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setLong(1, id);
@@ -76,6 +77,13 @@ public class TagService {
         return tagList;
     }
 
+    private void dismissTagFromAllTasks(Long tagId) throws SQLException {
+        String query = "DELETE FROM tag_task WHERE tag_id = ?;";
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setLong(1, tagId);
+        statement.executeUpdate();
+    }
+
     private boolean validateTag(Tag tag) {
         if (tag == null) {
             throw new IllegalArgumentException("Tag is null");
@@ -88,6 +96,7 @@ public class TagService {
         }
         return true;
     }
+
 
 
 }

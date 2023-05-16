@@ -422,7 +422,30 @@ public class ModelManager implements Model
             throw new RuntimeException(e);
         }
     }
-    
+
+    public TagList getAllTags(){
+        try
+        {
+            return databaseConnection.getAllTags();
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+    @Override
+    public void deleteTag(Long id){
+        try
+        {
+            databaseConnection.deleteTag(id);
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
     @Override
     public TaskList getAllTasksByUserId(Integer workingNumber)
     {

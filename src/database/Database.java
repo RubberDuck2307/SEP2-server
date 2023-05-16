@@ -1,17 +1,12 @@
 package database;
 
-import database.employee.EmployeeDO;
 import database.employee.EmployeeService;
-import database.employee.UserProfileDO;
-import database.project.ProjectDO;
 import database.project.ProjectService;
 import database.tag.TagService;
-import database.task.TaskDO;
 import database.task.TaskService;
 import model.*;
 
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Database implements DatabaseConnection {
@@ -101,6 +96,9 @@ public class Database implements DatabaseConnection {
 
     public Employee login(UserProfile userProfile) throws SQLException {
         return employeeService.login(userProfile);
+    }
+    public void deleteTag(Long id) throws SQLException {
+        tagService.deleteTag(id);
     }
 
     public Long saveProject(Project project) throws SQLException {

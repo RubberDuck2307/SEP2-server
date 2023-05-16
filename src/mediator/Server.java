@@ -82,6 +82,15 @@ public class Server implements RemoteModel {
 
 
     @Override
+    public TagList getAllTags() throws RemoteException {
+        return model.getAllTags();
+    }
+    @Override
+    public void deleteTag(Long id) throws RemoteException {
+        model.deleteTag(id);
+    }
+
+    @Override
     public TaskList getAllTasksOfProject(Long id) throws RemoteException {
         return model.getAllTasksOfProject(id);
     }

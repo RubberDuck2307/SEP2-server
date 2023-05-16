@@ -25,7 +25,7 @@ public class TaskTest {
     @Test
     @Order(1)
     void addTaskRegular() throws SQLException {
-        Task task = new Task(1L, "Interesting", "description", LocalDate.now(), 0, "HIGH", "TO DO", 1L, LocalDate.now());
+        Task task = new Task(1L, "Interesting", "description", LocalDate.now(), 0, "HIGH", "TO DO", 1L);
         assertDoesNotThrow(() -> database.saveTask(task));
         TaskList taskList = database.getAllTasks();
         Task savedTask = taskList.getTaskById(1L);
@@ -40,7 +40,7 @@ public class TaskTest {
 
     @Test
     void addTaskManyNull() {
-        Task task = new Task( "Banana", null, null, 0, "HIGH", "TO DO", 1L, null);
+        Task task = new Task( "Banana", null, null, 0, "HIGH", "TO DO", 1L);
         assertDoesNotThrow(() -> database.saveTask(task));
     }
 
@@ -53,7 +53,7 @@ public class TaskTest {
     @Test
     void modifyTask() throws SQLException {
         assertDoesNotThrow(() -> database.saveProject(new Project("Interesting", "description", LocalDate.now())));
-        Task task = new Task( 1L,"hello", "how", LocalDate.now(), 0, "LOW", "DONE", 2L, LocalDate.now());
+        Task task = new Task( 1L,"hello", "how", LocalDate.now(), 0, "LOW", "DONE", 2L);
         assertDoesNotThrow(() -> database.updateTask(task));
         TaskList taskList = database.getAllTasks();
         Task savedTask = taskList.getTaskById(1L);

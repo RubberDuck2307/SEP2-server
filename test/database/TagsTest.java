@@ -55,7 +55,7 @@ public class TagsTest {
     void addTagToTask() throws SQLException {
         Project project = new Project("Interesting", "description", LocalDate.now());
         database.saveProject(project);
-        Task task = new Task(1L, "Interesting", "description", LocalDate.now(), 0, "HIGH", "TO DO", 1L, LocalDate.now());
+        Task task = new Task(1L, "Interesting", "description", LocalDate.now(), 0, "HIGH", "TO DO", 1L);
         database.saveTask(task);
         assertDoesNotThrow(() -> database.addTagToTask(1L, 1L));
         task = database.getTask(1L);

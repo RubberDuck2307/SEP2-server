@@ -106,13 +106,7 @@ public class SetParser {
                 deadline = null;
             }
             Integer estimated_time = set.getInt("estimated_time");
-            LocalDate starting_date;
-            try {
-                starting_date = set.getDate("starting_date").toLocalDate();
-            } catch (NullPointerException e) {
-                starting_date = null;
-            }
-            taskList.addTask(new Task(id, name, description, deadline, estimated_time, priority, status, project_id, starting_date));
+            taskList.addTask(new Task(id, name, description, deadline, estimated_time, priority, status, project_id));
         }
         return taskList;
     }

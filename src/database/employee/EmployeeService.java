@@ -1,9 +1,9 @@
 package database.employee;
 
 import database.SetParser;
-import database.task.TaskDO;
 import model.Employee;
 import model.EmployeeList;
+import model.EmployeeRole;
 import model.UserProfile;
 
 import java.sql.*;
@@ -65,7 +65,6 @@ public class EmployeeService
       PreparedStatement st = conn.prepareStatement(query);
       ResultSet rs = st.executeQuery();
       employeeList = setParser.getAllEmployeesFromSet(rs);
-      System.out.println(employeeList);
     }
     catch (SQLException e)
     {
@@ -85,14 +84,19 @@ public class EmployeeService
   public Integer saveEmployee(Employee employee, String password)
       throws SQLException
   {
-    EmployeeDO employeeDO = new EmployeeDO(employee);
     String query =
-        "INSERT INTO employees (name, email, phone_number, dob, gender, role) VALUES ("
-            + employeeDO.getName() + ", " + employeeDO.getEmail() + ", "
-            + employeeDO.getPhoneNumber() + ", " + employeeDO.getDob() + ", "
-            + employeeDO.getGender() + ", " + employeeDO.getRole() + ");";
+        "INSERT INTO employees (name, email, phone_number, dob, gender, role) VALUES (?, ?, ?, ?, ?, ?);";
     PreparedStatement statement = conn.prepareStatement(query,
         Statement.RETURN_GENERATED_KEYS);
+    validateEmployee(employee);
+    statement.setString(1, employee.getName());
+    statement.setString(2, employee.getEmail());
+    statement.setString(3, employee.getPhoneNumber());
+    statement.setDate(4,
+        Date.valueOf(employee.getDob()));
+    statement.setString(5, employee.getGender());
+    System.out.println(parseRole(employee.getRole()));
+    statement.setString(6, parseRole(employee.getRole()));
     int affectedRows = statement.executeUpdate();
 
     if (affectedRows == 0)
@@ -120,15 +124,14 @@ public class EmployeeService
    * @param userProfile the user profile to be stored into the database
    * @throws SQLException
    */
-  public void addUserProfile(UserProfile userProfile) throws SQLException
-  {
-    UserProfileDO userProfileDO = new UserProfileDO(userProfile);
+  public void addUserProfile(UserProfile userProfile) throws SQLException {
+    validateUserProfile(userProfile);
     String query =
-        "INSERT INTO user_profiles (working_number, password) VALUES ("
-            + userProfileDO.getWorkingNumber() + ", "
-            + userProfileDO.getPassword() + ");";
-    Statement statement = conn.createStatement();
-    statement.executeUpdate(query);
+        "INSERT INTO user_profiles (working_number, password) VALUES (?, ?);";
+    PreparedStatement statement = conn.prepareStatement(query);
+    statement.setInt(1, userProfile.getWorkingNumber());
+    statement.setString(2, userProfile.getPassword());
+    statement.executeUpdate();
   }
 
   /**
@@ -141,23 +144,20 @@ public class EmployeeService
 
   public Employee login(UserProfile userProfile) throws SQLException
   {
-    UserProfileDO userProfileDO = new UserProfileDO(userProfile);
-    String query = "SELECT * FROM user_profiles WHERE working_number = "
-        + userProfileDO.getWorkingNumber() + " AND password = "
-        + userProfileDO.getPassword() + ";";
+    String query = "SELECT * FROM user_profiles WHERE working_number = ?  AND password = ? ;";
     PreparedStatement statement = conn.prepareStatement(query);
+    statement.setInt(1, userProfile.getWorkingNumber());
+    statement.setString(2, userProfile.getPassword());
     ResultSet rs = statement.executeQuery();
     if (!rs.next())
     {
-      System.out.println("Invalid working number or password");
-      return null;
+      throw new SQLException("Invalid working number or password");
     }
     else
     {
-      System.out.println("Login successful");
-      query = "SELECT * FROM employees WHERE working_number = "
-          + userProfileDO.getWorkingNumber() + ";";
+      query = "SELECT * FROM employees WHERE working_number = ? ;";
       statement = conn.prepareStatement(query);
+      statement.setInt(1, userProfile.getWorkingNumber());
       rs = statement.executeQuery();
       System.out.println(rs);
       return setParser.getAllEmployeesFromSet(rs).get(0);
@@ -297,19 +297,23 @@ public class EmployeeService
 
   public void updateEmployee(Employee employee) throws SQLException
   {
-    EmployeeDO employeeDO = new EmployeeDO(employee);
-
-    if (employeeDO.getWorkingNumber() == "NULL")
+    validateEmployee(employee);
+    if (employee.getWorkingNumber() == null)
     {
       throw new RuntimeException("Id cannot be null");
     }
     String query =
-        "UPDATE employees SET name = " + employeeDO.getName() + ", email = "
-            + employeeDO.getEmail() + ", phone_number = " + employeeDO.getPhoneNumber()
-            + ", dob = " + employeeDO.getDob() + ", gender = "
-            + employeeDO.getGender()+ ", role = "
-            + employeeDO.getRole() + " WHERE working_number = " + employee.getWorkingNumber() + ";";
+        "UPDATE employees SET name = ?, email = ?, phone_number = ?,"
+            + "dob = ? , gender = ? , role = ? + WHERE working_number = ?;";
     PreparedStatement st = conn.prepareStatement(query);
+    st.setString(1, employee.getName());
+    st.setString(2, employee.getEmail());
+    st.setString(3, employee.getPhoneNumber());
+    st.setDate(4, Date.valueOf( employee.getDob()));
+    st.setString(5, employee.getGender());
+    st.setString(6, parseRole(employee.getRole()));
+    st.setInt(7, employee.getWorkingNumber());
+
     st.executeUpdate();
   }
 
@@ -320,8 +324,60 @@ public class EmployeeService
       throw new RuntimeException("Id cannot be null");
     }
     String query =
-        "UPDATE user_profiles SET password = " + password  + " WHERE working_number = " + employee.getWorkingNumber() + ";";
+        "UPDATE user_profiles SET password = ? WHERE working_number = ?;";
     PreparedStatement st = conn.prepareStatement(query);
+    st.setString(1, password);
+    st.setInt(2, employee.getWorkingNumber());
     st.executeUpdate();
+  }
+
+  private String parseRole(EmployeeRole employeeRole){
+    String role;
+    if (employeeRole == null) {
+      throw new RuntimeException("Role cannot be null");
+    } else {
+      if (employeeRole.equals(EmployeeRole.HR)) {
+        role = "HR";
+      } else if (employeeRole.equals(EmployeeRole.WORKER)) {
+        role = "WORKER";
+      } else if (employeeRole.equals(EmployeeRole.MAIN_MANAGER)) {
+        role = "MAIN M";
+      } else if (employeeRole.equals(EmployeeRole.PROJECT_MANAGER)) {
+        role = "PROJECT M";
+      } else {
+        throw new RuntimeException("Role is not valid");
+      }
+    }
+    return role;
+  }
+
+  private void validateEmployee(Employee employee){
+    if (employee.getName() == null || employee.getName().trim().isEmpty()) {
+      throw new RuntimeException("Name cannot be null");
+    }
+    if (employee.getDob() == null) {
+      throw new RuntimeException("Date of birth cannot be null");
+    }
+    if (employee.getPhoneNumber() == null || employee.getPhoneNumber().trim().isEmpty()) {
+      throw new RuntimeException("Phone number cannot be null");
+    }
+    if (employee.getGender() == null || employee.getGender().trim().isEmpty()) {
+      throw new RuntimeException("Gender cannot be null");
+    }
+    if (employee.getRole() == null) {
+      throw new RuntimeException("Role cannot be null");
+    }
+    if (employee.getEmail() == null || employee.getEmail().trim().isEmpty()) {
+      throw new RuntimeException("Email cannot be null");
+    }
+  }
+
+  private void validateUserProfile(UserProfile userProfile){
+    if (userProfile.getWorkingNumber() == null){
+        throw new RuntimeException("Working number cannot be null");
+    }
+    if (userProfile.getPassword() == null){
+        throw new RuntimeException("Password cannot be null");
+    }
   }
 }
