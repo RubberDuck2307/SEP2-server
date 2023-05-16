@@ -33,6 +33,96 @@ public class ModelManager implements Model
             throw new RuntimeException(e);
         }
     }
+
+    @Override public Long saveTag(Tag tag)
+    {
+        try
+        {
+            return databaseConnection.saveTag(tag);
+        }
+        catch (SQLException e)
+        {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override public TagList getAllTags()
+    {
+        try
+        {
+            return databaseConnection.getAllTags();
+        }
+        catch (SQLException e)
+        {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override public TagList getTagsOfTask(Long taskId)
+    {
+        try
+        {
+            return databaseConnection.getTagsOfTask(taskId);
+        }
+        catch (SQLException e)
+        {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override public void addTagToTask(Long taskId, Long tagId)
+    {
+        try
+        {
+            databaseConnection.addTagToTask(taskId, tagId);
+        }
+        catch (SQLException e)
+        {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override public void removeTagFromTask(Long taskId, Long tagId)
+    {
+        try
+        {
+            databaseConnection.removeTagFromTask(taskId, tagId);
+        }
+        catch (SQLException e)
+        {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override public Tag getTag(Long tagId)
+    {
+        try
+        {
+            return databaseConnection.getTag(tagId);
+        }
+        catch (SQLException e)
+        {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override public void deleteTag(Long id)
+    {
+        try
+        {
+            databaseConnection.deleteTag(id);
+        }
+        catch (SQLException e)
+        {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+
+
+
+
     public TaskList getAllTasksOfProject(Long id)
     {
         try

@@ -229,4 +229,12 @@ public class TaskService {
         st.setLong(2, tagId);
         st.executeUpdate();
     }
+
+    public void removeTagFromTask(Long taskId, Long tagId) throws SQLException{
+        String query = "DELETE FROM tag_task VALUES(?, ?);";
+        PreparedStatement st = conn.prepareStatement(query);
+        st.setLong(1, taskId);
+        st.setLong(2, tagId);
+        st.executeUpdate();
+    }
 }

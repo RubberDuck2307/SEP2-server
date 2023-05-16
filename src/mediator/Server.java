@@ -41,6 +41,45 @@ public class Server implements RemoteModel {
         Naming.rebind("Case", this);
     }
 
+    @Override public Long saveTag(Tag tag) throws RemoteException
+    {
+        return model.saveTag(tag);
+    }
+
+    @Override public TagList getAllTags()
+    {
+        return model.getAllTags();
+    }
+
+    @Override public TagList getTagsOfTask(Long taskId)
+    {
+        return model.getTagsOfTask(taskId);
+    }
+
+    @Override public void addTagToTask(Long taskId, Long tagId)
+    {
+        model.addTagToTask(taskId, tagId);
+    }
+
+    @Override public void removeTagFromTask(Long taskId, Long tagId)
+        throws RemoteException
+    {
+        model.removeTagFromTask(taskId, tagId);
+    }
+
+    @Override public Tag getTag(Long tagId)
+    {
+        return model.getTag(tagId);
+    }
+
+    @Override public void deleteTag(Long id)
+    {
+        model.deleteTag(id);
+    }
+
+
+
+
 
     @Override
     public TaskList getAllTasksOfProject(Long id) throws RemoteException {

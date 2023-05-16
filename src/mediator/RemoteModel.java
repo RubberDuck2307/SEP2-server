@@ -9,6 +9,14 @@ import java.util.ArrayList;
 
 public interface RemoteModel extends Remote {
 
+    Long saveTag(Tag tag) throws RemoteException;
+    TagList getAllTags() throws RemoteException;
+    TagList getTagsOfTask(Long taskId) throws RemoteException;
+    void addTagToTask(Long taskId, Long tagId) throws RemoteException;
+    void removeTagFromTask(Long taskId, Long tagId) throws RemoteException;
+    Tag getTag(Long tagId) throws RemoteException;
+    void deleteTag(Long id) throws RemoteException;
+
     TaskList getAllTasksOfProject(Long id) throws RemoteException;
 
     ProjectList getAllProjectsByWorkingNumber(Integer workingNumber) throws RemoteException;

@@ -129,6 +129,11 @@ public class Database implements DatabaseConnection {
         return tagService.getTag(tagId);
     }
 
+    @Override public void deleteTag(Long id) throws SQLException
+    {
+        tagService.deleteTag(id);
+    }
+
     @Override
     public TagList getAllTags() throws SQLException {
         return tagService.getAllTags();
@@ -142,6 +147,12 @@ public class Database implements DatabaseConnection {
     @Override
     public void addTagToTask(Long taskId, Long tagId) throws SQLException {
         taskService.addTagToTask(taskId, tagId);
+    }
+
+    @Override public void removeTagFromTask(Long taskId, Long tagId)
+        throws SQLException
+    {
+        taskService.removeTagFromTask(taskId, tagId);
     }
 
     public ProjectList getAllProjectsOfEmployee(int workingNumber) throws SQLException {
