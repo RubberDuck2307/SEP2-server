@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 public interface RemoteModel extends Remote {
 
+    TagList getAllTags() throws RemoteException;
     TaskList getAllTasksOfProject(Long id) throws RemoteException;
 
     ProjectList getAllProjectsByWorkingNumber(Integer workingNumber) throws RemoteException;
@@ -32,6 +33,8 @@ public interface RemoteModel extends Remote {
     void removeWorkerFromTask(Integer workingNumber, Long taskID) throws RemoteException;
     void assignEmployeesToTask(ArrayList<Integer> employeeWorkingNumbers, Long TaskID) throws RemoteException;
     Integer saveEmployee(Employee employee, String password) throws RemoteException;
+
+    void deleteTag(Long id) throws RemoteException;
 
     void assignEmployeeToProject(Integer workingNumber, Long projectID) throws RemoteException;
     void removeEmployeeFromProject(Integer workingNumber, Long projectID) throws RemoteException;

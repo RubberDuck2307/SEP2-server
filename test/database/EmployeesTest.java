@@ -73,7 +73,7 @@ public class EmployeesTest {
     @Test
     void loginWrongCredentials() {
         UserProfile userProfile = new UserProfile(1, "wrong");
-        assertThrows(RuntimeException.class, () -> database.login(userProfile));
+        assertThrows(SQLException.class, () -> database.login(userProfile));
     }
 
 

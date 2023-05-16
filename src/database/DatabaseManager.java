@@ -149,6 +149,14 @@ public class DatabaseManager {
         statement.executeUpdate(query);
     }
 
+    private void addDummyDataTags() throws SQLException{
+        String query = "Insert INTO tags(name, color)" +
+                "VALUES ('tag1', '#b15583'),"+
+                "('tag2', '#b15583')," +
+                "('tag3', '#b15583');";
+        Statement statement = conn.createStatement();
+        statement.executeUpdate(query);
+    }
 
     /**
      * The method uses other private methods to add dummy data to the database
@@ -163,6 +171,7 @@ public class DatabaseManager {
         addDummyDataWorkerTask();
         addDummyDataManagerWorker();
         addDummyDataNotes();
+        addDummyDataTags();
     }
 
     /**

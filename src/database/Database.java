@@ -97,6 +97,9 @@ public class Database implements DatabaseConnection {
     public Employee login(UserProfile userProfile) throws SQLException {
         return employeeService.login(userProfile);
     }
+    public void deleteTag(Long id) throws SQLException {
+        tagService.deleteTag(id);
+    }
 
     public Long saveProject(Project project) throws SQLException {
         return projectService.saveProject(project);

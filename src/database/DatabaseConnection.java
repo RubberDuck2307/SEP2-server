@@ -7,6 +7,8 @@ import java.util.ArrayList;
 
 public interface DatabaseConnection
 {
+
+    public void deleteTag(Long id) throws SQLException;
     
     Long saveTag(Tag tag) throws SQLException;
     

@@ -51,4 +51,11 @@ public class TagList implements Serializable
         }
         return false;
     }
+
+    @Override
+    public String toString() {
+        return "TagList{" +
+                "tags=" + tags +
+                '}';
+    }
 }
