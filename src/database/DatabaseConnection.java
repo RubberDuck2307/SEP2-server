@@ -79,4 +79,7 @@ public interface DatabaseConnection
     void dismissEmployeesFromProject(ArrayList<Integer> employeeWorkingNumbers, Long projectID) throws SQLException;
     
     void assignEmployeesToProject(ArrayList<Integer> addedEmployees, Long id) throws SQLException;
+    
+    void changePassword(Employee employee, String password) throws SQLException;
+    void updateEmployee(Employee employee) throws SQLException;
 }
