@@ -19,7 +19,6 @@ public interface DatabaseConnection
     void addTagToTask(Long taskId, Long tagId) throws SQLException;
     void removeTagFromTask(Long taskId, Long tagId) throws SQLException;
     Tag getTag(Long tagId) throws SQLException;
-    void deleteTag(Long id) throws SQLException;
 
     ProjectList getAllProjectsOfEmployee(int workingNumber) throws SQLException;
     

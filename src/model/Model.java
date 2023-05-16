@@ -43,8 +43,6 @@ public interface Model
     
     Employee login(UserProfile userProfile);
 
-    void deleteTag(Long id);
-    TagList getAllTags();
     Integer saveEmployee(Employee employee, String password);
     
     void updateProject(Project project);

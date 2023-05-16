@@ -127,10 +127,6 @@ public class Database implements DatabaseConnection {
         return tagService.getTag(tagId);
     }
 
-    @Override public void deleteTag(Long id) throws SQLException
-    {
-        tagService.deleteTag(id);
-    }
 
     @Override
     public TagList getAllTags() throws SQLException {
