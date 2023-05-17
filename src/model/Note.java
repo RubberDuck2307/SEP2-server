@@ -1,8 +1,8 @@
 package model;
-
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Note
+public class Note implements Serializable
 {
   private Long id;
   private String title;
