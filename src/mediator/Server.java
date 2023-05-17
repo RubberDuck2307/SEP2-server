@@ -147,6 +147,12 @@ public class Server implements RemoteModel {
     public Integer saveEmployee(Employee employee, String password) throws RemoteException {
         return model.saveEmployee(employee, password);
     }
+    @Override
+    public void deleteEmployeeByWorkingNumber(Integer workingNumber) throws RemoteException
+    {
+        model.deleteEmployeeByWorkingNumber(workingNumber);
+    }
+    
 
     @Override public void assignEmployeeToProject(Integer workingNumber,
         Long projectID)

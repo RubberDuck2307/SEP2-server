@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public interface DatabaseConnection
 {
-
+    
     public void deleteTag(Long id) throws SQLException;
     
     Long saveTag(Tag tag) throws SQLException;
@@ -17,9 +17,11 @@ public interface DatabaseConnection
     TagList getTagsOfTask(Long taskId) throws SQLException;
     
     void addTagToTask(Long taskId, Long tagId) throws SQLException;
+    
     void removeTagFromTask(Long taskId, Long tagId) throws SQLException;
+    
     Tag getTag(Long tagId) throws SQLException;
-
+    
     ProjectList getAllProjectsOfEmployee(int workingNumber) throws SQLException;
     
     ProjectList getAllProjects() throws SQLException;
@@ -35,6 +37,8 @@ public interface DatabaseConnection
     Employee login(UserProfile userProfile) throws SQLException;
     
     Integer saveEmployee(Employee employee, String password) throws SQLException;
+    
+    void deleteEmployeeByWorkingNumber(Integer workingNumber) throws SQLException;
     
     EmployeeList getAllProjectManagers() throws SQLException;
     
@@ -83,5 +87,6 @@ public interface DatabaseConnection
     void assignEmployeesToProject(ArrayList<Integer> addedEmployees, Long id) throws SQLException;
     
     void changePassword(Employee employee, String password) throws SQLException;
+    
     void updateEmployee(Employee employee) throws SQLException;
 }

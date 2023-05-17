@@ -343,6 +343,18 @@ public class ModelManager implements Model
             throw new RuntimeException(e);
         }
     }
+    @Override
+    public void deleteEmployeeByWorkingNumber(Integer workingNumber)
+    {
+        try
+        {
+            databaseConnection.deleteEmployeeByWorkingNumber(workingNumber);
+        }
+        catch (SQLException e)
+        {
+            throw new RuntimeException(e);
+        }
+    }
     
     @Override
     public void updateProject(Project project)

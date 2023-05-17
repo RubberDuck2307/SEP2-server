@@ -40,6 +40,7 @@ public interface RemoteModel extends Remote {
     void removeWorkerFromTask(Integer workingNumber, Long taskID) throws RemoteException;
     void assignEmployeesToTask(ArrayList<Integer> employeeWorkingNumbers, Long TaskID) throws RemoteException;
     Integer saveEmployee(Employee employee, String password) throws RemoteException;
+    void deleteEmployeeByWorkingNumber(Integer workingNumber) throws RemoteException;
 
     void assignEmployeeToProject(Integer workingNumber, Long projectID) throws RemoteException;
     void removeEmployeeFromProject(Integer workingNumber, Long projectID) throws RemoteException;

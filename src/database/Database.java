@@ -85,6 +85,11 @@ public class Database implements DatabaseConnection {
     public Integer saveEmployee(Employee employee, String password) throws SQLException {
         return employeeService.saveEmployee(employee, password);
     }
+    
+    public void deleteEmployeeByWorkingNumber(Integer workingNumber)throws  SQLException
+    {
+        employeeService.deleteEmployeeByWorkingNumber(workingNumber);
+    }
 
     public Task getTask(Long projectId) throws SQLException {
         return taskService.getTask(projectId);

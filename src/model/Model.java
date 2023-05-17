@@ -42,8 +42,10 @@ public interface Model
     Task getTask(Long projectId);
     
     Employee login(UserProfile userProfile);
-
+    
     Integer saveEmployee(Employee employee, String password);
+    
+    void deleteEmployeeByWorkingNumber(Integer workingNumber);
     
     void updateProject(Project project);
     
