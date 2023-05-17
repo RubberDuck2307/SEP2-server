@@ -151,7 +151,7 @@ public class EmployeeService
     ResultSet rs = statement.executeQuery();
     if (!rs.next())
     {
-      throw new SQLException("Invalid working number or password");
+        return null;
     }
     else
     {

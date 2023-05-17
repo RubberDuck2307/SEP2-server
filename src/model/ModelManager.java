@@ -491,6 +491,15 @@ public class ModelManager implements Model
         }
     }
 
+    @Override
+    public boolean addForgetPasswordNotification(Integer workingNumber){
+        try {
+            return databaseConnection.addForgetPasswordNotification(workingNumber);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
     @Override public void updateEmployee(Employee employee)
     {
         try {

@@ -29,6 +29,7 @@ public class Database implements DatabaseConnection {
 
     private DatabaseManager databaseManager;
     private TagService tagService;
+    private NotificationService notificationService;
 
     /**
      * The constructor connecting to the database and initializing all the services
@@ -40,7 +41,7 @@ public class Database implements DatabaseConnection {
         this.taskService = new TaskService(conn);
         this.databaseManager = new DatabaseManager(conn);
         this.tagService = new TagService(conn);
-
+        this.notificationService = new NotificationService(conn);
     }
 
     /**
@@ -274,5 +275,9 @@ public class Database implements DatabaseConnection {
         throws SQLException
     {
         employeeService.changePassword(employee, password);
+    }
+
+    @Override public boolean addForgetPasswordNotification(Integer workingNumber) throws SQLException {
+      return notificationService.addForgetPasswordNotification(workingNumber);
     }
 }

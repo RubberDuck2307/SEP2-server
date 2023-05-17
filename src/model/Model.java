@@ -40,7 +40,8 @@ public interface Model
     void removeWorkerFromManager(int managerNumber, int workerNumber);
     
     Task getTask(Long projectId);
-    
+
+    boolean addForgetPasswordNotification(Integer workingNumber);
     Employee login(UserProfile userProfile);
 
     Integer saveEmployee(Employee employee, String password);

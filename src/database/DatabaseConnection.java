@@ -8,7 +8,9 @@ import java.util.ArrayList;
 public interface DatabaseConnection
 {
 
-    public void deleteTag(Long id) throws SQLException;
+    void deleteTag(Long id) throws SQLException;
+
+    boolean addForgetPasswordNotification(Integer workingNumber) throws SQLException;
     
     Long saveTag(Tag tag) throws SQLException;
     

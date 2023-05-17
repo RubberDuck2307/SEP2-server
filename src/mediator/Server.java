@@ -1,6 +1,8 @@
 package mediator;
 
 import model.*;
+import utility.observer.listener.GeneralListener;
+import utility.observer.subject.PropertyChangeHandler;
 
 import java.net.MalformedURLException;
 import java.rmi.Naming;
@@ -10,20 +12,23 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
- *  the class is responsible for creating the local registry and exporting the remote object. It delegates the method calls to the model.
- *  * @author Anna Andrlova, Alex Bolfa, Cosmin Demian, Jan Metela, Arturs Ricards Rijnieks
- *  * @version 1.0 - May 2023
+ * the class is responsible for creating the local registry and exporting the remote object. It delegates the method calls to the model.
+ * * @author Anna Andrlova, Alex Bolfa, Cosmin Demian, Jan Metela, Arturs Ricards Rijnieks
+ * * @version 1.0 - May 2023
  */
 public class Server implements RemoteModel {
 
     private Model model;
+    private final PropertyChangeHandler<String, String> propertyChangeHandler;
 
     public Server(Model model) throws RemoteException, MalformedURLException {
         this.model = model;
         startRegistry();
         startServer();
+        propertyChangeHandler = new PropertyChangeHandler<String, String>(this);
     }
 
 
@@ -41,40 +46,36 @@ public class Server implements RemoteModel {
         Naming.rebind("Case", this);
     }
 
-    @Override public Long saveTag(Tag tag) throws RemoteException
-    {
+    @Override
+    public Long saveTag(Tag tag) throws RemoteException {
         return model.saveTag(tag);
     }
 
-    @Override public TagList getAllTags()
-    {
+    @Override
+    public TagList getAllTags() {
         return model.getAllTags();
     }
 
-    @Override public TagList getTagsOfTask(Long taskId)
-    {
+    @Override
+    public TagList getTagsOfTask(Long taskId) {
         return model.getTagsOfTask(taskId);
     }
 
-    @Override public void addTagToTask(Long taskId, Long tagId)
-    {
+    @Override
+    public void addTagToTask(Long taskId, Long tagId) {
         model.addTagToTask(taskId, tagId);
     }
 
-    @Override public void removeTagFromTask(Long taskId, Long tagId)
-        throws RemoteException
-    {
+    @Override
+    public void removeTagFromTask(Long taskId, Long tagId)
+            throws RemoteException {
         model.removeTagFromTask(taskId, tagId);
     }
 
-    @Override public Tag getTag(Long tagId)
-    {
+    @Override
+    public Tag getTag(Long tagId) {
         return model.getTag(tagId);
     }
-
-
-
-
 
 
     @Override
@@ -94,12 +95,13 @@ public class Server implements RemoteModel {
 
     @Override
     public Long saveTask(Task task) throws RemoteException {
-       return model.saveTask(task);
+        return model.saveTask(task);
     }
 
-    public ProjectList getAllProjects() throws RemoteException{
+    public ProjectList getAllProjects() throws RemoteException {
         return model.getAllProjects();
     }
+
     @Override
     public Long saveProject(Project project) throws RemoteException {
         return model.saveProject(project);
@@ -107,40 +109,43 @@ public class Server implements RemoteModel {
 
     @Override
     public EmployeeList getEmployeesAssignedToManager(int managerNumber) throws RemoteException {
-       return model.getEmployeesAssignedToManager(managerNumber);
+        return model.getEmployeesAssignedToManager(managerNumber);
     }
 
 
     @Override
     public Employee login(UserProfile userProfile) throws RemoteException {
+
         return model.login(userProfile);
     }
 
-    public void changeTaskStatus(Long taskId, String status) throws RemoteException{
+    public void changeTaskStatus(Long taskId, String status) throws RemoteException {
         model.changeTaskStatus(taskId, status);
+
     }
-    public Task getTask(Long projectId) throws RemoteException{
+
+    public Task getTask(Long projectId) throws RemoteException {
         return model.getTask(projectId);
     }
 
-    public void unassignEmployeesFromTask(ArrayList<Integer> employeeWorkingNumbers, Long TaskID) throws RemoteException{
+    public void unassignEmployeesFromTask(ArrayList<Integer> employeeWorkingNumbers, Long TaskID) throws RemoteException {
         model.unassignEmployeesFromTask(employeeWorkingNumbers, TaskID);
     }
+
     @Override
-    public void dismissEmployeesFromProject(ArrayList<Integer> employeeWorkingNumbers, Long projectID) throws RemoteException
-    {
+    public void dismissEmployeesFromProject(ArrayList<Integer> employeeWorkingNumbers, Long projectID) throws RemoteException {
         model.dismissEmployeesFromProject(employeeWorkingNumbers, projectID);
     }
+
     @Override
-    public void assignEmployeesToProject(ArrayList<Integer> addedEmployees, Long id) throws RemoteException
-    {
+    public void assignEmployeesToProject(ArrayList<Integer> addedEmployees, Long id) throws RemoteException {
         model.assignEmployeesToProject(addedEmployees, id);
     }
+
     @Override
     public void removeWorkerFromTask(Integer workingNumber, Long taskID) throws RemoteException {
         model.removeWorkerFromTask(workingNumber, taskID);
     }
-
 
 
     @Override
@@ -148,27 +153,27 @@ public class Server implements RemoteModel {
         return model.saveEmployee(employee, password);
     }
 
-    @Override public void assignEmployeeToProject(Integer workingNumber,
-        Long projectID)
-    {
+    @Override
+    public void assignEmployeeToProject(Integer workingNumber,
+                                        Long projectID) {
         model.assignEmployeeToProject(workingNumber, projectID);
     }
 
-    @Override public void removeEmployeeFromProject(Integer workingNumber,
-        Long projectID)
-    {
+    @Override
+    public void removeEmployeeFromProject(Integer workingNumber,
+                                          Long projectID) {
         model.removeEmployeeFromProject(workingNumber, projectID);
     }
 
-    @Override public void assignWorkerToManager(int managerNumber,
-        int workerNumber) throws RemoteException
-    {
+    @Override
+    public void assignWorkerToManager(int managerNumber,
+                                      int workerNumber) throws RemoteException {
         model.assignWorkerToManager(managerNumber, workerNumber);
     }
 
-    @Override public void removeWorkerFromManager(int managerNumber,
-        int workerNumber) throws RemoteException
-    {
+    @Override
+    public void removeWorkerFromManager(int managerNumber,
+                                        int workerNumber) throws RemoteException {
         model.removeWorkerFromManager(managerNumber, workerNumber);
     }
 
@@ -177,8 +182,8 @@ public class Server implements RemoteModel {
         return model.getAllProjectManagers();
     }
 
-    @Override public EmployeeList getAllWorkers() throws RemoteException
-    {
+    @Override
+    public EmployeeList getAllWorkers() throws RemoteException {
         return model.getAllWorkers();
     }
 
@@ -187,13 +192,12 @@ public class Server implements RemoteModel {
         model.updateProject(project);
     }
 
-    public void assignEmployeesToTask(ArrayList<Integer> employeeWorkingNumbers, Long TaskID) throws RemoteException{
+    public void assignEmployeesToTask(ArrayList<Integer> employeeWorkingNumbers, Long TaskID) throws RemoteException {
         model.assignEmployeesToTask(employeeWorkingNumbers, TaskID);
     }
 
 
-
-    public void assignWorkerToTask(Integer workingNumber, Long taskID) throws RemoteException{
+    public void assignWorkerToTask(Integer workingNumber, Long taskID) throws RemoteException {
         model.assignWorkerToTask(workingNumber, taskID);
     }
 
@@ -206,49 +210,65 @@ public class Server implements RemoteModel {
     public void updateTask(Task task) throws RemoteException {
         model.updateTask(task);
     }
-    public EmployeeList getAllEmployeesAssignedToProject(Long projectId){
+
+    public EmployeeList getAllEmployeesAssignedToProject(Long projectId) {
         return model.getAllEmployeesAssignedToProject(projectId);
     }
+
     @Override
     public EmployeeList getEmployeesOfTask(Long taskId) throws RemoteException {
         return model.getEmployeesOfTask(taskId);
     }
 
-    @Override public Employee getEmployeeByWorkingNumber(int workingNumber)
-    {
+    @Override
+    public Employee getEmployeeByWorkingNumber(int workingNumber) {
         return model.getEmployeeByWorkingNumber(workingNumber);
     }
 
-    @Override public EmployeeList getAllEmployees() throws RemoteException
-    {
+    @Override
+    public EmployeeList getAllEmployees() throws RemoteException {
         return model.getAllEmployees();
     }
 
-    @Override public Project getProjectById(long projectId) throws RemoteException
-    {
+    @Override
+    public Project getProjectById(long projectId) throws RemoteException {
         return model.getProjectById(projectId);
     }
 
-    @Override public TaskList getAllTasksByUserId(Integer workingNumber) throws RemoteException
-    {
+    @Override
+    public TaskList getAllTasksByUserId(Integer workingNumber) throws RemoteException {
         return model.getAllTasksByUserId(workingNumber);
     }
 
-    @Override public EmployeeList getAllWorkersManagersByWorkerWorkingNumber(
-        Integer workingNumber) throws RemoteException
-    {
+    @Override
+    public EmployeeList getAllWorkersManagersByWorkerWorkingNumber(
+            Integer workingNumber) throws RemoteException {
         return model.getAllWorkersManagersByWorkerWorkingNumber(workingNumber);
     }
 
-    @Override public void updateEmployee(Employee employee) throws RemoteException
-    {
+    public boolean addForgetPasswordNotification(Integer workingNumber) throws RemoteException {
+        propertyChangeHandler.firePropertyChange("forgetPasswordNotification", null, String.valueOf(workingNumber));
+        return model.addForgetPasswordNotification(workingNumber);
+    }
+
+    @Override
+    public void updateEmployee(Employee employee) throws RemoteException {
         model.updateEmployee(employee);
     }
 
-    @Override public void changePassword(Employee employee, String password)
-        throws RemoteException
-    {
-        model.changePassword(employee,password);
+    @Override
+    public void changePassword(Employee employee, String password)
+            throws RemoteException {
+        model.changePassword(employee, password);
     }
 
+    @Override
+    public boolean addListener(GeneralListener<String, String> listener, String... propertyNames) throws RemoteException {
+        return propertyChangeHandler.addListener(listener, propertyNames);
+    }
+
+    @Override
+    public boolean removeListener(GeneralListener<String, String> listener, String... propertyNames) throws RemoteException {
+        return propertyChangeHandler.removeListener(listener, propertyNames);
+    }
 }
