@@ -304,7 +304,7 @@ public class EmployeeService
     }
     String query =
         "UPDATE employees SET name = ?, email = ?, phone_number = ?,"
-            + "dob = ? , gender = ? , role = ? + WHERE working_number = ?;";
+            + "dob = ? , gender = ? , role = ?  WHERE working_number = ?;";
     PreparedStatement st = conn.prepareStatement(query);
     st.setString(1, employee.getName());
     st.setString(2, employee.getEmail());
