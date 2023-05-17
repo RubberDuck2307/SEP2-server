@@ -86,6 +86,21 @@ public class DatabaseManager {
         statement.executeUpdate(query);
     }
 
+
+    private void addDummyDataNotes() throws SQLException
+    {
+        String query = "INSERT INTO notes(working_number, title, note_text, creation_date)" +
+                "VALUES (1, 'I like Mango', 'This should be the first employees note text', '1999-12-9')," +
+                "(2, 'I like Pineapple', 'This should be the second employees note text', '1999-12-9')," +
+                "(3, 'I like Papaya', 'This should be the third employees note text',  '1999-12-9')," +
+                "(4, 'I like Kiwi', 'This should be the fourth employees note text', '1999-12-9')," +
+                "(5, 'I like Dragon-fruit', 'This should be the fifth employees note text', '1999-12-9')," +
+                "(6, 'I like Guava', 'This should be the sixth employees note text', '1999-12-9');";
+        Statement statement = conn.createStatement();
+        statement.executeUpdate(query);
+    }
+
+
     /**
      * adds dummy data to employee_project table
      * @throws SQLException
@@ -134,19 +149,14 @@ public class DatabaseManager {
         statement.executeUpdate(query);
     }
 
-    private void addDummyDataEmployeeNotes() throws SQLException
-    {
-        String query = "INSERT INTO notes(working_number, title, note_text, creation_date)" +
-            "VALUES (1, 'I like Mango', 'This should be the first employees note text', '1999-12-9')," +
-            "(2, 'I like Pineapple', 'This should be the second employees note text', '1999-12-9')," +
-            "(3, 'I like Papaya', 'This should be the third employees note text',  '1999-12-9')," +
-            "(4, 'I like Kiwi', 'This should be the fourth employees note text', '1999-12-9')," +
-            "(5, 'I like Dragon-fruit', 'This should be the fifth employees note text', '1999-12-9')," +
-            "(6, 'I like Guava', 'This should be the sixth employees note text', '1999-12-9');";
+    private void addDummyDataTags() throws SQLException{
+        String query = "Insert INTO tags(name, color)" +
+                "VALUES ('tag1', '#b15583'),"+
+                "('tag2', '#b15583')," +
+                "('tag3', '#b15583');";
         Statement statement = conn.createStatement();
         statement.executeUpdate(query);
     }
-
 
     /**
      * The method uses other private methods to add dummy data to the database
@@ -160,7 +170,8 @@ public class DatabaseManager {
         addDummyDataEmployeeProject();
         addDummyDataWorkerTask();
         addDummyDataManagerWorker();
-        addDummyDataEmployeeNotes();
+        addDummyDataNotes();
+        addDummyDataTags();
     }
 
     /**
@@ -168,7 +179,7 @@ public class DatabaseManager {
      * @throws SQLException
      */
     public void clearAllTables() throws SQLException {
-        String query = "DELETE FROM manager_worker cascade; DELETE FROM employee_project cascade; DELETE FROM worker_task cascade; DELETE FROM tasks cascade; DELETE FROM projects cascade;DELETE FROM user_profiles cascade; DELETE FROM employees cascade;DELETE FROM notes cascade;";
+        String query = "DELETE FROM notes cascade; DELETE FROM tag_task cascade; DELETE FROM manager_worker cascade; DELETE FROM employee_project cascade; DELETE FROM worker_task cascade; DELETE FROM tasks cascade; DELETE FROM projects cascade;DELETE FROM user_profiles cascade; DELETE FROM employees cascade; Delete FROM tags cascade;";
         PreparedStatement st = conn.prepareStatement(query);
         st.executeUpdate();
     }
@@ -179,8 +190,10 @@ public class DatabaseManager {
      * @throws SQLException
      */
     public void resetSequences() throws SQLException {
-        String query = "ALTER SEQUENCE projects_id_seq RESTART WITH 1; ALTER SEQUENCE tasks_id_seq RESTART WITH 1; ALTER SEQUENCE employees_working_number_seq RESTART WITH 1000; ALTER SEQUENCE notes_id_seq RESTART WITH 1;";
+        String query = "ALTER SEQUENCE projects_id_seq RESTART WITH 1; ALTER SEQUENCE tasks_id_seq RESTART WITH 1; ALTER SEQUENCE employees_working_number_seq RESTART WITH 1000; ALTER SEQUENCE tags_id_seq RESTART WITH 1;";
         PreparedStatement statement = conn.prepareStatement(query);
         statement.executeUpdate();
     }
+
+
 }

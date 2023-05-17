@@ -9,6 +9,14 @@ import java.util.ArrayList;
 
 public interface RemoteModel extends Remote {
 
+    Long saveTag(Tag tag) throws RemoteException;
+    TagList getAllTags() throws RemoteException;
+    TagList getTagsOfTask(Long taskId) throws RemoteException;
+    void addTagToTask(Long taskId, Long tagId) throws RemoteException;
+    void removeTagFromTask(Long taskId, Long tagId) throws RemoteException;
+    Tag getTag(Long tagId) throws RemoteException;
+    void deleteTag(Long id) throws RemoteException;
+
     TaskList getAllTasksOfProject(Long id) throws RemoteException;
 
     ProjectList getAllProjectsByWorkingNumber(Integer workingNumber) throws RemoteException;
@@ -17,9 +25,13 @@ public interface RemoteModel extends Remote {
 
     ProjectList getAllProjects() throws RemoteException;
 
-    void saveProject(Project project)throws RemoteException;
+    void changeTaskStatus(Long taskId, String status) throws RemoteException;
+
+    Long saveProject(Project project)throws RemoteException;
 
     void unassignEmployeesFromTask(ArrayList<Integer> employeeWorkingNumbers, Long TaskID) throws RemoteException;
+    void dismissEmployeesFromProject(ArrayList<Integer> employeeWorkingNumbers, Long projectID) throws RemoteException;
+    void assignEmployeesToProject(ArrayList<Integer> addedEmployees, Long id) throws RemoteException;
     EmployeeList getEmployeesAssignedToManager(int managerNumber) throws RemoteException;
 
     Task getTask(Long projectId) throws RemoteException;
@@ -52,4 +64,6 @@ public interface RemoteModel extends Remote {
     void updateNote(Note note) throws RemoteException;
     void saveNote(Note note) throws RemoteException;
     NoteList getAllNotesSavedByEmployee(Integer workingNumber)  throws RemoteException;
+    void updateEmployee(Employee employee) throws RemoteException;
+    void changePassword(Employee employee, String password) throws RemoteException;
 }

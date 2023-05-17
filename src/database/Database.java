@@ -3,6 +3,7 @@ package database;
 import database.note.NoteService;
 import database.employee.EmployeeService;
 import database.project.ProjectService;
+import database.tag.TagService;
 import database.task.TaskService;
 import model.*;
 
@@ -28,6 +29,7 @@ public class Database implements DatabaseConnection {
     private TaskService taskService;
 
     private DatabaseManager databaseManager;
+    private TagService tagService;
 
     private NoteService noteService;
 
@@ -41,6 +43,7 @@ public class Database implements DatabaseConnection {
         this.taskService = new TaskService(conn);
         this.databaseManager = new DatabaseManager(conn);
         this.noteService = new NoteService(conn);
+        this.tagService = new TagService(conn);
 
     }
 
@@ -98,9 +101,12 @@ public class Database implements DatabaseConnection {
     public Employee login(UserProfile userProfile) throws SQLException {
         return employeeService.login(userProfile);
     }
+    public void deleteTag(Long id) throws SQLException {
+        tagService.deleteTag(id);
+    }
 
-    public void saveProject(Project project) throws SQLException {
-        projectService.saveProject(project);
+    public Long saveProject(Project project) throws SQLException {
+        return projectService.saveProject(project);
     }
 
     public void updateTask(Task task) throws SQLException {
@@ -114,6 +120,37 @@ public class Database implements DatabaseConnection {
 
     public void updateProject(Project project) throws SQLException {
         projectService.updateProject(project);
+    }
+
+    @Override
+    public Long saveTag(Tag tag) throws SQLException {
+        return tagService.saveTag(tag);
+    }
+
+    public Tag getTag(Long tagId) throws SQLException {
+        return tagService.getTag(tagId);
+    }
+
+
+    @Override
+    public TagList getAllTags() throws SQLException {
+        return tagService.getAllTags();
+    }
+
+    @Override
+    public TagList getTagsOfTask(Long taskId) throws SQLException {
+        return tagService.getTagsOfTask(taskId);
+    }
+
+    @Override
+    public void addTagToTask(Long taskId, Long tagId) throws SQLException {
+        taskService.addTagToTask(taskId, tagId);
+    }
+
+    @Override public void removeTagFromTask(Long taskId, Long tagId)
+        throws SQLException
+    {
+        taskService.removeTagFromTask(taskId, tagId);
     }
 
     public ProjectList getAllProjectsOfEmployee(int workingNumber) throws SQLException {
@@ -151,6 +188,11 @@ public class Database implements DatabaseConnection {
 
     public void assignEmployeesToProject(ArrayList<Integer> employeeWorkingNumbers, Long ProjectID) throws SQLException {
         projectService.assignEmployeesToProject(employeeWorkingNumbers, ProjectID);
+    }
+
+    public void dismissEmployeesFromProject(ArrayList<Integer> employeeWorkingNumbers, Long projectID) throws SQLException
+    {
+        projectService.dismissEmployeesFromProject(employeeWorkingNumbers, projectID);
     }
 
     public TaskList getAllTasks() throws SQLException {
@@ -236,5 +278,20 @@ public class Database implements DatabaseConnection {
     public NoteList getAllNotesSavedByEmployee(Integer workingNumber)  throws SQLException
     {
         return noteService.getAllNotesSavedByEmployee(workingNumber);
+    }
+
+    public void changeTaskStatus(Long taskId, String status) throws SQLException{
+        taskService.changeTaskStatus(taskId, status);
+    }
+
+    @Override public void updateEmployee(Employee employee) throws SQLException
+    {
+        employeeService.updateEmployee(employee);
+    }
+
+    @Override public void changePassword(Employee employee, String password)
+        throws SQLException
+    {
+        employeeService.changePassword(employee, password);
     }
 }

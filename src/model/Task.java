@@ -44,14 +44,14 @@ public class Task implements Serializable {
      */
     private Long projectId;
     /**
-     * The starting date of the task.
+     * The list of workers of the task.
      */
-    private LocalDate startingDate;
-    /**
-     * The list of employees working on the task.
-     */
-
     private EmployeeList workers;
+
+    /**
+     * The list of tags of the task.
+     */
+    private TagList tags;
 
     /**
      * 10-argument constructor for the class Task.
@@ -63,10 +63,9 @@ public class Task implements Serializable {
      * @param priority
      * @param status
      * @param projectId
-     * @param startingDate
      * @param workers
      */
-    public Task(Long id, String name, String description, LocalDate deadline, int estimatedTime, String priority, String status, Long projectId, LocalDate startingDate, EmployeeList workers) {
+    public Task(Long id, String name, String description, LocalDate deadline, int estimatedTime, String priority, String status, Long projectId, EmployeeList workers) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -75,8 +74,8 @@ public class Task implements Serializable {
         this.priority = priority;
         this.status = status;
         this.projectId = projectId;
-        this.startingDate = startingDate;
         this.workers = workers;
+        this.tags = new TagList();
     }
 
     /**
@@ -88,9 +87,8 @@ public class Task implements Serializable {
      * @param priority
      * @param status
      * @param projectId
-     * @param startingDate
      */
-    public Task(String name, String description, LocalDate deadline, Integer estimatedTime, String priority, String status, Long projectId, LocalDate startingDate) {
+    public Task(String name, String description, LocalDate deadline, Integer estimatedTime, String priority, String status, Long projectId) {
         this.name = name;
         this.description = description;
         this.deadline = deadline;
@@ -98,8 +96,8 @@ public class Task implements Serializable {
         this.priority = priority;
         this.status = status;
         this.projectId = projectId;
-        this.startingDate = startingDate;
         workers = new EmployeeList();
+        this.tags = new TagList();
     }
 
     /**
@@ -112,9 +110,8 @@ public class Task implements Serializable {
      * @param priority
      * @param status
      * @param projectId
-     * @param startingDate
      */
-    public Task(Long id, String name, String description, LocalDate deadline, int estimatedTime, String priority, String status, Long projectId, LocalDate startingDate) {
+    public Task(Long id, String name, String description, LocalDate deadline, int estimatedTime, String priority, String status, Long projectId) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -123,8 +120,8 @@ public class Task implements Serializable {
         this.priority = priority;
         this.status = status;
         this.projectId = projectId;
-        this.startingDate = startingDate;
         workers = new EmployeeList();
+        this.tags = new TagList();
     }
 
     public Long getId() {
@@ -191,13 +188,6 @@ public class Task implements Serializable {
         this.projectId = serverId;
     }
 
-    public LocalDate getStartingDate() {
-        return startingDate;
-    }
-
-    public void setStartingDate(LocalDate startingDate) {
-        this.startingDate = startingDate;
-    }
 
     public EmployeeList getWorkers() {
         return workers;
@@ -215,13 +205,25 @@ public class Task implements Serializable {
                     task.getPriority().equals(this.getPriority()) &&
                     task.getEstimatedTime() == this.getEstimatedTime() &&
                     task.getDeadline().equals(this.getDeadline()) &&
-                    task.getStartingDate().equals(this.getStartingDate()) &&
                     task.getDescription().equals(this.getDescription()) &&
                     task.getName().equals(this.getName()) &&
                     task.getProjectId().equals(this.getProjectId());
         }
         return false;
     }
+
+    public void setEstimatedTime(Integer estimatedTime) {
+        this.estimatedTime = estimatedTime;
+    }
+
+    public TagList getTags() {
+        return tags;
+    }
+
+    public void setTags(TagList tags) {
+        this.tags = tags;
+    }
+
     @Override
     public String toString() {
         return "Task{" +
@@ -233,10 +235,8 @@ public class Task implements Serializable {
                 ", priority='" + priority + '\'' +
                 ", status='" + status + '\'' +
                 ", projectId=" + projectId +
-                ", startingDate=" + startingDate +
                 ", workers=" + workers +
+                ", tags=" + tags +
                 '}';
     }
-
-
 }

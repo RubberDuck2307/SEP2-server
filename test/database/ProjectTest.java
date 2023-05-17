@@ -37,6 +37,7 @@ public class ProjectTest {
         assertDoesNotThrow(() -> database.saveProject(project));
         ProjectList projectList = database.getAllProjects();
         Project savedProject = projectList.getProjectByID(1L);
+        System.out.println(savedProject);
         assertTrue(savedProject.getDescription().equals(project.getDescription()) && savedProject.getName().equals(project.getName()) && savedProject.getDeadline().equals(project.getDeadline()));
     }
 

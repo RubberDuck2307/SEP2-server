@@ -41,6 +41,46 @@ public class Server implements RemoteModel {
         Naming.rebind("Case", this);
     }
 
+    @Override public Long saveTag(Tag tag) throws RemoteException
+    {
+        return model.saveTag(tag);
+    }
+
+    @Override public TagList getAllTags()
+    {
+        return model.getAllTags();
+    }
+
+    @Override public TagList getTagsOfTask(Long taskId)
+    {
+        return model.getTagsOfTask(taskId);
+    }
+
+    @Override public void addTagToTask(Long taskId, Long tagId)
+    {
+        model.addTagToTask(taskId, tagId);
+    }
+
+    @Override public void removeTagFromTask(Long taskId, Long tagId)
+        throws RemoteException
+    {
+        model.removeTagFromTask(taskId, tagId);
+    }
+
+    @Override public Tag getTag(Long tagId)
+    {
+        return model.getTag(tagId);
+    }
+
+
+
+
+
+
+    @Override
+    public void deleteTag(Long id) throws RemoteException {
+        model.deleteTag(id);
+    }
 
     @Override
     public TaskList getAllTasksOfProject(Long id) throws RemoteException {
@@ -61,8 +101,8 @@ public class Server implements RemoteModel {
         return model.getAllProjects();
     }
     @Override
-    public void saveProject(Project project) throws RemoteException {
-        model.saveProject(project);
+    public Long saveProject(Project project) throws RemoteException {
+        return model.saveProject(project);
     }
 
     @Override
@@ -76,12 +116,25 @@ public class Server implements RemoteModel {
         return model.login(userProfile);
     }
 
+    public void changeTaskStatus(Long taskId, String status) throws RemoteException{
+        model.changeTaskStatus(taskId, status);
+    }
     public Task getTask(Long projectId) throws RemoteException{
         return model.getTask(projectId);
     }
 
     public void unassignEmployeesFromTask(ArrayList<Integer> employeeWorkingNumbers, Long TaskID) throws RemoteException{
         model.unassignEmployeesFromTask(employeeWorkingNumbers, TaskID);
+    }
+    @Override
+    public void dismissEmployeesFromProject(ArrayList<Integer> employeeWorkingNumbers, Long projectID) throws RemoteException
+    {
+        model.dismissEmployeesFromProject(employeeWorkingNumbers, projectID);
+    }
+    @Override
+    public void assignEmployeesToProject(ArrayList<Integer> addedEmployees, Long id) throws RemoteException
+    {
+        model.assignEmployeesToProject(addedEmployees, id);
     }
     @Override
     public void removeWorkerFromTask(Integer workingNumber, Long taskID) throws RemoteException {
@@ -182,9 +235,20 @@ public class Server implements RemoteModel {
     }
 
     @Override public EmployeeList getAllWorkersManagersByWorkerWorkingNumber(
-        Integer workingNumber)
+        Integer workingNumber) throws RemoteException
     {
         return model.getAllWorkersManagersByWorkerWorkingNumber(workingNumber);
+    }
+
+    @Override public void updateEmployee(Employee employee) throws RemoteException
+    {
+        model.updateEmployee(employee);
+    }
+
+    @Override public void changePassword(Employee employee, String password)
+        throws RemoteException
+    {
+        model.changePassword(employee,password);
     }
 
     @Override public void updateNote(Note note) throws RemoteException

@@ -48,7 +48,7 @@ class DatabaseTest {
     }
 
     @Test void updateTask(){
-        Task task = new Task(19L, "Almost", "description", LocalDate.now(), 0, "HIGH", "TO DO", 8L, LocalDate.now());
+        Task task = new Task(19L, "Almost", "description", LocalDate.now(), 0, "HIGH", "TO DO", 8L);
         assertDoesNotThrow(() -> database.updateTask(task));
     }
 
