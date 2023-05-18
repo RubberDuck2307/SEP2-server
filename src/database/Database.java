@@ -280,4 +280,25 @@ public class Database implements DatabaseConnection {
     @Override public boolean addForgetPasswordNotification(Integer workingNumber) throws SQLException {
       return notificationService.addForgetPasswordNotification(workingNumber);
     }
+
+    @Override
+    public void addAssignedProjectNotification(Integer workingNumber, Long projectID) throws SQLException {
+        notificationService.addAssignedProjectNotification(workingNumber, projectID);
+    }
+
+    @Override
+    public void addAssignedToTaskNotification(Integer workingNumber, Long taskID) throws SQLException {
+        notificationService.addAssignedToTaskNotification(workingNumber, taskID);
+    }
+
+    @Override
+    public void addMultipleAssignedToTaskNotification(ArrayList<Integer> workingNumbers, Long taskID) throws SQLException {
+        notificationService.addMultipleAssignedToTaskNotification(workingNumbers, taskID);
+    }
+
+    @Override
+    public void addMultipleAssignedToProjectNotification(ArrayList<Integer> workingNumbers, Long projectID) throws SQLException {
+        notificationService.addMultipleAssignedToProjectNotification(workingNumbers, projectID);
+    }
+
 }

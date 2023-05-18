@@ -22,13 +22,13 @@ import java.util.Arrays;
 public class Server implements RemoteModel {
 
     private Model model;
-    private final PropertyChangeHandler<String, String> propertyChangeHandler;
+    private PropertyHandler propertyHandler;
 
     public Server(Model model) throws RemoteException, MalformedURLException {
         this.model = model;
         startRegistry();
         startServer();
-        propertyChangeHandler = new PropertyChangeHandler<String, String>(this);
+        propertyHandler = new PropertyHandler(new PropertyChangeHandler<>(this));
     }
 
 
@@ -140,6 +140,9 @@ public class Server implements RemoteModel {
     @Override
     public void assignEmployeesToProject(ArrayList<Integer> addedEmployees, Long id) throws RemoteException {
         model.assignEmployeesToProject(addedEmployees, id);
+        //model.addMultipleAssignedToProjectNotification(addedEmployees, id);
+
+
     }
 
     @Override
@@ -157,6 +160,7 @@ public class Server implements RemoteModel {
     public void assignEmployeeToProject(Integer workingNumber,
                                         Long projectID) {
         model.assignEmployeeToProject(workingNumber, projectID);
+       // model.addAssignedProjectNotification(workingNumber, projectID);
     }
 
     @Override
@@ -194,11 +198,13 @@ public class Server implements RemoteModel {
 
     public void assignEmployeesToTask(ArrayList<Integer> employeeWorkingNumbers, Long TaskID) throws RemoteException {
         model.assignEmployeesToTask(employeeWorkingNumbers, TaskID);
+       // model.addMultipleAssignedToTaskNotification(employeeWorkingNumbers, TaskID);
     }
 
 
     public void assignWorkerToTask(Integer workingNumber, Long taskID) throws RemoteException {
         model.assignWorkerToTask(workingNumber, taskID);
+       // model.addAssignedToTaskNotification(workingNumber, taskID);
     }
 
     @Override
@@ -247,7 +253,7 @@ public class Server implements RemoteModel {
     }
 
     public boolean addForgetPasswordNotification(Integer workingNumber) throws RemoteException {
-        propertyChangeHandler.firePropertyChange("forgetPasswordNotification", null, String.valueOf(workingNumber));
+        propertyHandler.fireForgotPasswordNotification(workingNumber);
         return model.addForgetPasswordNotification(workingNumber);
     }
 
@@ -264,11 +270,11 @@ public class Server implements RemoteModel {
 
     @Override
     public boolean addListener(GeneralListener<String, String> listener, String... propertyNames) throws RemoteException {
-        return propertyChangeHandler.addListener(listener, propertyNames);
+        return propertyHandler.addListener(listener, propertyNames);
     }
 
     @Override
     public boolean removeListener(GeneralListener<String, String> listener, String... propertyNames) throws RemoteException {
-        return propertyChangeHandler.removeListener(listener, propertyNames);
+        return propertyHandler.addListener(listener, propertyNames);
     }
 }
