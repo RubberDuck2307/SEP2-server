@@ -57,6 +57,7 @@ public interface Model {
 
     void deleteEmployeeByWorkingNumber(Integer workingNumber);
 
+
     void updateProject(Project project);
 
     void updateTask(Task task);

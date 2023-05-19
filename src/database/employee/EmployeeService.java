@@ -53,6 +53,13 @@ public class EmployeeService
     return employeeList;
   }
 
+  public void deleteEmployeeByWorkingNumber(Integer workingNumber) throws SQLException
+  {
+    String query = "DELETE FROM employees WHERE working_number = " + workingNumber + ";";
+    PreparedStatement st = conn.prepareStatement(query);
+    st.executeUpdate();
+  }
+
   /**
    * @return all the workers from the database.
    */
@@ -225,9 +232,7 @@ public class EmployeeService
   public void removeWorkerFromManager(Integer managerNumber,
       Integer workerNumber) throws SQLException
   {
-    String query =
-        "INSERT INTO worker_task VALUES(" + managerNumber + ", " + workerNumber
-            + ");";
+    String query;
     query = "DELETE FROM manager_worker WHERE manager_number = "
         + managerNumber.toString() + " AND worker_number = "
         + workerNumber.toString() + ";";

@@ -96,6 +96,7 @@ public class Database implements DatabaseConnection {
         return taskService.getTask(projectId);
     }
 
+
     public void addUserProfile(UserProfile userProfile) throws SQLException {
         employeeService.addUserProfile(userProfile);
     }
