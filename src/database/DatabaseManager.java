@@ -90,8 +90,17 @@ public class DatabaseManager {
     private void addDummyDataNotes() throws SQLException
     {
         String query = "INSERT INTO notes(working_number, title, note_text, creation_date)" +
-                "VALUES (1, 'I like Mango', 'This should be the first employees note text', '1999-12-9')," +
-                "(2, 'I like Pineapple', 'This should be the second employees note text', '1999-12-9')," +
+                "VALUES (1, 'I like Mango', 'This should be the first employees note text No. 1', '1999-12-9')," +
+                "(1, 'I like Mango', 'This should be the first employees note text No. 2', '1999-12-9')," +
+                "(1, 'I like Mango', 'This should be the first employees note text No. 3', '1999-12-9')," +
+                "(2, 'I like Pineapple', 'This should be the second employees note text No. 1', '1999-12-9')," +
+                "(2, 'I like Pineapple', 'This should be the second employees note text No. 2', '1999-12-9')," +
+                "(2, 'I like Pineapple', 'This should be the second employees note text No. 3', '1999-12-9')," +
+                "(2, 'I like Pineapple', 'This should be the second employees note text No. 4', '1999-12-9')," +
+                "(2, 'I like Pineapple', 'This should be the second employees note text No. 5', '1999-12-9')," +
+                "(2, 'I like Pineapple', 'This should be the second employees note text No. 6', '1999-12-9')," +
+                "(2, 'I like Pineapple', '{ This should be the second employees note text No. 7 } This should be the second employees note text No. 7; This should be the second employees note text No. 7; This should be the second employees note text No. 7; This should be the second employees note text No. 7 ;This should be the second employees note text No. 7; This should be the second employees note text No. 7; This should be the second employees note text No. 7; This should be the second employees note text No. 7; This should be the second employees note text No. 7', '1999-12-9')," +
+                "(2, 'I like Pineapple', 'This should be the second employees note text No. 8', '1999-12-9')," +
                 "(3, 'I like Papaya', 'This should be the third employees note text',  '1999-12-9')," +
                 "(4, 'I like Kiwi', 'This should be the fourth employees note text', '1999-12-9')," +
                 "(5, 'I like Dragon-fruit', 'This should be the fifth employees note text', '1999-12-9')," +
@@ -190,7 +199,7 @@ public class DatabaseManager {
      * @throws SQLException
      */
     public void resetSequences() throws SQLException {
-        String query = "ALTER SEQUENCE projects_id_seq RESTART WITH 1; ALTER SEQUENCE tasks_id_seq RESTART WITH 1; ALTER SEQUENCE employees_working_number_seq RESTART WITH 1000; ALTER SEQUENCE tags_id_seq RESTART WITH 1;";
+        String query = "ALTER SEQUENCE projects_id_seq RESTART WITH 1; ALTER SEQUENCE tasks_id_seq RESTART WITH 1; ALTER SEQUENCE employees_working_number_seq RESTART WITH 1000; ALTER SEQUENCE tags_id_seq RESTART WITH 1; ALTER SEQUENCE notes_id_seq RESTART WITH 1;";
         PreparedStatement statement = conn.prepareStatement(query);
         statement.executeUpdate();
     }
