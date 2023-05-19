@@ -34,6 +34,26 @@ public class ModelManager implements Model
         }
     }
 
+    @Override
+    public void addAssignedProjectNotification(Integer workingNumber, Long projectID) {
+        try {
+            databaseConnection.addAssignedProjectNotification(workingNumber, projectID);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void addAssignedToTaskNotification(Integer workingNumber, Long taskID) {
+        try {
+            databaseConnection.addAssignedToTaskNotification(workingNumber, taskID);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
     @Override public Long saveTag(Tag tag)
     {
         try
@@ -503,6 +523,16 @@ public class ModelManager implements Model
         }
     }
 
+
+    @Override
+    public boolean addForgetPasswordNotification(Integer workingNumber){
+        try {
+            return databaseConnection.addForgetPasswordNotification(workingNumber);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
     @Override public void updateEmployee(Employee employee)
     {
         try {
@@ -561,6 +591,24 @@ public class ModelManager implements Model
         }
         catch (SQLException e)
         {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void addMultipleAssignedToTaskNotification(ArrayList<Integer> workingNumbers, Long taskID){
+        try {
+            databaseConnection.addMultipleAssignedToTaskNotification(workingNumbers,taskID);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void addMultipleAssignedToProjectNotification(ArrayList<Integer> workingNumbers, Long projectID) {
+        try {
+            databaseConnection.addMultipleAssignedToProjectNotification(workingNumbers,projectID);
+        } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
         }

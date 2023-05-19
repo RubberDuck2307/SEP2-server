@@ -51,5 +51,6 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="junit.jupiter.engine" level="project" />
+    <orderEntry type="library" name="MyObserver-1.4" level="application" />
   </component>
 </module>
