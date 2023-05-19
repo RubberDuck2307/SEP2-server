@@ -179,7 +179,7 @@ public class DatabaseManager {
         addDummyDataEmployeeProject();
         addDummyDataWorkerTask();
         addDummyDataManagerWorker();
-        addDummyDataNotes();
+
         addDummyDataTags();
     }
 

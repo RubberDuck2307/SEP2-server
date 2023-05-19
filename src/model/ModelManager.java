@@ -34,6 +34,26 @@ public class ModelManager implements Model
         }
     }
 
+    @Override
+    public void addAssignedProjectNotification(Integer workingNumber, Long projectID) {
+        try {
+            databaseConnection.addAssignedProjectNotification(workingNumber, projectID);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void addAssignedToTaskNotification(Integer workingNumber, Long taskID) {
+        try {
+            databaseConnection.addAssignedToTaskNotification(workingNumber, taskID);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
     @Override public Long saveTag(Tag tag)
     {
         try
@@ -138,7 +158,7 @@ public class ModelManager implements Model
             throw new RuntimeException(e);
         }
     }
-
+    
     public ProjectList getAllProjects()
     {
         try
@@ -151,7 +171,7 @@ public class ModelManager implements Model
             throw new RuntimeException(e);
         }
     }
-
+    
     public EmployeeList getEmployeesOfTask(Long TaskId)
     {
         try
@@ -164,7 +184,7 @@ public class ModelManager implements Model
             throw new RuntimeException(e);
         }
     }
-
+    
     @Override
     public void assignWorkerToTask(Integer workingNumber, Long taskID)
     {
@@ -178,7 +198,7 @@ public class ModelManager implements Model
             throw new RuntimeException(e);
         }
     }
-
+    
     @Override
     public void removeWorkerFromTask(Integer workingNumber, Long taskID)
     {
@@ -192,7 +212,7 @@ public class ModelManager implements Model
             throw new RuntimeException(e);
         }
     }
-
+    
     @Override
     public Long saveTask(Task task)
     {
@@ -218,7 +238,7 @@ public class ModelManager implements Model
             throw new RuntimeException(e);
         }
     }
-
+    
     @Override
     public Long saveProject(Project project)
     {
@@ -232,7 +252,7 @@ public class ModelManager implements Model
             throw new RuntimeException(e);
         }
     }
-
+    
     @Override
     public void assignEmployeeToProject(Integer workingNumber, Long projectID)
     {
@@ -246,7 +266,7 @@ public class ModelManager implements Model
             throw new RuntimeException(e);
         }
     }
-
+    
     @Override
     public void removeEmployeeFromProject(Integer workingNumber, Long projectID)
     {
@@ -260,7 +280,7 @@ public class ModelManager implements Model
             throw new RuntimeException(e);
         }
     }
-
+    
     @Override
     public void assignWorkerToManager(int managerNumber, int workerNumber)
     {
@@ -274,7 +294,7 @@ public class ModelManager implements Model
             throw new RuntimeException(e);
         }
     }
-
+    
     @Override
     public void removeWorkerFromManager(int managerNumber, int workerNumber)
     {
@@ -288,7 +308,7 @@ public class ModelManager implements Model
             throw new RuntimeException(e);
         }
     }
-
+    
     @Override
     public Employee login(UserProfile userProfile)
     {
@@ -302,7 +322,7 @@ public class ModelManager implements Model
             throw new RuntimeException(e);
         }
     }
-
+    
     public EmployeeList getAllProjectManagers()
     {
         try
@@ -315,7 +335,7 @@ public class ModelManager implements Model
             throw new RuntimeException(e);
         }
     }
-
+    
     @Override
     public EmployeeList getAllWorkers()
     {
@@ -329,7 +349,7 @@ public class ModelManager implements Model
             throw new RuntimeException(e);
         }
     }
-
+    
     @Override
     public Integer saveEmployee(Employee employee, String password)
     {
@@ -340,6 +360,18 @@ public class ModelManager implements Model
         catch (SQLException e)
         {
             e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+    @Override
+    public void deleteEmployeeByWorkingNumber(Integer workingNumber)
+    {
+        try
+        {
+            databaseConnection.deleteEmployeeByWorkingNumber(workingNumber);
+        }
+        catch (SQLException e)
+        {
             throw new RuntimeException(e);
         }
     }
@@ -357,7 +389,7 @@ public class ModelManager implements Model
             throw new RuntimeException(e);
         }
     }
-
+    
     public EmployeeList getEmployeesAssignedToManager(int managerNumber)
     {
         try
@@ -370,7 +402,7 @@ public class ModelManager implements Model
             throw new RuntimeException(e);
         }
     }
-
+    
     @Override
     public Employee getEmployeeByWorkingNumber(int workingNumber)
     {
@@ -384,7 +416,7 @@ public class ModelManager implements Model
             throw new RuntimeException(e);
         }
     }
-
+    
     @Override
     public EmployeeList getAllEmployees()
     {
@@ -398,7 +430,7 @@ public class ModelManager implements Model
             throw new RuntimeException(e);
         }
     }
-
+    
     @Override
     public Project getProjectById(long projectId)
     {
@@ -439,7 +471,7 @@ public class ModelManager implements Model
             throw new RuntimeException(e);
         }
     }
-
+    
     @Override
     public EmployeeList getAllWorkersManagersByWorkerWorkingNumber(Integer workingNumber)
     {
@@ -479,7 +511,7 @@ public class ModelManager implements Model
             throw new RuntimeException(e);
         }
     }
-
+    
 
     @Override public void changePassword(Employee employee, String password)
     {
@@ -521,6 +553,16 @@ public class ModelManager implements Model
         }
     }
 
+
+    @Override
+    public boolean addForgetPasswordNotification(Integer workingNumber){
+        try {
+            return databaseConnection.addForgetPasswordNotification(workingNumber);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
     @Override public void updateEmployee(Employee employee)
     {
         try {
@@ -543,7 +585,7 @@ public class ModelManager implements Model
             throw new RuntimeException(e);
         }
     }
-
+    
     @Override
     public void assignEmployeesToTask(ArrayList<Integer> employeeWorkingNumbers, Long TaskID)
     {
@@ -557,7 +599,7 @@ public class ModelManager implements Model
             throw new RuntimeException(e);
         }
     }
-
+    
     public EmployeeList getAllEmployeesAssignedToProject(Long projectId)
     {
         try
@@ -570,7 +612,7 @@ public class ModelManager implements Model
             throw new RuntimeException(e);
         }
     }
-
+    
     public void changeTaskStatus(Long taskId, String status)
     {
         try
@@ -579,6 +621,24 @@ public class ModelManager implements Model
         }
         catch (SQLException e)
         {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void addMultipleAssignedToTaskNotification(ArrayList<Integer> workingNumbers, Long taskID){
+        try {
+            databaseConnection.addMultipleAssignedToTaskNotification(workingNumbers,taskID);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void addMultipleAssignedToProjectNotification(ArrayList<Integer> workingNumbers, Long projectID) {
+        try {
+            databaseConnection.addMultipleAssignedToProjectNotification(workingNumbers,projectID);
+        } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
         }

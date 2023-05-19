@@ -4,17 +4,21 @@ import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public interface Model
-{
+public interface Model {
 
     Long saveTag(Tag tag);
-    TagList getAllTags();
-    TagList getTagsOfTask(Long taskId);
-    void addTagToTask(Long taskId, Long tagId);
-    void removeTagFromTask(Long taskId, Long tagId);
-    Tag getTag(Long tagId);
-    void deleteTag(Long id);
 
+    TagList getAllTags();
+
+    TagList getTagsOfTask(Long taskId);
+
+    void addTagToTask(Long taskId, Long tagId);
+
+    void removeTagFromTask(Long taskId, Long tagId);
+
+    Tag getTag(Long tagId);
+
+    void deleteTag(Long id);
 
 
     TaskList getAllTasksOfProject(Long id);
@@ -41,9 +45,17 @@ public interface Model
 
     Task getTask(Long projectId);
 
+    void addAssignedProjectNotification(Integer workingNumber, Long projectID);
+
+    void addAssignedToTaskNotification(Integer workingNumber, Long taskID);
+
+    boolean addForgetPasswordNotification(Integer workingNumber);
+
     Employee login(UserProfile userProfile);
 
     Integer saveEmployee(Employee employee, String password);
+
+    void deleteEmployeeByWorkingNumber(Integer workingNumber);
 
     void updateProject(Project project);
 
@@ -82,6 +94,10 @@ public interface Model
     void updateEmployee(Employee employee);
 
     void changePassword(Employee employee, String password);
+
+    void addMultipleAssignedToTaskNotification(ArrayList<Integer> workingNumbers, Long taskID);
+
+    void addMultipleAssignedToProjectNotification(ArrayList<Integer> workingNumbers, Long projectID);
 
     void updateNote(Note note);
 

@@ -5,11 +5,20 @@ import model.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public interface DatabaseConnection
-{
+public interface DatabaseConnection {
 
-    public void deleteTag(Long id) throws SQLException;
 
+     void deleteTag(Long id) throws SQLException;
+
+    boolean addForgetPasswordNotification(Integer workingNumber) throws SQLException;
+
+    void addAssignedProjectNotification(Integer workingNumber, Long projectID) throws SQLException;
+
+    void addAssignedToTaskNotification(Integer workingNumber, Long taskID) throws SQLException;
+
+    void addMultipleAssignedToTaskNotification(ArrayList<Integer> workingNumbers, Long taskID) throws SQLException;
+
+    void addMultipleAssignedToProjectNotification(ArrayList<Integer> workingNumbers, Long projectID) throws SQLException;
     Long saveTag(Tag tag) throws SQLException;
 
     TagList getAllTags() throws SQLException;
@@ -17,7 +26,9 @@ public interface DatabaseConnection
     TagList getTagsOfTask(Long taskId) throws SQLException;
 
     void addTagToTask(Long taskId, Long tagId) throws SQLException;
+
     void removeTagFromTask(Long taskId, Long tagId) throws SQLException;
+
     Tag getTag(Long tagId) throws SQLException;
 
     ProjectList getAllProjectsOfEmployee(int workingNumber) throws SQLException;
@@ -35,6 +46,8 @@ public interface DatabaseConnection
     Employee login(UserProfile userProfile) throws SQLException;
 
     Integer saveEmployee(Employee employee, String password) throws SQLException;
+
+    void deleteEmployeeByWorkingNumber(Integer workingNumber) throws SQLException;
 
     EmployeeList getAllProjectManagers() throws SQLException;
 
@@ -75,6 +88,7 @@ public interface DatabaseConnection
     TaskList getAllTasksByUserId(Integer workingNumber) throws SQLException;
 
     EmployeeList getAllWorkersManagersByWorkerWorkingNumber(Integer workingNumber) throws SQLException;
+
     void updateNote(Note note) throws SQLException;
     void saveNote(Note note) throws SQLException;
     NoteList getAllNotesSavedByEmployee(Integer workingNumber)  throws SQLException;
@@ -87,5 +101,6 @@ public interface DatabaseConnection
     void assignEmployeesToProject(ArrayList<Integer> addedEmployees, Long id) throws SQLException;
 
     void changePassword(Employee employee, String password) throws SQLException;
+
     void updateEmployee(Employee employee) throws SQLException;
 }

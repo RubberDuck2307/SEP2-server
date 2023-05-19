@@ -30,6 +30,7 @@ public class Database implements DatabaseConnection {
 
     private DatabaseManager databaseManager;
     private TagService tagService;
+    private NotificationService notificationService;
 
     private NoteService noteService;
 
@@ -44,7 +45,7 @@ public class Database implements DatabaseConnection {
         this.databaseManager = new DatabaseManager(conn);
         this.noteService = new NoteService(conn);
         this.tagService = new TagService(conn);
-
+        this.notificationService = new NotificationService(conn);
     }
 
     /**
@@ -88,6 +89,11 @@ public class Database implements DatabaseConnection {
 
     public Integer saveEmployee(Employee employee, String password) throws SQLException {
         return employeeService.saveEmployee(employee, password);
+    }
+    
+    public void deleteEmployeeByWorkingNumber(Integer workingNumber)throws  SQLException
+    {
+        employeeService.deleteEmployeeByWorkingNumber(workingNumber);
     }
 
     public Task getTask(Long projectId) throws SQLException {
@@ -294,4 +300,29 @@ public class Database implements DatabaseConnection {
     {
         employeeService.changePassword(employee, password);
     }
+
+    @Override public boolean addForgetPasswordNotification(Integer workingNumber) throws SQLException {
+      return notificationService.addForgetPasswordNotification(workingNumber);
+    }
+
+    @Override
+    public void addAssignedProjectNotification(Integer workingNumber, Long projectID) throws SQLException {
+        notificationService.addAssignedProjectNotification(workingNumber, projectID);
+    }
+
+    @Override
+    public void addAssignedToTaskNotification(Integer workingNumber, Long taskID) throws SQLException {
+        notificationService.addAssignedToTaskNotification(workingNumber, taskID);
+    }
+
+    @Override
+    public void addMultipleAssignedToTaskNotification(ArrayList<Integer> workingNumbers, Long taskID) throws SQLException {
+        notificationService.addMultipleAssignedToTaskNotification(workingNumbers, taskID);
+    }
+
+    @Override
+    public void addMultipleAssignedToProjectNotification(ArrayList<Integer> workingNumbers, Long projectID) throws SQLException {
+        notificationService.addMultipleAssignedToProjectNotification(workingNumbers, projectID);
+    }
+
 }
