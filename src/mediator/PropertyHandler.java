@@ -15,7 +15,6 @@ public class PropertyHandler implements RemoteSubject<String, String> {
         this.propertyChangeHandler = propertyChangeHandler;
     }
 
-
     @Override
     public boolean addListener(GeneralListener<String, String> listener, String... propertyNames) throws RemoteException {
         System.out.println(Arrays.toString(propertyNames));
