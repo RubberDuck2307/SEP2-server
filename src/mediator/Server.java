@@ -46,6 +46,22 @@ public class Server implements RemoteModel {
         Naming.rebind("Case", this);
     }
 
+
+    @Override
+    public IdObjectList<ForgottenPasswordNotification> getForgottenPasswordNotification() throws RemoteException {
+        return model.getForgottenPasswordNotification();
+    }
+
+    @Override
+    public IdObjectList<AssignedToTaskNotification> getAssignedToTaskNotification(Integer workingNumber) throws RemoteException {
+        return model.getAssignedToTaskNotification(workingNumber);
+    }
+
+    @Override
+    public IdObjectList<AssignedToProjectNotification> getAssignedToProjectNotification(Integer workingNumber) throws RemoteException {
+        return model.getAssignedToProjectNotification(workingNumber);
+    }
+
     @Override
     public Long saveTag(Tag tag) throws RemoteException {
         return model.saveTag(tag);
@@ -140,7 +156,8 @@ public class Server implements RemoteModel {
     @Override
     public void assignEmployeesToProject(ArrayList<Integer> addedEmployees, Long id) throws RemoteException {
         model.assignEmployeesToProject(addedEmployees, id);
-        //model.addMultipleAssignedToProjectNotification(addedEmployees, id);
+        model.addMultipleAssignedToProjectNotification(addedEmployees, id);
+        propertyHandler.fireMultipleAssignedToProjectNotification(addedEmployees);
 
 
     }
@@ -155,18 +172,19 @@ public class Server implements RemoteModel {
     public Integer saveEmployee(Employee employee, String password) throws RemoteException {
         return model.saveEmployee(employee, password);
     }
+
     @Override
-    public void deleteEmployeeByWorkingNumber(Integer workingNumber) throws RemoteException
-    {
+    public void deleteEmployeeByWorkingNumber(Integer workingNumber) throws RemoteException {
         model.deleteEmployeeByWorkingNumber(workingNumber);
     }
-    
+
 
     @Override
     public void assignEmployeeToProject(Integer workingNumber,
                                         Long projectID) {
         model.assignEmployeeToProject(workingNumber, projectID);
-       // model.addAssignedProjectNotification(workingNumber, projectID);
+        model.addAssignedProjectNotification(workingNumber, projectID);
+        propertyHandler.fireAssignedToProjectNotification(workingNumber);
     }
 
     @Override
@@ -204,13 +222,16 @@ public class Server implements RemoteModel {
 
     public void assignEmployeesToTask(ArrayList<Integer> employeeWorkingNumbers, Long TaskID) throws RemoteException {
         model.assignEmployeesToTask(employeeWorkingNumbers, TaskID);
-       // model.addMultipleAssignedToTaskNotification(employeeWorkingNumbers, TaskID);
+        model.addMultipleAssignedToTaskNotification(employeeWorkingNumbers, TaskID);
+        propertyHandler.fireMultipleAssignedToTaskNotification(employeeWorkingNumbers);
     }
 
 
     public void assignWorkerToTask(Integer workingNumber, Long taskID) throws RemoteException {
+
         model.assignWorkerToTask(workingNumber, taskID);
-       // model.addAssignedToTaskNotification(workingNumber, taskID);
+        model.addAssignedToTaskNotification(workingNumber, taskID);
+        propertyHandler.fireAssignedToTaskNotification(workingNumber);
     }
 
     @Override
@@ -259,8 +280,9 @@ public class Server implements RemoteModel {
     }
 
     public boolean addForgetPasswordNotification(Integer workingNumber) throws RemoteException {
-        propertyHandler.fireForgotPasswordNotification(workingNumber);
-        return model.addForgetPasswordNotification(workingNumber);
+        boolean result = model.addForgetPasswordNotification(workingNumber);
+         propertyHandler.fireForgotPasswordNotification(workingNumber);
+        return result;
     }
 
     @Override

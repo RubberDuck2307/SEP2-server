@@ -57,6 +57,9 @@ public interface Model {
 
     void deleteEmployeeByWorkingNumber(Integer workingNumber);
 
+    IdObjectList<ForgottenPasswordNotification> getForgottenPasswordNotification() ;
+    IdObjectList<AssignedToTaskNotification> getAssignedToTaskNotification(Integer workingNumber);
+    IdObjectList<AssignedToProjectNotification> getAssignedToProjectNotification(Integer workingNumber);
 
     void updateProject(Project project);
 

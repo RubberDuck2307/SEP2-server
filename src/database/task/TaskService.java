@@ -101,14 +101,9 @@ public class TaskService {
         st.executeUpdate();
     }
 
-    /**
-     * @param projectId id of the project
-     * @return list of tasks of the given project
-     * @throws SQLException
-     */
 
-    public Task getTask(Long projectId) throws SQLException {
-        String query = "SELECT * FROM tasks WHERE id = " + projectId + ";";
+    public Task getTask(Long taskId) throws SQLException {
+        String query = "SELECT * FROM tasks WHERE id = " + taskId + ";";
         PreparedStatement st = conn.prepareStatement(query);
         ResultSet set = st.executeQuery();
         TaskList taskList = setParser.getTasksFromSet(set);
@@ -125,6 +120,11 @@ public class TaskService {
         return task;
     }
 
+    /**
+     * @param projectId id of the project
+     * @return list of tasks of the given project
+     * @throws SQLException
+     */
     public TaskList getAllTasksOfProject(Long projectId) throws SQLException {
         String query = "SELECT * FROM tasks WHERE project_id = " + projectId + ";";
         PreparedStatement st = conn.prepareStatement(query);

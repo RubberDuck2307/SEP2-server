@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * A class representing a project
  */
 
-public class Project implements Serializable {
+public class Project implements Serializable, IdObject {
     /**
      * unique id of the project
      */

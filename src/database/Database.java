@@ -108,6 +108,22 @@ public class Database implements DatabaseConnection {
         tagService.deleteTag(id);
     }
 
+    @Override
+    public IdObjectList<ForgottenPasswordNotification> getForgottenPasswordNotification() throws SQLException {
+       return notificationService.getForgottenPasswordNotification();
+    }
+
+    @Override
+    public IdObjectList<AssignedToTaskNotification> getAssignedToTaskNotification(Integer workingNumber) throws SQLException {
+        return notificationService.getAssignedToTaskNotification(workingNumber);
+    }
+
+    @Override
+    public IdObjectList<AssignedToProjectNotification> getAssignedToProjectNotification(Integer workingNumber) throws SQLException {
+        return notificationService.getAssignedToProjectNotification(workingNumber);
+    }
+
+
     public Long saveProject(Project project) throws SQLException {
         return projectService.saveProject(project);
     }

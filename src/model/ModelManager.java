@@ -375,7 +375,38 @@ public class ModelManager implements Model
             throw new RuntimeException(e);
         }
     }
-    
+
+    @Override
+    public IdObjectList<ForgottenPasswordNotification> getForgottenPasswordNotification() {
+        try {
+            return databaseConnection.getForgottenPasswordNotification();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public IdObjectList<AssignedToTaskNotification> getAssignedToTaskNotification(Integer workingNumber) {
+        try {
+            return databaseConnection.getAssignedToTaskNotification(workingNumber);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public IdObjectList<AssignedToProjectNotification> getAssignedToProjectNotification(Integer workingNumber) {
+        try {
+            return databaseConnection.getAssignedToProjectNotification(workingNumber);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+
     @Override
     public void updateProject(Project project)
     {

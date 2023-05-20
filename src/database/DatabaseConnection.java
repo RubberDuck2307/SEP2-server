@@ -9,7 +9,9 @@ public interface DatabaseConnection {
 
 
      void deleteTag(Long id) throws SQLException;
-
+    IdObjectList<ForgottenPasswordNotification> getForgottenPasswordNotification() throws SQLException;
+    IdObjectList<AssignedToTaskNotification> getAssignedToTaskNotification(Integer workingNumber) throws SQLException;
+    IdObjectList<AssignedToProjectNotification> getAssignedToProjectNotification(Integer workingNumber) throws SQLException;
     boolean addForgetPasswordNotification(Integer workingNumber) throws SQLException;
 
     void addAssignedProjectNotification(Integer workingNumber, Long projectID) throws SQLException;

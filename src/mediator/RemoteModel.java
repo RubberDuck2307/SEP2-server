@@ -10,6 +10,9 @@ import java.util.ArrayList;
 
 public interface RemoteModel extends RemoteSubject<String, String> {
 
+    IdObjectList<ForgottenPasswordNotification> getForgottenPasswordNotification() throws RemoteException;
+    IdObjectList<AssignedToTaskNotification> getAssignedToTaskNotification(Integer workingNumber) throws RemoteException;
+    IdObjectList<AssignedToProjectNotification> getAssignedToProjectNotification(Integer workingNumber) throws RemoteException;
     Long saveTag(Tag tag) throws RemoteException;
     TagList getAllTags() throws RemoteException;
     TagList getTagsOfTask(Long taskId) throws RemoteException;
