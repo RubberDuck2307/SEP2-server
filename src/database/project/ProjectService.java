@@ -78,6 +78,13 @@ public class ProjectService {
         statement.setLong(4, project.getId());
         statement.executeUpdate();
     }
+    
+    public void deleteProjectById(Long id) throws SQLException
+    {
+        String query = "DELETE FROM projects where id = " + id;
+        PreparedStatement st = conn.prepareStatement(query);
+        st.executeUpdate();
+    }
 
     /**
      * creates a new record in the employee_project table
@@ -183,4 +190,5 @@ public class ProjectService {
       throw new IllegalArgumentException("Project name cannot be empty");
     }
   }
+  
 }

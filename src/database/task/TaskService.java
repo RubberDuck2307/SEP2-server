@@ -100,7 +100,14 @@ public class TaskService {
         st.setLong(8, task.getId());
         st.executeUpdate();
     }
-
+    
+    public void deleteTaskById(Long id) throws SQLException
+    {
+        String query;
+        query = "DELETE FROM tasks where id = " + id;
+        PreparedStatement st = conn.prepareStatement(query);
+        st.executeUpdate();
+    }
 
     public Task getTask(Long taskId) throws SQLException {
         String query = "SELECT * FROM tasks WHERE id = " + taskId + ";";
@@ -275,4 +282,5 @@ public class TaskService {
         }
 
     }
+    
 }

@@ -113,7 +113,12 @@ public class Server implements RemoteModel {
     public Long saveTask(Task task) throws RemoteException {
         return model.saveTask(task);
     }
-
+    @Override
+    public void deleteTaskById(Long id) throws RemoteException
+    {
+        model.deleteTaskById(id);
+    }
+    
     public ProjectList getAllProjects() throws RemoteException {
         return model.getAllProjects();
     }
@@ -122,7 +127,12 @@ public class Server implements RemoteModel {
     public Long saveProject(Project project) throws RemoteException {
         return model.saveProject(project);
     }
-
+    @Override
+    public void deleteProjectById(Long id) throws RemoteException
+    {
+        model.deleteProjectById(id);
+    }
+    
     @Override
     public EmployeeList getEmployeesAssignedToManager(int managerNumber) throws RemoteException {
         return model.getEmployeesAssignedToManager(managerNumber);

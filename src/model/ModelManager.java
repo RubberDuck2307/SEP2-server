@@ -226,6 +226,19 @@ public class ModelManager implements Model
             throw new RuntimeException(e);
         }
     }
+    @Override
+    public void deleteTaskById(Long id)
+    {
+        try
+        {
+            databaseConnection.deleteTaskById(id);
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
     public void unassignEmployeesFromTask(ArrayList<Integer> employeeWorkingNumbers, Long TaskID)
     {
         try
@@ -249,6 +262,18 @@ public class ModelManager implements Model
         catch (SQLException e)
         {
             e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+    @Override
+    public void deleteProjectById(Long id)
+    {
+        try
+        {
+            databaseConnection.deleteProjectById(id);
+        }
+        catch (SQLException e)
+        {
             throw new RuntimeException(e);
         }
     }

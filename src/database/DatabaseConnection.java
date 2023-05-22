@@ -2,6 +2,7 @@ package database;
 
 import model.*;
 
+import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -40,10 +41,13 @@ public interface DatabaseConnection {
     TaskList getAllTasksOfProject(Long projectId) throws SQLException;
 
     Long saveTask(Task task) throws SQLException;
+    
+    void deleteTaskById(Long id) throws SQLException;
 
     void unassignEmployeesFromTask(ArrayList<Integer> employeeWorkingNumbers, Long TaskID) throws SQLException;
 
     Long saveProject(Project project) throws SQLException;
+    void deleteProjectById(Long id) throws SQLException;
 
     Employee login(UserProfile userProfile) throws SQLException;
 
@@ -100,4 +104,6 @@ public interface DatabaseConnection {
     void changePassword(Employee employee, String password) throws SQLException;
 
     void updateEmployee(Employee employee) throws SQLException;
+    
+    
 }

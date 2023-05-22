@@ -127,7 +127,12 @@ public class Database implements DatabaseConnection {
     public Long saveProject(Project project) throws SQLException {
         return projectService.saveProject(project);
     }
-
+    @Override
+    public void deleteProjectById(Long id) throws SQLException
+    {
+        projectService.deleteProjectById(id);
+    }
+    
     public void updateTask(Task task) throws SQLException {
         taskService.updateTask(task);
     }
@@ -136,7 +141,12 @@ public class Database implements DatabaseConnection {
     public Long saveTask(Task task) throws SQLException {
         return taskService.saveTask(task);
     }
-
+    @Override
+    public void deleteTaskById(Long id) throws SQLException
+    {
+        taskService.deleteTaskById(id);
+    }
+    
     public void updateProject(Project project) throws SQLException {
         projectService.updateProject(project);
     }
