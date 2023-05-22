@@ -1,4 +1,4 @@
-package database.tag;
+package database;
 
 import database.SetParser;
 import model.Tag;

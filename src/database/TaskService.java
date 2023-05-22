@@ -1,7 +1,5 @@
-package database.task;
+package database;
 
-import database.SetParser;
-import database.tag.TagService;
 import model.*;
 
 import java.sql.*;

@@ -1,4 +1,4 @@
-package database.project;
+package database;
 
 import database.SetParser;
 import model.Project;

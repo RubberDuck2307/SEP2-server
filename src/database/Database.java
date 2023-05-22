@@ -1,9 +1,5 @@
 package database;
 
-import database.employee.EmployeeService;
-import database.project.ProjectService;
-import database.tag.TagService;
-import database.task.TaskService;
 import model.*;
 
 import java.sql.*;

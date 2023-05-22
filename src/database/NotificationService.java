@@ -1,7 +1,5 @@
 package database;
 
-import database.project.ProjectService;
-import database.task.TaskService;
 import model.*;
 import org.postgresql.util.PSQLException;
 
