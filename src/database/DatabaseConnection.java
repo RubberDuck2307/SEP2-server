@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public interface DatabaseConnection {
 
 
-     void deleteTag(Long id) throws SQLException;
+    void deleteTag(Long id) throws SQLException;
     IdObjectList<ForgottenPasswordNotification> getForgottenPasswordNotification() throws SQLException;
     IdObjectList<AssignedToTaskNotification> getAssignedToTaskNotification(Integer workingNumber) throws SQLException;
     IdObjectList<AssignedToProjectNotification> getAssignedToProjectNotification(Integer workingNumber) throws SQLException;

@@ -32,12 +32,12 @@ public class Database implements DatabaseConnection {
      */
     public Database() {
         connect();
-        this.employeeService = new EmployeeService(conn);
-        this.projectService = new ProjectService(conn);
-        this.taskService = new TaskService(conn);
+        this.employeeService = new DefaultEmployeeService(conn);
+        this.projectService = new DefaultProjectService(conn);
+        this.taskService = new DefaultTaskService(conn);
         this.databaseManager = new DatabaseManager(conn);
-        this.tagService = new TagService(conn);
-        this.notificationService = new NotificationService(conn);
+        this.tagService = new DefaultTagService(conn);
+        this.notificationService = new DefaultNotificationService(conn);
     }
 
     /**
