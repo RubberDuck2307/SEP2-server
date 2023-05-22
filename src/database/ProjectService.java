@@ -1,4 +1,4 @@
-package database.project;
+package database;
 
 import database.SetParser;
 import model.Project;
@@ -8,7 +8,7 @@ import java.sql.*;
 import java.util.ArrayList;
 
 /**
- * The class that handles all the database operations related to projects table.
+ * The class that handles database operations related to projects.
  * @author Anna Andrlova, Alex Bolfa, Cosmin Demian, Jan Metela, Arturs Ricards Rijnieks
  * @version 1.0 - May 2023
  */
@@ -79,6 +79,19 @@ public class ProjectService {
         statement.executeUpdate();
     }
 
+
+    /**
+     * Deletes the project with the given id from the database
+     * @param id
+     * @throws SQLException
+     */
+    public void deleteProjectById(Long id) throws SQLException
+    {
+        String query = "DELETE FROM projects where id = " + id;
+        PreparedStatement st = conn.prepareStatement(query);
+        st.executeUpdate();
+    }
+
     /**
      * creates a new record in the employee_project table
      * @param workingNumber working number of employee
@@ -141,6 +154,13 @@ public class ProjectService {
         st.executeUpdate();
     }
 
+    /**
+     * Dismisses employees with the given working numbers from the project with the given id
+     * @param employeeWorkingNumbers
+     * @param projectID
+     * @throws SQLException
+     */
+
     public void dismissEmployeesFromProject(ArrayList<Integer> employeeWorkingNumbers, Long projectID) throws SQLException
     {
         String query = "DELETE FROM employee_project WHERE project_id = " + projectID + " AND working_number IN (";
@@ -169,6 +189,12 @@ public class ProjectService {
         return projectList;
     }
 
+    /**
+     *
+     * @param projectId
+     * @return the project with the given id
+     * @throws SQLException
+     */
     public Project getProjectById(long projectId) throws SQLException
   {
       String query = "SELECT * FROM projects;";
@@ -178,9 +204,14 @@ public class ProjectService {
       return project;
   }
 
+    /**
+     * check if the project can be stored in the database.
+     * @param project
+     */
   private void validateProject(Project project){
     if(project.getName() == null || project.getName().isEmpty()){
       throw new IllegalArgumentException("Project name cannot be empty");
     }
   }
+  
 }

@@ -2,15 +2,13 @@ package model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Objects;
 
 /**
  * A class representing a task
  * @author Anna Andrlova, Alex Bolfa, Cosmin Demian, Jan Metela, Arturs Ricards Rijnieks
  * @version 1.0 - May 2023
  */
-public class Task implements Serializable {
+public class Task implements Serializable, IdObject {
     /**
      * The id of the task.
      */

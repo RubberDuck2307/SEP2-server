@@ -10,6 +10,9 @@ import java.util.ArrayList;
 
 public interface RemoteModel extends RemoteSubject<String, String> {
 
+    IdObjectList<ForgottenPasswordNotification> getForgottenPasswordNotification() throws RemoteException;
+    IdObjectList<AssignedToTaskNotification> getAssignedToTaskNotification(Integer workingNumber) throws RemoteException;
+    IdObjectList<AssignedToProjectNotification> getAssignedToProjectNotification(Integer workingNumber) throws RemoteException;
     Long saveTag(Tag tag) throws RemoteException;
     TagList getAllTags() throws RemoteException;
     TagList getTagsOfTask(Long taskId) throws RemoteException;
@@ -23,12 +26,15 @@ public interface RemoteModel extends RemoteSubject<String, String> {
     ProjectList getAllProjectsByWorkingNumber(Integer workingNumber) throws RemoteException;
 
     Long saveTask(Task task) throws RemoteException;
+    
+    void deleteTaskById(Long id) throws RemoteException;
 
     ProjectList getAllProjects() throws RemoteException;
 
     void changeTaskStatus(Long taskId, String status) throws RemoteException;
 
     Long saveProject(Project project)throws RemoteException;
+    void deleteProjectById(Long id)  throws RemoteException;
 
     void unassignEmployeesFromTask(ArrayList<Integer> employeeWorkingNumbers, Long TaskID) throws RemoteException;
     void dismissEmployeesFromProject(ArrayList<Integer> employeeWorkingNumbers, Long projectID) throws RemoteException;

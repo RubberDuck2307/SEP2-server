@@ -158,6 +158,10 @@ public class DatabaseManager {
         statement.executeUpdate(query);
     }
 
+    /**
+     * adds dummy data to tags table
+      * @throws SQLException
+     */
     private void addDummyDataTags() throws SQLException{
         String query = "Insert INTO tags(name, color)" +
                 "VALUES ('tag1', '#b15583'),"+

@@ -6,8 +6,12 @@ import utility.observer.subject.RemoteSubject;
 
 import java.lang.reflect.Array;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * helper class for firing the property changes from the server to the client
+ */
 public class PropertyHandler implements RemoteSubject<String, String> {
     private PropertyChangeHandler<String, String> propertyChangeHandler;
 
@@ -28,7 +32,26 @@ public class PropertyHandler implements RemoteSubject<String, String> {
     }
 
     public void fireForgotPasswordNotification(Integer workingNumber){
-        propertyChangeHandler.firePropertyChange("forgetPasswordNotification", null, String.valueOf(workingNumber));
-        System.out.println("PropertyHandler: fireForgotPasswordNotification");
+        propertyChangeHandler.firePropertyChange("00|forgetPassword|notification", null, String.valueOf(workingNumber));
+    }
+
+    public void fireAssignedToProjectNotification(Integer workingNumber){
+        propertyChangeHandler.firePropertyChange(workingNumber + "|assignedToProject|notification", null, String.valueOf(workingNumber));
+    }
+
+    public void fireMultipleAssignedToProjectNotification(ArrayList<Integer> workingNumbers){
+        for (Integer workingNumber : workingNumbers) {
+            propertyChangeHandler.firePropertyChange(workingNumber + "|assignedToProject|notification", null, String.valueOf(workingNumber));
+        }
+    }
+
+    public void fireAssignedToTaskNotification(Integer workingNumber){
+        propertyChangeHandler.firePropertyChange(workingNumber + "|assignedToTask|notification", null, String.valueOf(workingNumber));
+    }
+
+    public void fireMultipleAssignedToTaskNotification(ArrayList<Integer> workingNumbers){
+        for (Integer workingNumber : workingNumbers) {
+            propertyChangeHandler.firePropertyChange(workingNumber + "|assignedToTask|notification", null, String.valueOf(workingNumber));
+        }
     }
 }

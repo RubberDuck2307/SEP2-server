@@ -111,8 +111,29 @@ public class Database implements DatabaseConnection {
         tagService.deleteTag(id);
     }
 
+    @Override
+    public IdObjectList<ForgottenPasswordNotification> getForgottenPasswordNotification() throws SQLException {
+       return notificationService.getForgottenPasswordNotification();
+    }
+
+    @Override
+    public IdObjectList<AssignedToTaskNotification> getAssignedToTaskNotification(Integer workingNumber) throws SQLException {
+        return notificationService.getAssignedToTaskNotification(workingNumber);
+    }
+
+    @Override
+    public IdObjectList<AssignedToProjectNotification> getAssignedToProjectNotification(Integer workingNumber) throws SQLException {
+        return notificationService.getAssignedToProjectNotification(workingNumber);
+    }
+
+
     public Long saveProject(Project project) throws SQLException {
         return projectService.saveProject(project);
+    }
+    @Override
+    public void deleteProjectById(Long id) throws SQLException
+    {
+        projectService.deleteProjectById(id);
     }
 
     public void updateTask(Task task) throws SQLException {
@@ -122,6 +143,11 @@ public class Database implements DatabaseConnection {
 
     public Long saveTask(Task task) throws SQLException {
         return taskService.saveTask(task);
+    }
+    @Override
+    public void deleteTaskById(Long id) throws SQLException
+    {
+        taskService.deleteTaskById(id);
     }
 
     public void updateProject(Project project) throws SQLException {
@@ -195,7 +221,7 @@ public class Database implements DatabaseConnection {
     public void assignEmployeesToProject(ArrayList<Integer> employeeWorkingNumbers, Long ProjectID) throws SQLException {
         projectService.assignEmployeesToProject(employeeWorkingNumbers, ProjectID);
     }
-
+    
     public void dismissEmployeesFromProject(ArrayList<Integer> employeeWorkingNumbers, Long projectID) throws SQLException
     {
         projectService.dismissEmployeesFromProject(employeeWorkingNumbers, projectID);

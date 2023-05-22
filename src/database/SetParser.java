@@ -135,6 +135,12 @@ public class SetParser {
         return noteList;
     }
 
+    /**
+     *
+     * @param set
+     * @return list of tags from the given set
+     * @throws SQLException
+     */
     public TagList getTagsFromSet(ResultSet set) throws SQLException {
         TagList tagList = new TagList();
 
@@ -146,4 +152,64 @@ public class SetParser {
         }
         return tagList;
     }
-}
+
+    /**
+     *
+     * @param set
+     * @return list of forgottenPasswordNotification from the given set
+     * @throws SQLException
+     */
+
+    public IdObjectList<ForgottenPasswordNotification> getForgottenPasswordNotifications(ResultSet set) throws SQLException{
+        IdObjectList<ForgottenPasswordNotification> forgottenPasswordNotifications = new IdObjectList<>();
+
+        while(set.next()){
+            Long id = set.getLong("id");
+            Integer workingNumber = set.getInt("working_number");
+
+            forgottenPasswordNotifications.add(new ForgottenPasswordNotification(id, workingNumber));
+        }
+        return forgottenPasswordNotifications;
+    }
+
+    /**
+     *
+     * @param set
+     * @return list of assignedToProjectNotification from the given set
+     * @throws SQLException
+     */
+
+    public IdObjectList<AssignedToProjectNotification> getAssignedToProjectNotifications(ResultSet set) throws SQLException{
+        IdObjectList<AssignedToProjectNotification> assignedToProjectNotifications = new IdObjectList<>();
+
+        while(set.next()){
+            Long id = set.getLong("id");
+            Integer workingNumber = set.getInt("project_manager_number");
+            Long projectId = set.getLong("project_id");
+
+            assignedToProjectNotifications.add(new AssignedToProjectNotification(id, workingNumber, projectId));
+        }
+        return assignedToProjectNotifications;
+    }
+
+    /**
+     *
+     * @param set
+     * @return list of assignedToTaskNotification from the given set
+     * @throws SQLException
+     */
+    public IdObjectList<AssignedToTaskNotification> getAssignedToTaskNotifications(ResultSet set) throws SQLException{
+        IdObjectList<AssignedToTaskNotification> assignedToTaskNotifications = new IdObjectList<>();
+
+            while(set.next()){
+                Long id = set.getLong("id");
+                Integer workingNumber = set.getInt("workers_number");
+                Long taskId = set.getLong("task_id");
+
+                assignedToTaskNotifications.add(new AssignedToTaskNotification(id, workingNumber, taskId));
+            }
+
+
+    return assignedToTaskNotifications;
+
+}}

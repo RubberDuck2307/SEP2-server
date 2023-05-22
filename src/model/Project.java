@@ -2,13 +2,12 @@ package model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 /**
  * A class representing a project
  */
 
-public class Project implements Serializable {
+public class Project implements Serializable, IdObject {
     /**
      * unique id of the project
      */

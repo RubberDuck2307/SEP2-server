@@ -26,10 +26,13 @@ public interface Model {
     ProjectList getAllProjectsByUserId(Integer workingNumber);
 
     Long saveTask(Task task);
+    
+    void deleteTaskById(Long id);
 
     void unassignEmployeesFromTask(ArrayList<Integer> employeeWorkingNumbers, Long TaskID);
 
     Long saveProject(Project project);
+    void deleteProjectById(Long id);
 
     void assignWorkerToTask(Integer workingNumber, Long taskID);
 
@@ -56,6 +59,10 @@ public interface Model {
     Integer saveEmployee(Employee employee, String password);
 
     void deleteEmployeeByWorkingNumber(Integer workingNumber);
+
+    IdObjectList<ForgottenPasswordNotification> getForgottenPasswordNotification() ;
+    IdObjectList<AssignedToTaskNotification> getAssignedToTaskNotification(Integer workingNumber);
+    IdObjectList<AssignedToProjectNotification> getAssignedToProjectNotification(Integer workingNumber);
 
     void updateProject(Project project);
 

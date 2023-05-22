@@ -1,4 +1,4 @@
-package database.tag;
+package database;
 
 import database.SetParser;
 import model.Tag;
@@ -7,16 +7,31 @@ import model.Task;
 
 import java.sql.*;
 
+/**
+ * The class that handles database operations related to tags.
+ * @author Anna Andrlova, Alex Bolfa, Cosmin Demian, Jan Metela, Arturs Ricards Rijnieks
+ * @version 1.0 - May 2023
+ */
 public class TagService {
 
     private Connection connection;
     private SetParser setParser;
 
+    /**
+     * The constructor sets the connection to the given parameter and initializes the SetParser.
+     * @param connection
+     */
     public TagService(Connection connection) {
         this.connection = connection;
         setParser = new SetParser();
     }
 
+    /**
+     * gets a tag with the given id
+     * @param id
+     * @return
+     * @throws SQLException
+     */
     public Tag getTag(Long id) throws SQLException {
         String query = "SELECT * FROM tags WHERE id = ?;";
         PreparedStatement statement = connection.prepareStatement(query);
@@ -26,6 +41,11 @@ public class TagService {
         return tag;
     }
 
+    /**
+     *
+     * @return all tags from database
+     * @throws SQLException
+     */
     public TagList getAllTags() throws SQLException {
         String query = "SELECT * FROM tags;";
         PreparedStatement statement = connection.prepareStatement(query);
@@ -34,6 +54,12 @@ public class TagService {
         return tagList;
     }
 
+    /**
+     * saves the tag to the database
+     * @param tag
+     * @return
+     * @throws SQLException
+     */
     public Long saveTag(Tag tag) throws SQLException {
         if (validateTag(tag)) {
 
@@ -60,6 +86,11 @@ public class TagService {
         }
     }
 
+    /**
+     * deletes the tag with the given id from the database
+     * @param id
+     * @throws SQLException
+     */
     public void deleteTag(Long id) throws SQLException {
         dismissTagFromAllTasks(id);
         String query = "DELETE FROM tags WHERE id = ?;";
@@ -68,6 +99,12 @@ public class TagService {
         statement.executeUpdate();
     }
 
+    /**
+     * gets all tags of the given task
+     * @param taskId
+     * @return
+     * @throws SQLException
+     */
     public TagList getTagsOfTask(Long taskId) throws SQLException {
         String query = "SELECT * FROM tags WHERE id IN (SELECT tag_id FROM tag_task WHERE task_id = ?);";
         PreparedStatement statement = connection.prepareStatement(query);
@@ -77,12 +114,23 @@ public class TagService {
         return tagList;
     }
 
+    /**
+     * removes tag from every task
+     * @param tagId
+     * @throws SQLException
+     */
     private void dismissTagFromAllTasks(Long tagId) throws SQLException {
         String query = "DELETE FROM tag_task WHERE tag_id = ?;";
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setLong(1, tagId);
         statement.executeUpdate();
     }
+
+    /**
+     * check if tag is valid to be saved in the database or throw exception if not
+     * @param tag
+     * @return
+     */
 
     private boolean validateTag(Tag tag) {
         if (tag == null) {

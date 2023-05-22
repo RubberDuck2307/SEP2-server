@@ -14,9 +14,9 @@ import java.util.ArrayList;
  */
 public class ModelManager implements Model
 {
-
+    
     private DatabaseConnection databaseConnection;
-
+    
     public ModelManager(DatabaseConnection databaseConnection)
     {
         this.databaseConnection = databaseConnection;
@@ -145,7 +145,7 @@ public class ModelManager implements Model
             throw new RuntimeException(e);
         }
     }
-
+    
     public ProjectList getAllProjectsByUserId(Integer workingNumber)
     {
         try
@@ -226,6 +226,19 @@ public class ModelManager implements Model
             throw new RuntimeException(e);
         }
     }
+    @Override
+    public void deleteTaskById(Long id)
+    {
+        try
+        {
+            databaseConnection.deleteTaskById(id);
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
     public void unassignEmployeesFromTask(ArrayList<Integer> employeeWorkingNumbers, Long TaskID)
     {
         try
@@ -252,7 +265,19 @@ public class ModelManager implements Model
             throw new RuntimeException(e);
         }
     }
-    
+    @Override
+    public void deleteProjectById(Long id)
+    {
+        try
+        {
+            databaseConnection.deleteProjectById(id);
+        }
+        catch (SQLException e)
+        {
+            throw new RuntimeException(e);
+        }
+    }
+
     @Override
     public void assignEmployeeToProject(Integer workingNumber, Long projectID)
     {
@@ -375,6 +400,37 @@ public class ModelManager implements Model
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public IdObjectList<ForgottenPasswordNotification> getForgottenPasswordNotification() {
+        try {
+            return databaseConnection.getForgottenPasswordNotification();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public IdObjectList<AssignedToTaskNotification> getAssignedToTaskNotification(Integer workingNumber) {
+        try {
+            return databaseConnection.getAssignedToTaskNotification(workingNumber);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public IdObjectList<AssignedToProjectNotification> getAssignedToProjectNotification(Integer workingNumber) {
+        try {
+            return databaseConnection.getAssignedToProjectNotification(workingNumber);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
 
     @Override
     public void updateProject(Project project)

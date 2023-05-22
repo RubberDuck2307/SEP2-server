@@ -1,4 +1,4 @@
-package database.employee;
+package database;
 
 import database.SetParser;
 import model.Employee;
@@ -9,7 +9,7 @@ import model.UserProfile;
 import java.sql.*;
 
 /**
- * The class that handles the database operations related to the employees table and user_profiles table.
+ * The class that handles the database operations related to employees table and user_profiles.
  *
  * @author Anna Andrlova, Alex Bolfa, Cosmin Demian, Jan Metela, Arturs Ricards Rijnieks
  * @version 1.0 - May 2023
@@ -51,6 +51,19 @@ public class EmployeeService
       System.out.println(e.getMessage());
     }
     return employeeList;
+  }
+
+  /**
+   * deletes the employee from the database by the working number
+   * @param workingNumber
+   * @throws SQLException
+   */
+
+  public void deleteEmployeeByWorkingNumber(Integer workingNumber) throws SQLException
+  {
+    String query = "DELETE FROM employees WHERE working_number = " + workingNumber + ";";
+    PreparedStatement st = conn.prepareStatement(query);
+    st.executeUpdate();
   }
 
   /**
@@ -225,9 +238,7 @@ public class EmployeeService
   public void removeWorkerFromManager(Integer managerNumber,
       Integer workerNumber) throws SQLException
   {
-    String query =
-        "INSERT INTO worker_task VALUES(" + managerNumber + ", " + workerNumber
-            + ");";
+    String query;
     query = "DELETE FROM manager_worker WHERE manager_number = "
         + managerNumber.toString() + " AND worker_number = "
         + workerNumber.toString() + ";";
@@ -283,6 +294,12 @@ public class EmployeeService
     return employee;
   }
 
+  /**
+   *
+   * @param workingNumber
+   * @return all managers that are managing employee with the given working number
+   * @throws SQLException
+   */
   public EmployeeList getAllWorkersManagersByWorkerWorkingNumber(
       Integer workingNumber) throws SQLException
   {
@@ -294,6 +311,12 @@ public class EmployeeService
     EmployeeList employees = setParser.getAllEmployeesFromSet(set);
     return employees;
   }
+
+  /**
+   * Updates the employee with the given working number
+   * @param employee
+   * @throws SQLException
+   */
 
   public void updateEmployee(Employee employee) throws SQLException
   {
@@ -317,6 +340,12 @@ public class EmployeeService
     st.executeUpdate();
   }
 
+  /**
+   * changes the password of the employee
+   * @param employee
+   * @param password
+   * @throws SQLException
+   */
   public void changePassword(Employee employee, String password) throws SQLException
   {
     if (employee.getWorkingNumber().toString().equals("NULL"))
@@ -330,6 +359,12 @@ public class EmployeeService
     st.setInt(2, employee.getWorkingNumber());
     st.executeUpdate();
   }
+
+  /**
+   * Parses the role of the employee to a string, so it can be saved in the database
+   * @param employeeRole
+   * @return
+   */
 
   private String parseRole(EmployeeRole employeeRole){
     String role;
@@ -351,6 +386,10 @@ public class EmployeeService
     return role;
   }
 
+  /**
+   * check if the attributes of given employee are valid to be saved into database throws runtime exception if they are not
+   * @param employee
+   */
   private void validateEmployee(Employee employee){
     if (employee.getName() == null || employee.getName().trim().isEmpty()) {
       throw new RuntimeException("Name cannot be null");
@@ -372,6 +411,10 @@ public class EmployeeService
     }
   }
 
+  /**
+   * check if the attributes of given user profile are valid to be saved into database throws runtime exception if they are not
+   * @param userProfile
+   */
   private void validateUserProfile(UserProfile userProfile){
     if (userProfile.getWorkingNumber() == null){
         throw new RuntimeException("Working number cannot be null");
