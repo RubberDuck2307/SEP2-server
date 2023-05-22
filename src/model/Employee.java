@@ -181,6 +181,24 @@ public class Employee implements Serializable, IdObject {
                 '}';
     }
 
+    public String getRoleString(){
+        switch (role){
+            case PROJECT_MANAGER -> {
+                return "Project Manager";
+            }
+            case MAIN_MANAGER -> {
+                return "Main Manager";
+            }
+            case WORKER -> {
+                return "Worker";
+            }
+            case HR -> {
+                return "HR";
+            }
+        }
+        throw new RuntimeException("Employee role is not valid");
+    }
+
     @Override
     public Long getId() {
         return null;
