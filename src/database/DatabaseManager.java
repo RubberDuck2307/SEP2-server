@@ -93,14 +93,14 @@ public class DatabaseManager {
                 "VALUES (1, 'I like Mango', 'This should be the first employees note text No. 1', '1999-12-9')," +
                 "(1, 'I like Mango', 'This should be the first employees note text No. 2', '1999-12-9')," +
                 "(1, 'I like Mango', 'This should be the first employees note text No. 3', '1999-12-9')," +
-                "(2, 'I like Pineapple', 'This should be the second employees note text No. 1', '1999-12-9')," +
-                "(2, 'I like Pineapple', 'This should be the second employees note text No. 2', '1999-12-9')," +
-                "(2, 'I like Pineapple', 'This should be the second employees note text No. 3', '1999-12-9')," +
-                "(2, 'I like Pineapple', 'This should be the second employees note text No. 4', '1999-12-9')," +
-                "(2, 'I like Pineapple', 'This should be the second employees note text No. 5', '1999-12-9')," +
-                "(2, 'I like Pineapple', 'This should be the second employees note text No. 6', '1999-12-9')," +
-                "(2, 'I like Pineapple', '{ This should be the second employees note text No. 7 } This should be the second employees note text No. 7; This should be the second employees note text No. 7; This should be the second employees note text No. 7; This should be the second employees note text No. 7 ;This should be the second employees note text No. 7; This should be the second employees note text No. 7; This should be the second employees note text No. 7; This should be the second employees note text No. 7; This should be the second employees note text No. 7', '1999-12-9')," +
-                "(2, 'I like Pineapple', 'This should be the second employees note text No. 8', '1999-12-9')," +
+                "(2, 'I like Pineapple No. 1', 'This should be the second employees note text No. 1', '1999-12-9')," +
+                "(2, 'I like Pineapple No. 2', 'This should be the second employees note text No. 2', '1999-12-9')," +
+                "(2, 'I like Pineapple No. 3', 'This should be the second employees note text No. 3', '1999-12-9')," +
+                "(2, 'I like Pineapple No. 4', 'This should be the second employees note text No. 4', '1999-12-9')," +
+                "(2, 'I like Pineapple No. 5', 'This should be the second employees note text No. 5', '1999-12-9')," +
+                "(2, 'I like Pineapple No. 6', 'This should be the second employees note text No. 6', '1999-12-9')," +
+                "(2, 'I like Pineapple No. 7', '{ This should be the second employees note text No. 7 } This should be the second employees note text No. 7; This should be the second employees note text No. 7; This should be the second employees note text No. 7; This should be the second employees note text No. 7 ;This should be the second employees note text No. 7; This should be the second employees note text No. 7; This should be the second employees note text No. 7; This should be the second employees note text No. 7; This should be the second employees note text No. 7', '1999-12-9')," +
+                "(2, 'I like Pineapple No. 8', 'This should be the second employees note text No. 8', '1999-12-9')," +
                 "(3, 'I like Papaya', 'This should be the third employees note text',  '1999-12-9')," +
                 "(4, 'I like Kiwi', 'This should be the fourth employees note text', '1999-12-9')," +
                 "(5, 'I like Dragon-fruit', 'This should be the fifth employees note text', '1999-12-9')," +
@@ -179,6 +179,7 @@ public class DatabaseManager {
         addDummyDataEmployeeProject();
         addDummyDataWorkerTask();
         addDummyDataManagerWorker();
+        addDummyDataNotes();
 
         addDummyDataTags();
     }

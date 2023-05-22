@@ -1,6 +1,7 @@
 package database.note;
 
 import database.SetParser;
+import model.Employee;
 import model.Note;
 import model.NoteList;
 
@@ -19,29 +20,51 @@ public class NoteService
 
   public void saveNote(Note note) throws SQLException
   {
-    NoteDO noteDO = new NoteDO(note);
+    validateNote(note);
+    String query = "INSERT INTO notes (title, note_text, creation_date) VALUES (?, ?, ?);";
+    PreparedStatement statement = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+    statement.setString(1, note.getTitle());
+    statement.setString(2, note.getNoteText());
+    statement.setDate(3, Date.valueOf(note.getCreationDate()));
+    statement.executeUpdate();
+  }
 
-    String query = "INSERT INTO notes (title, note_text, creation_date) VALUES (" + noteDO.getTitle() + ", " + noteDO.getNoteText() + ", " + noteDO.getCreationDate() + ");";
-    Statement statement = conn.createStatement();
-    statement.executeUpdate(query);
+  public void validateNote(Note note)
+  {
+    if(note.getTitle() == null || note.getTitle().trim().isEmpty()){
+      throw new RuntimeException("Title cannot be null");
+    }
+    if(note.getNoteText() == null || note.getNoteText().trim().isEmpty()){
+      throw new RuntimeException("Note text cannot be null");
+    }
   }
 
   public void updateNote(Note note) throws SQLException
   {
-    NoteDO noteDO = new NoteDO(note);
+    validateNote(note);
+    if(note.getId() == null)
+    {
+      throw new RuntimeException("Id cannot be null");
+    }
 
-    String query = "UPDATE notes SET title = " + noteDO.getTitle() + ", note_text = " + noteDO.getNoteText() + ", creation_date = "
-        + noteDO.getCreationDate() + " WHERE id = " + noteDO.getId() + ";";
-    Statement statement = conn.createStatement();
-    statement.executeUpdate(query);
+    String query =
+        "UPDATE notes SET title = ?, note_text = ?, creation_date = ? "
+            + "WHERE id = ?;";
+    PreparedStatement st = conn.prepareStatement(query);
+    st.setString(1, note.getTitle());
+    st.setString(2, note.getNoteText());
+    st.setDate(3, Date.valueOf(note.getCreationDate()));
+
+    st.executeUpdate();
   }
 
   public NoteList getAllNotesSavedByEmployee(Integer workingNumber) throws SQLException
   {
-    String query = "SELECT * FROM notes WHERE id in (SELECT id FROM notes WHERE working_number = " + workingNumber + " );";
+    String query =
+        "SELECT * FROM notes WHERE id in (SELECT id FROM notes WHERE working_number = " + workingNumber + " );";
     PreparedStatement st = conn.prepareStatement(query);
     ResultSet set = st.executeQuery();
-    NoteList noteList = setParser.getAllNotesFromSet(set);
-    return noteList;
+    NoteList notes = setParser.getAllNotesFromSet(set);
+    return notes;
   }
 }

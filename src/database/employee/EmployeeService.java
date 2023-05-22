@@ -380,4 +380,11 @@ public class EmployeeService
         throw new RuntimeException("Password cannot be null");
     }
   }
+
+  public void deleteEmployeeByWorkingNumber(Integer workingNumber) throws SQLException
+  {
+    String query = "DELETE FROM employees WHERE working_number = " + workingNumber + ";";
+    PreparedStatement st = conn.prepareStatement(query);
+    st.executeUpdate();
+  }
 }
