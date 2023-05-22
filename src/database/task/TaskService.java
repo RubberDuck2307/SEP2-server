@@ -100,7 +100,12 @@ public class TaskService {
         st.setLong(8, task.getId());
         st.executeUpdate();
     }
-    
+
+    /**
+     * deletes task with the given id from the database
+     * @param id
+     * @throws SQLException
+     */
     public void deleteTaskById(Long id) throws SQLException
     {
         String query;
@@ -109,6 +114,12 @@ public class TaskService {
         st.executeUpdate();
     }
 
+    /**
+     * gets the task with the given id from the database
+     * @param taskId
+     * @return
+     * @throws SQLException
+     */
     public Task getTask(Long taskId) throws SQLException {
         String query = "SELECT * FROM tasks WHERE id = " + taskId + ";";
         PreparedStatement st = conn.prepareStatement(query);
@@ -234,6 +245,12 @@ public class TaskService {
         st.executeUpdate();
     }
 
+    /**
+     * gets all the task of the given user
+     * @param workingNumber
+     * @return
+     * @throws SQLException
+     */
     public TaskList getAllTasksByUserId(Integer workingNumber) throws SQLException {
         String query = "SELECT * FROM tasks WHERE id in (SELECT task_id FROM worker_task WHERE working_number = " + workingNumber + " );";
         PreparedStatement st = conn.prepareStatement(query);
@@ -242,6 +259,12 @@ public class TaskService {
         return taskList;
     }
 
+    /**
+     * changes the status of the task
+     * @param taskId
+     * @param status
+     * @throws SQLException
+     */
     public void changeTaskStatus(Long taskId, String status) throws SQLException {
         String query = "UPDATE tasks SET status = ? WHERE id = ? ;";
         PreparedStatement st = conn.prepareStatement(query);
@@ -250,6 +273,12 @@ public class TaskService {
         st.executeUpdate();
     }
 
+    /**
+     * adds a tag to the task
+     * @param taskId
+     * @param tagId
+     * @throws SQLException
+     */
     public void addTagToTask(Long taskId, Long tagId) throws SQLException{
         String query = "INSERT INTO tag_task VALUES(?, ?);";
         PreparedStatement st = conn.prepareStatement(query);
@@ -257,6 +286,13 @@ public class TaskService {
         st.setLong(2, tagId);
         st.executeUpdate();
     }
+
+    /**
+     * removes a tag from the task
+     * @param taskId
+     * @param tagId
+     * @throws SQLException
+     */
 
     public void removeTagFromTask(Long taskId, Long tagId) throws SQLException{
         String query = "DELETE FROM tag_task VALUES(?, ?);";
@@ -266,7 +302,10 @@ public class TaskService {
         st.executeUpdate();
     }
 
-
+    /**
+     * checks if the task is valid to be saved in the database. Throws an exception if not.
+     * @param task
+     */
     public void validateTask(Task task) {
         if (task.getName() == null || task.getName().trim().isEmpty()) {
             throw new IllegalArgumentException("Task name cannot be empty");

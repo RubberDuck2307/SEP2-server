@@ -181,6 +181,9 @@ public class Employee implements Serializable, IdObject {
                 '}';
     }
 
+    /**
+     * @return String representation of the role of the employee.
+     */
     public String getRoleString(){
         switch (role){
             case PROJECT_MANAGER -> {

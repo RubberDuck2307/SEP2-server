@@ -15,9 +15,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * the class is responsible for creating the local registry and exporting the remote object. It delegates the method calls to the model.
- * * @author Anna Andrlova, Alex Bolfa, Cosmin Demian, Jan Metela, Arturs Ricards Rijnieks
- * * @version 1.0 - May 2023
+ * the class is responsible for creating the local registry and exporting the remote object.
+ * It delegates the method calls to the model.
+ * It has association to a propertyHandler object which is used for firing the property changes to notify the client when needed.
+ * @author Anna Andrlova, Alex Bolfa, Cosmin Demian, Jan Metela, Arturs Ricards Rijnieks
+ * @version 1.0 - May 2023
  */
 public class Server implements RemoteModel {
 

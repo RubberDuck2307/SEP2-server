@@ -111,6 +111,12 @@ public class SetParser {
         return taskList;
     }
 
+    /**
+     *
+     * @param set
+     * @return list of tags from the given set
+     * @throws SQLException
+     */
     public TagList getTagsFromSet(ResultSet set) throws SQLException {
         TagList tagList = new TagList();
 
@@ -123,6 +129,13 @@ public class SetParser {
         return tagList;
     }
 
+    /**
+     *
+     * @param set
+     * @return list of forgottenPasswordNotification from the given set
+     * @throws SQLException
+     */
+
     public IdObjectList<ForgottenPasswordNotification> getForgottenPasswordNotifications(ResultSet set) throws SQLException{
         IdObjectList<ForgottenPasswordNotification> forgottenPasswordNotifications = new IdObjectList<>();
 
@@ -134,6 +147,13 @@ public class SetParser {
         }
         return forgottenPasswordNotifications;
     }
+
+    /**
+     *
+     * @param set
+     * @return list of assignedToProjectNotification from the given set
+     * @throws SQLException
+     */
 
     public IdObjectList<AssignedToProjectNotification> getAssignedToProjectNotifications(ResultSet set) throws SQLException{
         IdObjectList<AssignedToProjectNotification> assignedToProjectNotifications = new IdObjectList<>();
@@ -148,6 +168,12 @@ public class SetParser {
         return assignedToProjectNotifications;
     }
 
+    /**
+     *
+     * @param set
+     * @return list of assignedToTaskNotification from the given set
+     * @throws SQLException
+     */
     public IdObjectList<AssignedToTaskNotification> getAssignedToTaskNotifications(ResultSet set) throws SQLException{
         IdObjectList<AssignedToTaskNotification> assignedToTaskNotifications = new IdObjectList<>();
 
