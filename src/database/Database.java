@@ -1,6 +1,5 @@
 package database;
 
-import database.note.NoteService;
 import database.employee.EmployeeService;
 import database.project.ProjectService;
 import database.tag.TagService;

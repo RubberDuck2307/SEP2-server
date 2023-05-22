@@ -1,4 +1,4 @@
-package database.note;
+package database;
 
 import database.SetParser;
 import model.Employee;
