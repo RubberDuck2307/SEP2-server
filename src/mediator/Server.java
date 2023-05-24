@@ -10,9 +10,8 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * the class is responsible for creating the local registry and exporting the remote object.
@@ -67,6 +66,8 @@ public class Server implements RemoteModel {
 
     @Override
     public Long saveTag(Tag tag) throws RemoteException {
+        AtomicReference<Long> id = null;
+        Thread thread = new Thread(() -> id.set(model.saveTag(tag)));
         return model.saveTag(tag);
     }
 

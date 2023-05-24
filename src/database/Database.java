@@ -12,10 +12,7 @@ public class Database implements DatabaseConnection {
      * @version 1.0 - May 2023
      */
 
-    /**
-     * The connection to the database
-     */
-    private Connection conn;
+    private ServiceFactory serviceFactory;
     private EmployeeService employeeService;
 
     private ProjectService projectService;
@@ -29,47 +26,18 @@ public class Database implements DatabaseConnection {
     private NoteService noteService;
 
     /**
-     * The constructor connecting to the database and initializing all the services
+     * The constructor initializing all the services from the factory
      */
-    public Database() {
-        connect();
-        this.employeeService = new DefaultEmployeeService(conn);
-        this.projectService = new DefaultProjectService(conn);
-        this.taskService = new DefaultTaskService(conn);
-        this.databaseManager = new DatabaseManager(conn);
-        this.noteService = new DefaultNoteService(conn);
-        this.tagService = new DefaultTagService(conn);
-        this.notificationService = new DefaultNotificationService(conn);
-    }
+    public Database(ServiceFactory serviceFactory) {
+        this.serviceFactory = serviceFactory;
+        this.employeeService = serviceFactory.getEmployeeService();
+        this.projectService = serviceFactory.getProjectService();
+        this.taskService = serviceFactory.getTaskService();
+        this.databaseManager = serviceFactory.getDatabaseManager();
+        this.noteService = serviceFactory.getNoteService();
+        this.tagService = serviceFactory.getTagService();
+        this.notificationService = serviceFactory.getNotificationService();
 
-    /**
-     * The method connecting to the database
-     */
-    private void connect() {
-        conn = null;
-        try {
-            conn = DriverManager.getConnection(Credentials.url, Credentials.user, Credentials.password);
-            String query = "SET SCHEMA 'company';";
-            PreparedStatement st = conn.prepareStatement(query);
-            st.executeQuery();
-            System.out.println("Connected to the PostgreSQL server successfully.");
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-
-    }
-
-    /**
-     * The method disconnecting from the database
-     */
-
-    public void disconnect() {
-        try {
-            conn.close();
-            System.out.println("Disconnected from the PostgreSQL server successfully.");
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
     }
 
     public EmployeeList getAllProjectManagers(){

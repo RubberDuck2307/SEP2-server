@@ -21,7 +21,6 @@ public class PropertyHandler implements RemoteSubject<String, String> {
 
     @Override
     public boolean addListener(GeneralListener<String, String> listener, String... propertyNames) throws RemoteException {
-        System.out.println(Arrays.toString(propertyNames));
         return propertyChangeHandler.addListener(listener, propertyNames);
 
     }
@@ -41,12 +40,14 @@ public class PropertyHandler implements RemoteSubject<String, String> {
 
     public void fireMultipleAssignedToProjectNotification(ArrayList<Integer> workingNumbers){
         for (Integer workingNumber : workingNumbers) {
-            propertyChangeHandler.firePropertyChange(workingNumber + "|assignedToProject|notification", null, String.valueOf(workingNumber));
+            propertyChangeHandler.firePropertyChange(workingNumber + "|assignedToProject|notification",
+                    null, String.valueOf(workingNumber));
         }
     }
 
     public void fireAssignedToTaskNotification(Integer workingNumber){
-        propertyChangeHandler.firePropertyChange(workingNumber + "|assignedToTask|notification", null, String.valueOf(workingNumber));
+        propertyChangeHandler.firePropertyChange(workingNumber + "|assignedToTask|notification", null,
+                String.valueOf(workingNumber));
     }
 
     public void fireMultipleAssignedToTaskNotification(ArrayList<Integer> workingNumbers){
