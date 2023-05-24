@@ -1,9 +1,4 @@
 package database;
-
-import database.employee.EmployeeService;
-import database.project.ProjectService;
-import database.tag.TagService;
-import database.task.TaskService;
 import model.*;
 
 import java.sql.*;
@@ -42,7 +37,7 @@ public class Database implements DatabaseConnection {
         this.projectService = new ProjectService(conn);
         this.taskService = new TaskService(conn);
         this.databaseManager = new DatabaseManager(conn);
-        this.noteService = new NoteService(conn);
+        this.noteService = new DefaultNoteService(conn);
         this.tagService = new TagService(conn);
         this.notificationService = new NotificationService(conn);
     }
