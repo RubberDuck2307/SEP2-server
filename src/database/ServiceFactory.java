@@ -2,6 +2,11 @@ package database;
 
 import java.sql.Connection;
 
+/**
+ * The class responsible for creating all the services.
+ * @author Anna Andrlova, Alex Bolfa, Cosmin Demian, Jan Metela, Arturs Ricards Rijnieks
+ * @version 1.0 - May 2023
+ */
 public class ServiceFactory {
     private EmployeeService employeeService;
     private Connection conn;

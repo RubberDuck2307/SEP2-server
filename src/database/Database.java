@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class Database implements DatabaseConnection {
 
     /**
-     * The class responsible for connecting to the database and integrating all the services. The functionality is delegated to the services.
+     * The class responsible for integrating all the services.
      * @author Anna Andrlova, Alex Bolfa, Cosmin Demian, Jan Metela, Arturs Ricards Rijnieks
      * @version 1.0 - May 2023
      */

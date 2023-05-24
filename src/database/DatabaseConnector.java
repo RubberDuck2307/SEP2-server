@@ -5,6 +5,11 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+/**
+ * The class responsible for connecting to the database.
+ * @author Anna Andrlova, Alex Bolfa, Cosmin Demian, Jan Metela, Arturs Ricards Rijnieks
+ * @version 1.0 - May 2023
+ */
 public class DatabaseConnector {
 
     private Connection conn;
