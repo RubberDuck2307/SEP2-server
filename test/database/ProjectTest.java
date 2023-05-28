@@ -6,6 +6,7 @@ import model.ProjectList;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.Order;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -19,7 +20,10 @@ public class ProjectTest {
 
     @BeforeAll
     static void setUp() {
-        database = new Database();
+        DatabaseConnector connector = new DatabaseConnector();
+        Connection connection = connector.connect();
+        ServiceFactory factory = new ServiceFactory(connection);
+        database = new Database(factory);
         assertDoesNotThrow(() -> database.clearAllTables());
         assertDoesNotThrow(() -> database.resetSequences());
     }

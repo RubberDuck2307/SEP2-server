@@ -6,6 +6,7 @@ import utility.observer.subject.RemoteSubject;
 
 import java.lang.reflect.Array;
 import java.rmi.RemoteException;
+import java.rmi.server.RemoteObject;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -15,8 +16,8 @@ import java.util.Arrays;
 public class PropertyHandler implements RemoteSubject<String, String> {
     private PropertyChangeHandler<String, String> propertyChangeHandler;
 
-    public PropertyHandler(PropertyChangeHandler<String, String> propertyChangeHandler) {
-        this.propertyChangeHandler = propertyChangeHandler;
+    public PropertyHandler(RemoteSubject<String, String> remoteObject) {
+        this.propertyChangeHandler = new PropertyChangeHandler<>(remoteObject);
     }
 
     @Override

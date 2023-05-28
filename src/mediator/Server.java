@@ -29,7 +29,8 @@ public class Server implements RemoteModel {
         this.model = model;
         startRegistry();
         startServer();
-        propertyHandler = new PropertyHandler(new PropertyChangeHandler<>(this));
+        PropertyChangeHandler propertyChangeHandler = new PropertyChangeHandler(this);
+        propertyHandler = new PropertyHandler(this);
     }
 
 

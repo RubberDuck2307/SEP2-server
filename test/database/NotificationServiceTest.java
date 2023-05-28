@@ -6,6 +6,7 @@ import org.junit.jupiter.api.*;
 
 import javax.xml.crypto.Data;
 
+import java.sql.Connection;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -17,7 +18,10 @@ class NotificationServiceTest {
 
     @BeforeAll
     static void setUp() {
-        database = new Database();
+        DatabaseConnector connector = new DatabaseConnector();
+        Connection connection = connector.connect();
+        ServiceFactory factory = new ServiceFactory(connection);
+        database = new Database(factory);
         assertDoesNotThrow(() -> database.clearAllTables());
         assertDoesNotThrow(() -> database.resetSequences());
         assertDoesNotThrow(() -> database.addDummyData());

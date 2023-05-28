@@ -5,6 +5,7 @@ import model.Task;
 import model.TaskList;
 import org.junit.jupiter.api.*;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
 
@@ -16,7 +17,10 @@ public class TaskTest {
     private static Database database;
     @BeforeAll
     static void setUp() {
-        database = new Database();
+        DatabaseConnector connector = new DatabaseConnector();
+        Connection connection = connector.connect();
+        ServiceFactory factory = new ServiceFactory(connection);
+        database = new Database(factory);
         assertDoesNotThrow(() -> database.clearAllTables());
         assertDoesNotThrow(() -> database.resetSequences());
         assertDoesNotThrow(() -> database.saveProject(new Project("Interesting", "description", LocalDate.now())));

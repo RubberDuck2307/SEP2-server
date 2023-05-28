@@ -4,6 +4,7 @@ import model.*;
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -18,7 +19,10 @@ public class EmployeesTest {
 
     @BeforeAll
     static void setUp() {
-        database = new Database();
+        DatabaseConnector connector = new DatabaseConnector();
+        Connection connection = connector.connect();
+        ServiceFactory factory = new ServiceFactory(connection);
+        database = new Database(factory);
         assertDoesNotThrow(() -> database.clearAllTables());
         assertDoesNotThrow(() -> database.resetSequences());
         Project project = new Project(1L, "Very Interesting", "description", LocalDate.now());

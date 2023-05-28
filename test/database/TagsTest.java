@@ -6,6 +6,7 @@ import model.TagList;
 import model.Task;
 import org.junit.jupiter.api.*;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
 
@@ -19,7 +20,10 @@ public class TagsTest {
 
     @BeforeAll
     static void setUp() {
-        database = new Database();
+        DatabaseConnector connector = new DatabaseConnector();
+        Connection connection = connector.connect();
+        ServiceFactory factory = new ServiceFactory(connection);
+        database = new Database(factory);
         assertDoesNotThrow(() -> database.clearAllTables());
         assertDoesNotThrow(() -> database.resetSequences());
     }
