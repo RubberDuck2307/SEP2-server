@@ -128,7 +128,7 @@ public class DefaultProjectService implements ProjectService {
      */
     @Override
     public ProjectList getAllProjectsOfEmployee(int workingNumber) throws SQLException {
-        System.out.println("working number: " + workingNumber);
+
         String query = "SELECT * FROM projects WHERE id in (SELECT project_id FROM employee_project WHERE working_number = " + workingNumber + " );";
         PreparedStatement st = conn.prepareStatement(query);
         ResultSet set = st.executeQuery();
@@ -178,7 +178,6 @@ public class DefaultProjectService implements ProjectService {
             }
         }
         query += ");";
-        System.out.println(query);
         PreparedStatement st = conn.prepareStatement(query);
         st.executeUpdate();
     }

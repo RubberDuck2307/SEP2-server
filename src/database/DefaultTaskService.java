@@ -248,7 +248,6 @@ public class DefaultTaskService implements TaskService {
             }
         }
         query += ");";
-        System.out.println(query);
         PreparedStatement st = conn.prepareStatement(query);
         st.executeUpdate();
     }

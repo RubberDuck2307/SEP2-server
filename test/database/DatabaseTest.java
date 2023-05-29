@@ -67,7 +67,6 @@ class DatabaseTest {
 
     @Test void getEmployeesOfManager() throws SQLException {
         assertDoesNotThrow(() -> database.addDummyData());
-        System.out.println(database.getEmployeesAssignedToManager(4));
 
     }
 }

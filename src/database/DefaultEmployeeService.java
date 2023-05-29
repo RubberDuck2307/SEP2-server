@@ -43,7 +43,6 @@ public class DefaultEmployeeService implements EmployeeService {
       PreparedStatement st = conn.prepareStatement(query);
       ResultSet rs = st.executeQuery();
       employeeList = setParser.getAllEmployeesFromSet(rs);
-      System.out.println(employeeList);
     }
     catch (SQLException e)
     {
@@ -110,7 +109,6 @@ public class DefaultEmployeeService implements EmployeeService {
     statement.setDate(4,
         Date.valueOf(employee.getDob()));
     statement.setString(5, employee.getGender());
-    System.out.println(parseRole(employee.getRole()));
     statement.setString(6, parseRole(employee.getRole()));
     int affectedRows = statement.executeUpdate();
 
@@ -176,7 +174,6 @@ public class DefaultEmployeeService implements EmployeeService {
       statement = conn.prepareStatement(query);
       statement.setInt(1, userProfile.getWorkingNumber());
       rs = statement.executeQuery();
-      System.out.println(rs);
       return setParser.getAllEmployeesFromSet(rs).get(0);
     }
   }
@@ -196,7 +193,7 @@ public class DefaultEmployeeService implements EmployeeService {
     PreparedStatement st = conn.prepareStatement(query);
     ResultSet set = st.executeQuery();
     EmployeeList employeeList = setParser.getAllEmployeesFromSet(set);
-    System.out.println(employeeList);
+
     return employeeList;
   }
 
