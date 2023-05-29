@@ -28,32 +28,35 @@ public class PropertyHandler implements RemoteSubject<String, String> {
 
     @Override
     public boolean removeListener(GeneralListener<String, String> listener, String... propertyNames) throws RemoteException {
+
         return propertyChangeHandler.removeListener(listener, propertyNames);
     }
 
     public void fireForgotPasswordNotification(Integer workingNumber){
-        propertyChangeHandler.firePropertyChange("00|forgetPassword|notification", null, String.valueOf(workingNumber));
+        new Thread(() -> {
+            propertyChangeHandler.firePropertyChange("00|forgetPassword|notification", null, String.valueOf(workingNumber));
+        }).start();
     }
 
     public void fireAssignedToProjectNotification(Integer workingNumber){
-        propertyChangeHandler.firePropertyChange(workingNumber + "|assignedToProject|notification", null, String.valueOf(workingNumber));
+        new Thread( () -> propertyChangeHandler.firePropertyChange(workingNumber + "|assignedToProject|notification", null, String.valueOf(workingNumber))).start();
     }
 
     public void fireMultipleAssignedToProjectNotification(ArrayList<Integer> workingNumbers){
         for (Integer workingNumber : workingNumbers) {
-            propertyChangeHandler.firePropertyChange(workingNumber + "|assignedToProject|notification",
-                    null, String.valueOf(workingNumber));
+            new Thread( () -> propertyChangeHandler.firePropertyChange(workingNumber + "|assignedToProject|notification",
+                    null, String.valueOf(workingNumber))).start();
         }
     }
 
     public void fireAssignedToTaskNotification(Integer workingNumber){
-        propertyChangeHandler.firePropertyChange(workingNumber + "|assignedToTask|notification", null,
-                String.valueOf(workingNumber));
+        new Thread( () -> propertyChangeHandler.firePropertyChange(workingNumber + "|assignedToTask|notification", null,
+                String.valueOf(workingNumber))).start();
     }
 
     public void fireMultipleAssignedToTaskNotification(ArrayList<Integer> workingNumbers){
         for (Integer workingNumber : workingNumbers) {
-            propertyChangeHandler.firePropertyChange(workingNumber + "|assignedToTask|notification", null, String.valueOf(workingNumber));
+            new Thread( () -> propertyChangeHandler.firePropertyChange(workingNumber + "|assignedToTask|notification", null, String.valueOf(workingNumber))).start();
         }
     }
 }

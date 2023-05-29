@@ -333,6 +333,6 @@ public class Server implements RemoteModel {
 
     @Override
     public boolean removeListener(GeneralListener<String, String> listener, String... propertyNames) throws RemoteException {
-        return propertyHandler.addListener(listener, propertyNames);
+        return propertyHandler.removeListener(listener, propertyNames);
     }
 }

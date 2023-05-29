@@ -71,6 +71,7 @@ public class DefaultNotificationService implements NotificationService {
 
     @Override
     public void addMultipleAssignedToTaskNotification(ArrayList<Integer> workingNumbers, Long taskID) throws SQLException {
+        if (workingNumbers.size() == 0) return;
         String query = "INSERT INTO assigned_task_notification(workers_number, task_id) values";
         for (int i = 0; i < workingNumbers.size(); i++) {
             query += "(?, ?),";
@@ -97,6 +98,7 @@ public class DefaultNotificationService implements NotificationService {
      */
     @Override
     public void addMultipleAssignedToProjectNotification(ArrayList<Integer> workingNumbers, Long projectID) throws SQLException {
+        if (workingNumbers.size() == 0) return;
         String query = "INSERT INTO assigned_project_notification(project_manager_number, project_id) values";
         for (int i = 0; i < workingNumbers.size(); i++) {
             query += "(?, ?),";
