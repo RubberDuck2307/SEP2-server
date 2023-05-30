@@ -1,6 +1,7 @@
 import database.Database;
 import database.DatabaseConnector;
 import database.ServiceFactory;
+import mediator.RemoteModel;
 import mediator.Server;
 import model.Model;
 import model.ModelManager;
@@ -18,7 +19,7 @@ public class Main {
         ServiceFactory factory = new ServiceFactory(connection);
         Database database = new Database(factory);
         Model model = new ModelManager(database);
-        Server server = new Server(model);
+        RemoteModel server = new Server(model);
 
     }
 }
