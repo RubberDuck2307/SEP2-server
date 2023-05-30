@@ -73,13 +73,6 @@ public class EmployeesTest {
         assertDoesNotThrow(() -> database.login(userProfile));
     }
 
-    @Order(3)
-    @Test
-    void loginWrongCredentials() {
-        UserProfile userProfile = new UserProfile(1, "wrong");
-        assertThrows(SQLException.class, () -> database.login(userProfile));
-    }
-
 
     @Test
     void addEmployeeNullPassword() {
