@@ -28,9 +28,9 @@ public class DatabaseManager {
      */
     private void addDummyDataProject() throws SQLException {
         String query = "Insert into projects(name, description, deadline)" +
-                "VALUES ('firstProject', 'I like potatoes', '2003-12-9')," +
-                "('secondProject', 'I like bananas', '2006-12-4')," +
-                "('thirdProject', 'I like apples', '2007-12-4');";
+                "VALUES ('firstProject', 'I like potatoes', '2025-12-9')," +
+                "('secondProject', 'I like bananas', '2026-12-4')," +
+                "('thirdProject', 'I like apples', '2026-12-4');";
         Statement statement = conn.createStatement();
         statement.executeUpdate(query);
     }
@@ -41,13 +41,13 @@ public class DatabaseManager {
      */
     private void addDummyDataTasks() throws SQLException {
         String query = "Insert into tasks(name, description, deadline, estimated_time, priority, status, project_id)" +
-                "VALUES ('firstTask', 'I like fathers', '2003-12-9', 10, 'HIGH', 'IN PROGRESS', 1)," +
-                "('secondTask', 'I like mothers', '2006-12-4', 10, 'HIGH', 'IN PROGRESS', 1)," +
-                "('thirdTask', 'I like sons', '2007-12-4', 10, 'HIGH', 'IN PROGRESS', 1)," +
-                "('fourthTask', 'I like daughters', '2007-12-4', 10, 'HIGH', 'IN PROGRESS', 2)," +
-                "('fifthTask', 'I like brothers', '2007-12-4', 10, 'HIGH', 'IN PROGRESS', 2)," +
-                "('sixthTask', 'I like sisters', '2007-12-4', 10, 'HIGH', 'IN PROGRESS', 3)," +
-                "('seventhTask', 'I like grandfathers', '2007-12-4', 10, 'HIGH', 'IN PROGRESS', 3);";
+                "VALUES ('firstTask', 'I like fathers', '2025-12-9', 10, 'HIGH', 'IN PROGRESS', 1)," +
+                "('secondTask', 'I like mothers', '2025-12-9', 10, 'HIGH', 'IN PROGRESS', 1)," +
+                "('thirdTask', 'I like sons', '2025-12-9', 10, 'HIGH', 'IN PROGRESS', 1)," +
+                "('fourthTask', 'I like daughters', '2026-12-4', 10, 'HIGH', 'IN PROGRESS', 2)," +
+                "('fifthTask', 'I like brothers', '2026-12-4', 10, 'HIGH', 'IN PROGRESS', 2)," +
+                "('sixthTask', 'I like sisters', '2026-12-4', 10, 'HIGH', 'IN PROGRESS', 3)," +
+                "('seventhTask', 'I like grandfathers', '2026-12-4', 10, 'HIGH', 'IN PROGRESS', 3);";
         Statement statement = conn.createStatement();
         statement.executeUpdate(query);
     }
@@ -64,7 +64,7 @@ public class DatabaseManager {
                 "('JOHN', 3, 'WORKER', 'M', '1999-12-9', '123456789', 'John@gmail.com')," +
                 "('KARL', 4, 'PROJECT M', 'M', '1999-12-9', '123456789', 'John@gmail.com')," +
                 "('JAN', 5, 'MAIN M', 'M', '1999-12-9', '123456789', 'John@gmail.com')," +
-                "('ANNICKA', 6, 'HR', 'F', '1999-12-9', '123456789', 'object@gmail.com');";
+                "('ANNICKA', 6, 'HR', 'F', '2000-2-2', '222222222', 'HiMyNameIsAnna2@gmail.com');";
         Statement statement = conn.createStatement();
         statement.executeUpdate(query);
     }
